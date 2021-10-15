@@ -2,8 +2,8 @@ import * as React from 'react';
 import { View, Text, Button, Alert } from 'react-native';
 import { styles } from '../styles/Styles';
 import { useAppSelector, useAppDispatch } from '../store/store';
-import { selectAllHouseholds } from '../store/hosehold/householdSelectors';
-import { AddHousehold } from '../store/hosehold/householdActions';
+import { selectAllHouseholds } from '../store/household/householdSelectors';
+import { AddHousehold } from '../store/household/householdActions';
 
 function HomeScreen() {
   const allHouseholds = useAppSelector(selectAllHouseholds);

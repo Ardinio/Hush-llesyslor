@@ -3,8 +3,8 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import accountReducer from './account/accountReducer';
 import { AccountActions } from './account/accountActions';
-import householdReducer from './household/householdReducer';
-// TODO: Importera även ations.
+import householdReducer from './hosehold/householdReducer';
+import { HouseholdActions } from './hosehold/householdActions';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 const thunkMiddleware = applyMiddleware<AppThunkDispatch>(thunk);
 const store = createStore(rootReducer, thunkMiddleware);
 
-type KnownActions = AccountActions;         // TODO
+type KnownActions = AccountActions | HouseholdActions;
 
 export type AppThunkDispatch = ThunkDispatch <
   RootState,

@@ -1,4 +1,4 @@
-import * as accountAction from '../actions/accountActions';
+import * as accountAction from '../account/accountActions';
 import { Accounts } from '../../entities/Accounts';
 
 interface AccountState {

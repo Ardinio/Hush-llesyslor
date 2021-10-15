@@ -4,8 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { styles } from '../styles/Styles';
 import { useAppSelector, useAppDispatch } from '../store/store';
-import { selectAllAccounts } from '../store/selectors/accountSelectors';
-import { selectAllHouseholds } from '../store/selectors/householdSelector';
+import { selectAllAccounts } from '../store/account/accountSelectors';
+import { selectAllHouseholds } from '../store/household/householdSelector';
 
 function HomeScreen() {
   const allAccounts = useAppSelector(selectAllAccounts);
@@ -25,8 +25,8 @@ function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
-      <Button title="Account add" onPress={handleAdd}></Button>
-      <Button title="Account print" onPress={handlePrint}></Button>
+      <Button title="Household add" onPress={handleAdd}></Button>
+      <Button title="Household print" onPress={handlePrint}></Button>
     </View>
   );
 }

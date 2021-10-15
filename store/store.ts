@@ -1,7 +1,7 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
-import accountReducer from './reducers/accountReducer';
-import householdReducer from './reducers/householdReducer';
+import accountReducer from './account/accountReducer';
+import householdReducer from './household/householdReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,

@@ -1,4 +1,4 @@
-import * as householdAction from '../actions/householdActions';
+import * as householdAction from '../household/householdActions';
 import { Households } from '../../entities/Household';
 
 interface HouseholdState {

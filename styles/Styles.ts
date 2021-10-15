@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const { height, width } = Dimensions.get("screen");
 
 export const styles = StyleSheet.create({
     text: {
@@ -8,5 +10,29 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    inputContainer: {
+        justifyContent: "center",
+        width: width / 1.1,
+        alignSelf: "center",
+        marginVertical: 10,
+    },
+    inputText: {
+        width: "95%",
+        marginLeft: 10,
+        marginTop: 50,
+        height: height / 13,
+        padding: 10,
+        flexDirection: "row",
+        borderRadius: 10,
+        backgroundColor: '#FFFFFF',
+        shadowColor: 'rgba(0, 0, 0, 0.1)',
+        shadowOpacity: 0.8,
+        elevation: 6,
+        shadowRadius: 15,
+        shadowOffset: { width: 1, height: 13 },
+        fontSize: 18,
+        color: '#000000',
+        fontFamily: "Roboto_400Regular"
+    },
 })

@@ -1,15 +1,15 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { combineReducers, createStore } from "redux";
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import accountReducer from './reducers/accountReducer';
+import householdReducer from './reducers/householdReducer';
 
 const rootReducer = combineReducers({
-    //bank: bankReducer,
-    // profile: profileReducer,
-    // etc..
+  account: accountReducer,
+  household: householdReducer
 });
 
 const store = createStore(rootReducer);
 
-/* Define our own custom hooks so we get strong typings */
 export type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
 

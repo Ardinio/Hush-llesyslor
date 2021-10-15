@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { View, Text, Button, Alert } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { styles } from '../styles/Styles';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { selectAllAccounts } from '../store/account/accountSelectors';
 import { selectAllHouseholds } from '../store/household/householdSelector';
+import { AddAccount } from '../store/account/accountActions';
 
 function HomeScreen() {
   const allAccounts = useAppSelector(selectAllAccounts);
@@ -13,14 +12,14 @@ function HomeScreen() {
   const dispatch = useAppDispatch();
 
   const handleAdd = () => {
-    dispatch({type: 'household/addHousehold', payload: { Id: 1, Name: 'household 1', Code: '123'}})
+    dispatch(AddAccount({Id: 1, Email: 'a@a.com', Password: '123'}));
     Alert.alert('Added new household');
   }
 
   const handlePrint = () => {
     Alert.alert('Print (see console)');
     // console.log('allAccountsSelector: ', allAccounts);
-    console.log('allHouseholds: ', allHouseholds);
+    console.log('allHouseholds: ', allAccounts);
   }
   return (
     <View style={styles.container}>

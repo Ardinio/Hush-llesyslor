@@ -1,15 +1,7 @@
-import * as accountAction from '../account/accountActions';
-import { Accounts } from '../../entities/Accounts';
+import { AccountActions } from './accountActions';
+import { AccountState, initialState } from './accountState';
 
-interface AccountState {
-  AllAccounts: Accounts[];
-}
-
-const initialState: AccountState = {
-  AllAccounts: []
-}
-
-function accountReducer(state: AccountState = initialState, action: accountAction.KnownActions): AccountState {
+function accountReducer(state: AccountState = initialState, action: AccountActions): AccountState {
   if (action.type === 'accounts/addAccount') {
     return {
       ...state,

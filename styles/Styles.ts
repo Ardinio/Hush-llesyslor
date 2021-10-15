@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
     buttonText: {
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: "bold",
         color: "black",
         fontFamily: "Roboto_400Regular",

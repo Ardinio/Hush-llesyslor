@@ -26,7 +26,7 @@ const Button: FC<Props> = (props) => {
     return (
       <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
         <View style={styles.iconWrapper}>
-          <FontAwesome5 name={props.btnType} style={styles.icon} size={22} />
+          <FontAwesome5 name={props.btnType} style={styles.icon} size={18} />
         </View>
         <View style={styles.btnTxtWrapper}>
           <Text style={styles.buttonText}>{props.buttonTitle}</Text>

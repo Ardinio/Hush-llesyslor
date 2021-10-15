@@ -13,11 +13,11 @@ const HomeScreen = ({navigation}: Props) => {
     <View style={styles.container}>
       <Text>Home Screen</Text>
 
-      {/* Endast för test av komponenter */}
+      {/* Endast för test av komponenten */}
       <Button
-        buttonTitle="Edit"
-        btnType="pencil-alt"
-        onPress={() => navigation.navigate("LoginScreen")}
+        buttonTitle=""
+        btnType=""
+        onPress={() => ("")}
       />
     </View>
   );

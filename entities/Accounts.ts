@@ -1,5 +1,5 @@
 export type Accounts = {
-    Id: number,
-    Email: string,
-    Password: string
+  Id: number,
+  Email: string,
+  Password: string
 }

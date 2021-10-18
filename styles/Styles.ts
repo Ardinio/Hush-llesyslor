@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     },
     buttonsContainer: {
         bottom: 10,
+        justifyContent: "space-around",
         flexDirection: "row",
         backgroundColor: "transparent",
         position: 'absolute',
@@ -34,10 +35,12 @@ export const styles = StyleSheet.create({
     clickableText: {
         color: "steelblue",
         textAlign: "center",
-        fontWeight: "600"        
+        fontWeight: "600",
+        paddingBottom: 10,    
     },
     modalView: {
         width: "70%",
+        height: 200,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,

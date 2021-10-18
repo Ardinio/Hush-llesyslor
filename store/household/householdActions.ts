@@ -1,4 +1,4 @@
-import { Households } from '../../entities/Household';
+import { Households } from '../../entities/Households';
 import { AppThunk } from '../store';
 
 export interface AddHouseholdAction {

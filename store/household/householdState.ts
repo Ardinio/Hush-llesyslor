@@ -1,4 +1,4 @@
-import { Households } from '../../entities/Household';
+import { Households } from '../../entities/Households';
 
 export interface HouseholdState {
   AllHouseholds: Households[];

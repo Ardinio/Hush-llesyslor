@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 50,
-        width: "30%",
+        width: "35%",
         height: height / 15,
         padding: 10,
         flexDirection: "row",

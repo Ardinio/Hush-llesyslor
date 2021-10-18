@@ -4,10 +4,14 @@ export const styles = StyleSheet.create({
     text: {
         color: "#ffffff"
     },
+    root: {
+        flex: 1,
+        alignItems: 'center',
+    },
     container: {
         flex: 1,
         alignItems: 'center',
-        // justifyContent: 'center'
+        justifyContent: 'center'
     },
     buttonsContainer: {
         bottom: 10,

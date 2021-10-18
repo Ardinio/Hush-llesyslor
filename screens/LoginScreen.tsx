@@ -8,21 +8,31 @@ import {
   TouchableHighlight,
   Modal,
   Image,
+  Alert,
+  Pressable,
 } from "react-native";
+import { AddAccount } from "../store/account/accountActions";
 import { styles } from "../styles/Styles";
+import nextId from "react-id-generator";
 
 function LoginScreen() {
   const [loginEmail, setLoginEmail] = React.useState<string>();
   const [loginPassword, setLoginPassword] = React.useState<string>();
+  const [newUserPassword, setNewUserPassword] = React.useState<string>();
+  const [newUserEmail, setNewUserEmail] = React.useState<string>();
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const login = () => {};
-  const registerAccount = () => {
+  
+  const newAccount = () => {
+    const newUserId = Number(nextId());
+    dispatch(AddAccount({Id: newUserId, Email: newUserEmail!, Password: newUserPassword!}));
+    Alert.alert('Added new household');
     setModalVisible(!modalVisible);
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.root}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -37,30 +47,28 @@ function LoginScreen() {
             <TextInput
               style={styles.textInputBox}
               placeholder="E-mail"
-              value={loginEmail}
-              onChangeText={(value) => setLoginEmail(value)}
+              value={newUserEmail}
+              onChangeText={(value) => setNewUserEmail(value)}
             />
             <TextInput
               style={styles.textInputBox}
               placeholder="Password"
-              value={loginPassword}
-              onChangeText={(value) => setLoginPassword(value)}
+              value={newUserPassword}
+              onChangeText={(value) => setNewUserPassword(value)}
             />
             <View style={styles.buttonsContainer}>
-              <TouchableHighlight
-                onPress={registerAccount}
+              <Pressable
+                onPress={newAccount}
                 style={styles.button}
-                underlayColor={"#B6B8A8"}
               >
                 <Text style={styles.buttonText}>Registrera</Text>
-              </TouchableHighlight>
-              <TouchableHighlight
+              </Pressable>
+              <Pressable
                 onPress={() => setModalVisible(!modalVisible)}
                 style={styles.button}
-                underlayColor={"#B6B8A8"}
               >
                 <Text style={styles.buttonText}>Avbryt</Text>
-              </TouchableHighlight>
+              </Pressable>
             </View>
           </View>
         </View>
@@ -90,3 +98,7 @@ function LoginScreen() {
 }
 
 export default LoginScreen;
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
+}
+

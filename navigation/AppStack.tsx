@@ -36,6 +36,11 @@ const AppStack: FC = () => {
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: true }}>
         <Screen
+          name="ProfileScreen"
+          component={ ProfileScreen }
+          options={{ title: "Profil" }}
+        />
+        <Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{ title: "Home" }}
@@ -44,11 +49,6 @@ const AppStack: FC = () => {
           name="LoginScreen"
           component={LoginScreen}
           options={{ title: "Login" }}
-        />
-        <Screen
-          name="ProfileScreen"
-          component={ ProfileScreen }
-          options={{ title: "Profil" }}
         />
 
         <Screen

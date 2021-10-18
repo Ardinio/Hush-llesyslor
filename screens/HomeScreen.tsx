@@ -10,7 +10,7 @@ function HomeScreen() {
   const dispatch = useAppDispatch();
 
   const handleAdd = () => {
-    dispatch(AddHousehold({Id: 1, Name: 'household 1', Code: '123'}));
+    dispatch(AddHousehold({Id: 1, Name: 'household 1', GeneratedCode: '123'}));
     Alert.alert('Added new household');
   }
 

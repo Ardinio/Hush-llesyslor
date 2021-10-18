@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   TouchableHighlight,
   Modal,
   Image,
@@ -15,6 +14,8 @@ import nextId from "react-id-generator";
 import { Accounts } from "../entities/Accounts";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamList } from "../navigation/AppStack";
+import { Button } from "../components";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -40,8 +41,8 @@ function LoginScreen({ navigation }: Props) {
   };
 
   const logOut = () => {
-    setIsLoggedIn(!isLoggedIn)
-  }
+    setIsLoggedIn(!isLoggedIn);
+  };
 
   const newAccount = () => {
     if (!newUserEmail) return setErrorMsg("E-mail eller Password Saknas!");
@@ -50,7 +51,7 @@ function LoginScreen({ navigation }: Props) {
     const newAccount: Accounts = {
       Id: newUserId,
       Email: newUserEmail,
-      Password: newUserPassword
+      Password: newUserPassword,
     };
     dispatch(AddAccount(newAccount));
     Alert.alert("New user registered");
@@ -62,10 +63,17 @@ function LoginScreen({ navigation }: Props) {
   if (isLoggedIn) {
     return (
       <View style={styles.root}>
-        <Image style={styles.loginLogo} source={require("../assets/logo.png")} />
-        <Button title="Logga Ut" onPress={logOut}></Button>
+        <Image
+          style={styles.loginLogo}
+          source={require("../assets/logo.png")}
+        />
+        <Button
+          buttonTitle="Logga Ut"
+          btnType="sign-out-alt"
+          onPress={logOut}
+        ></Button>
       </View>
-    )
+    );
   }
 
   return (
@@ -94,11 +102,22 @@ function LoginScreen({ navigation }: Props) {
               onChangeText={(value) => setNewUserPassword(value)}
             />
             <View style={styles.buttonsContainer}>
-              <Button title="Registrera" onPress={newAccount}></Button>
-              <Button
-                title="Avbryt"
-                onPress={() => setModalVisible(!modalVisible)}
-              ></Button>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="check"
+                  style={styles.icon}
+                  size={25}
+                  onPress={newAccount}
+                />
+              </View>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="arrow-circle-down"
+                  style={styles.icon}
+                  size={25}
+                  onPress={() => setModalVisible(!modalVisible)}
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -119,7 +138,7 @@ function LoginScreen({ navigation }: Props) {
       <TouchableHighlight onPress={() => setModalVisible(!modalVisible)}>
         <Text style={styles.clickableText}>Registrera Konto</Text>
       </TouchableHighlight>
-      <Button title="Login" onPress={logIn} />
+      <Button buttonTitle="Logga in" btnType="sign-in-alt" onPress={logIn} />
     </View>
   );
 }

@@ -23,13 +23,13 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         width: "100%"
       },
-    button: {
-        backgroundColor: "#8E9080",
-        padding: 2,
-        margin: 2,
-        borderRadius: 20,
-        width: "50%"
-    },
+    // button: {
+    //     backgroundColor: "#8E9080",
+    //     padding: 2,
+    //     margin: 2,
+    //     borderRadius: 20,
+    //     width: "50%"
+    // },
     // buttonText: {
     //     textAlign: "center",
     //     fontWeight: "600"

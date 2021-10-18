@@ -15,7 +15,7 @@ const TaskCard = () => {
 const styles = StyleSheet.create({
     item: {
         backgroundColor: "#FFF",
-        padding: 15,
+        padding: 20,
         borderRadius: 10,
         flexDirection: "row",
         alignItems: "center",
@@ -25,10 +25,11 @@ const styles = StyleSheet.create({
     itemLeft: {
         flexDirection: "row",
         alignItems: 'center',
-        flexWrap: "wrap"
+        flexWrap: "wrap",
     },
     itemText: {
         fontSize: 14,
+        fontWeight: "bold",
     },
 })
 

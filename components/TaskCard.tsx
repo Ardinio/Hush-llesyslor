@@ -15,12 +15,12 @@ const TaskCard = () => {
 const styles = StyleSheet.create({
     item: {
         backgroundColor: "#FFF",
-        padding: 20,
+        padding: 10,
         borderRadius: 10,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        marginBottom: 15,
+        marginBottom: 10,
     },
     itemLeft: {
         flexDirection: "row",

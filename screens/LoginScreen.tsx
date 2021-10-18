@@ -1,12 +1,24 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, Text, TextInput, Button } from 'react-native';
+
 
 function LoginScreen() {
+
+  const login = () => {
+    
+  }
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
+      <Text>LoginScreen</Text>
+      <TextInput
+            placeholder="E-mail"
+            />
+      <TextInput
+          placeholder="Password"
+        />
+      <Text >Registrera Konto</Text>
+      <Button title="Login" onPress={login}/>
     </View>
   );
 }

@@ -36,14 +36,14 @@ const AppStack: FC = () => {
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: true }}>
         <Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{ title: "Home" }}
-        />
-        <Screen
           name="LoginScreen"
           component={LoginScreen}
           options={{ title: "Login" }}
+        />
+        <Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ title: "Home" }}
         />
         <Screen
           name="ProfileScreen"

@@ -1,5 +1,5 @@
-export type Households = {
-    Id: number,
-    Name: string,
-    Code: string
+export type Household = {
+  Id: number,
+  Name: string,
+  GeneratedCode: string
 }

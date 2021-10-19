@@ -11,7 +11,6 @@ import {
 import { AddAccount } from "../store/account/accountActions";
 import { styles } from "../styles/Styles";
 import nextId from "react-id-generator";
-import { Accounts } from "../entities/Accounts";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamList } from "../navigation/AppStack";
 import { Button } from "../components";
@@ -34,16 +33,23 @@ function LoginScreen({ navigation }: Props) {
 
   const [email, setEmail] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
+  const [accountId, setAccountId] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logIn = () => {
-    setIsLoggedIn(!isLoggedIn);
-    navigation.navigate("HomeScreen");
+    if (!allAccounts.find((a) => a.Email === email)) return setErrorMsg("Email eller Password är felaktigt")
+    
+    
+
+      setIsLoggedIn(!isLoggedIn);
+      navigation.navigate("HomeScreen"); // send accountID !!
+    
   };
 
   const logOut = () => {
+    setAccountId("");
     setIsLoggedIn(!isLoggedIn);
   };
 
@@ -55,15 +61,16 @@ function LoginScreen({ navigation }: Props) {
   };
 
   const newAccount = () => {
-    console.log(email)
-    if (allAccounts.find(a => a.Email === email)) return setErrorMsg("E-postadressen finns redan")
+    console.log(email); // remove line when finished!!!
     if (!email || !password)
       return setErrorMsg("E-mail eller Password Saknas!");
+    if (allAccounts.find((a) => a.Email === email))
+      return setErrorMsg("E-postadressen finns redan");
     dispatch(
       AddAccount({
         Id: nextId(),
-        Email: email,
-        Password: password,
+        Email: email.trim(),
+        Password: password.trim(),
       })
     );
     Alert.alert("New user registered");
@@ -153,6 +160,7 @@ function LoginScreen({ navigation }: Props) {
       <TouchableHighlight onPress={() => setModalVisible(!modalVisible)}>
         <Text style={styles.clickableText}>Registrera Konto</Text>
       </TouchableHighlight>
+      <Text style={styles.errorText}>{errorMsg}</Text>
       <Button buttonTitle="Logga in" btnType="sign-in-alt" onPress={logIn} />
     </View>
   );

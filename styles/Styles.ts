@@ -59,8 +59,7 @@ export const styles = StyleSheet.create({
         margin: 5,
       },
       loginLogo: {
-        marginTop: 50,
-        marginBottom: 10,
+        marginTop: 20,
       },
     buttonContainer: {
         marginTop: 50,

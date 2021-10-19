@@ -1,3 +1,3 @@
 import { RootState } from '../store';
 
-export const selectAllHouseholds = (state: RootState) => state.task.AllTasks;
+export const selectAllTasks = (state: RootState) => state.task.AllTasks;

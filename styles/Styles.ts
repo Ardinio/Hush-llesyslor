@@ -23,6 +23,10 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         width: "100%"
       },
+    errorText: {
+        color: "red",
+        fontSize: 12,
+    },
     clickableText: {
         color: "steelblue",
         textAlign: "center",

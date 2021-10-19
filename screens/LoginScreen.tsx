@@ -63,6 +63,7 @@ function LoginScreen({ navigation }: Props) {
     console.log(allAccounts); // remove line when finished!!!
     setNewUserEmail("");
     setNewUserPassword("");
+    setErrorMsg("");
     setModalVisible(!modalVisible);
   };
 
@@ -107,6 +108,7 @@ function LoginScreen({ navigation }: Props) {
               value={newUserPassword}
               onChangeText={(value) => setNewUserPassword(value)}
             />
+            <Text style={styles.errorText} >{errorMsg}</Text>
             <View style={styles.buttonsContainer}>
               <View style={styles.iconWrapper}>
                 <FontAwesome5
@@ -121,8 +123,10 @@ function LoginScreen({ navigation }: Props) {
                   name="arrow-circle-down"
                   style={styles.icon}
                   size={25}
-                  onPress={() => setModalVisible(!modalVisible)}
-                />
+                  onPress={() => {
+                    setModalVisible(!modalVisible)
+                    setErrorMsg("")
+                  }}/>
               </View>
             </View>
           </View>

@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
+import { styles } from "../styles/Styles";
 
 const TaskCard = () => {
 
@@ -11,26 +12,5 @@ const TaskCard = () => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    item: {
-        backgroundColor: "#FFF",
-        padding: 10,
-        borderRadius: 10,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginBottom: 10,
-    },
-    itemLeft: {
-        flexDirection: "row",
-        alignItems: 'center',
-        flexWrap: "wrap",
-    },
-    itemText: {
-        fontSize: 14,
-        fontWeight: "bold",
-    },
-})
 
 export default TaskCard;

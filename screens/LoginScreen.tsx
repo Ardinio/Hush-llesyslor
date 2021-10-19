@@ -28,6 +28,7 @@ type Props = {
 };
 
 // TODO
+// Add Formik
 // Add validation for e-mail, add encryption on password, add snackbar on new account
 
 function LoginScreen({ navigation }: Props) {
@@ -58,6 +59,7 @@ function LoginScreen({ navigation }: Props) {
   };
 
   const logOut = () => {
+    setErrorMsg("");
     setAccountId("");
     setIsLoggedIn(!isLoggedIn);
   };

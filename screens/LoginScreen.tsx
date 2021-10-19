@@ -16,6 +16,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamList } from "../navigation/AppStack";
 import { Button } from "../components";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { selectAllAccounts } from "../store/account/accountSelectors";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -27,6 +29,9 @@ type Props = {
 };
 
 function LoginScreen({ navigation }: Props) {
+  const allAccounts = useAppSelector(selectAllAccounts);
+  const dispatch = useAppDispatch();
+
   const [loginEmail, setLoginEmail] = React.useState<string>();
   const [loginPassword, setLoginPassword] = React.useState<string>();
   const [newUserPassword, setNewUserPassword] = React.useState<string>();
@@ -47,7 +52,7 @@ function LoginScreen({ navigation }: Props) {
   const newAccount = () => {
     if (!newUserEmail) return setErrorMsg("E-mail eller Password Saknas!");
     if (!newUserPassword) return setErrorMsg("E-mail eller Password Saknas!");
-    const newUserId = Number(nextId());
+    const newUserId = nextId();
     const newAccount: Accounts = {
       Id: newUserId,
       Email: newUserEmail,
@@ -55,6 +60,7 @@ function LoginScreen({ navigation }: Props) {
     };
     dispatch(AddAccount(newAccount));
     Alert.alert("New user registered");
+    console.log(allAccounts); // remove line when finished!!!
     setNewUserEmail("");
     setNewUserPassword("");
     setModalVisible(!modalVisible);
@@ -144,6 +150,3 @@ function LoginScreen({ navigation }: Props) {
 }
 
 export default LoginScreen;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}

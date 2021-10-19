@@ -23,17 +23,6 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         width: "100%"
       },
-    // button: {
-    //     backgroundColor: "#8E9080",
-    //     padding: 2,
-    //     margin: 2,
-    //     borderRadius: 20,
-    //     width: "50%"
-    // },
-    // buttonText: {
-    //     textAlign: "center",
-    //     fontWeight: "600"
-    // },
     clickableText: {
         color: "steelblue",
         textAlign: "center",
@@ -67,7 +56,7 @@ export const styles = StyleSheet.create({
       },
       loginLogo: {
         marginTop: 50,
-        marginBottom: 50,
+        marginBottom: 10,
       },
     buttonContainer: {
         marginTop: 50,

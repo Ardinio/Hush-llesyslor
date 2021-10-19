@@ -9,18 +9,21 @@ import userReducer from './user/userReducer';
 import { UserActions } from './user/userActions';
 import taskReducer from './task/taskReducer';
 import { TaskActions } from './task/taskActions';
+import taskuserReducer from './taskuser/taskuserReducer';
+import { TaskUserActions } from './taskuser/taskuserActions';
 
 const rootReducer = combineReducers({
   account: accountReducer,
   household: householdReducer,
   user: userReducer,
-  task: taskReducer
+  task: taskReducer,
+  taskuser: taskuserReducer
 });
 
 const thunkMiddleware = applyMiddleware<AppThunkDispatch>(thunk);
 const store = createStore(rootReducer, thunkMiddleware);
 
-type KnownActions = AccountActions | HouseholdActions | UserActions | TaskActions;
+type KnownActions = AccountActions | HouseholdActions | UserActions | TaskActions | TaskUserActions;
 
 export type AppThunkDispatch = ThunkDispatch <
   RootState,

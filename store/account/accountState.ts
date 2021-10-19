@@ -1,7 +1,7 @@
-import { Accounts } from '../../entities/Accounts';
+import { Account } from '../../entities/Account';
 
 export interface AccountState {
-  AllAccounts: Accounts[];
+  AllAccounts: Account[];
 }
 
 export const initialState: AccountState = {

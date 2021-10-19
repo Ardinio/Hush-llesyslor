@@ -1,7 +1,7 @@
-import { Households } from '../../entities/Household';
+import { Household } from '../../entities/Household';
 
 export interface HouseholdState {
-  AllHouseholds: Households[];
+  AllHouseholds: Household[];
 }
 
 export const initialState: HouseholdState = {

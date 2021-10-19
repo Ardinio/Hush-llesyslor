@@ -32,12 +32,10 @@ function LoginScreen({ navigation }: Props) {
   const allAccounts = useAppSelector(selectAllAccounts);
   const dispatch = useAppDispatch();
 
-  const [loginEmail, setLoginEmail] = React.useState<string>();
-  const [loginPassword, setLoginPassword] = React.useState<string>();
-  const [newUserPassword, setNewUserPassword] = React.useState<string>();
-  const [newUserEmail, setNewUserEmail] = React.useState<string>();
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [email, setEmail] = React.useState<string>();
+  const [password, setPassword] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
+  const [modalVisible, setModalVisible] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logIn = () => {
@@ -49,20 +47,29 @@ function LoginScreen({ navigation }: Props) {
     setIsLoggedIn(!isLoggedIn);
   };
 
+  const closeModal = () => {
+    setModalVisible(!modalVisible);
+    setEmail("");
+    setPassword("");
+    setErrorMsg("");
+  };
+
   const newAccount = () => {
-    if (!newUserEmail) return setErrorMsg("E-mail eller Password Saknas!");
-    if (!newUserPassword) return setErrorMsg("E-mail eller Password Saknas!");
-    const newUserId = nextId();
-    const newAccount: Accounts = {
-      Id: newUserId,
-      Email: newUserEmail,
-      Password: newUserPassword,
-    };
-    dispatch(AddAccount(newAccount));
+    console.log(email)
+    if (allAccounts.find(a => a.Email === email)) return setErrorMsg("E-postadressen finns redan")
+    if (!email || !password)
+      return setErrorMsg("E-mail eller Password Saknas!");
+    dispatch(
+      AddAccount({
+        Id: nextId(),
+        Email: email,
+        Password: password,
+      })
+    );
     Alert.alert("New user registered");
     console.log(allAccounts); // remove line when finished!!!
-    setNewUserEmail("");
-    setNewUserPassword("");
+    setEmail("");
+    setPassword("");
     setErrorMsg("");
     setModalVisible(!modalVisible);
   };
@@ -99,16 +106,16 @@ function LoginScreen({ navigation }: Props) {
             <TextInput
               style={styles.textInputBox}
               placeholder="E-mail"
-              value={newUserEmail}
-              onChangeText={(value) => setNewUserEmail(value)}
+              value={email}
+              onChangeText={(value) => setEmail(value)}
             />
             <TextInput
               style={styles.textInputBox}
               placeholder="Password"
-              value={newUserPassword}
-              onChangeText={(value) => setNewUserPassword(value)}
+              value={password}
+              onChangeText={(value) => setPassword(value)}
             />
-            <Text style={styles.errorText} >{errorMsg}</Text>
+            <Text style={styles.errorText}>{errorMsg}</Text>
             <View style={styles.buttonsContainer}>
               <View style={styles.iconWrapper}>
                 <FontAwesome5
@@ -123,10 +130,8 @@ function LoginScreen({ navigation }: Props) {
                   name="arrow-circle-down"
                   style={styles.icon}
                   size={25}
-                  onPress={() => {
-                    setModalVisible(!modalVisible)
-                    setErrorMsg("")
-                  }}/>
+                  onPress={closeModal}
+                />
               </View>
             </View>
           </View>
@@ -136,14 +141,14 @@ function LoginScreen({ navigation }: Props) {
       <TextInput
         style={styles.textInputBox}
         placeholder="E-mail"
-        value={loginEmail}
-        onChangeText={(value) => setLoginEmail(value)}
+        value={email}
+        onChangeText={(value) => setEmail(value)}
       />
       <TextInput
         style={styles.textInputBox}
         placeholder="Password"
-        value={loginPassword}
-        onChangeText={(value) => setLoginPassword(value)}
+        value={password}
+        onChangeText={(value) => setPassword(value)}
       />
       <TouchableHighlight onPress={() => setModalVisible(!modalVisible)}>
         <Text style={styles.clickableText}>Registrera Konto</Text>

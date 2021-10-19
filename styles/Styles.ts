@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from "react-native";
 
-const { height } = Dimensions.get("screen");
+const { height, width } = Dimensions.get("screen");
 
 export const styles = StyleSheet.create({
     text: {
@@ -10,6 +10,24 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    inputContainer: {
+        justifyContent: "center",
+        width: width / 1.1,
+        alignSelf: "center",
+        marginVertical: 10,
+    },
+    inputText: {
+        width: "95%",
+        marginLeft: 10,
+        marginTop: 50,
+        height: height / 13,
+        padding: 10,
+        flexDirection: "row",
+        borderRadius: 10,
+        fontSize: 18,
+        color: '#000000',
+        fontFamily: "Roboto_400Regular"
     },
     buttonContainer: {
         marginTop: 50,

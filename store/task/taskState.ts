@@ -1,7 +1,7 @@
-import { Tasks } from '../../entities/Tasks';
+import { Task } from '../../entities/Task';
 
 export interface TaskState {
-  AllTasks: Tasks[];
+  AllTasks: Task[];
 }
 
 export const initialState: TaskState = {

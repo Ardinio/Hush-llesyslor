@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, TextInput, Text } from 'react-native';
 import {
   List, Switch, Avatar, Button
 } from 'react-native-paper';
@@ -24,17 +24,18 @@ const onSaveAvatar = (avatar: string) => {
   return (
     <View style={{ flex: 1 }}>
       <List.Item
-                title="Dark Mode"
-                left={() => <List.Icon icon="brightness-4" />}
+                title="Light Mode"
+                left={() => <List.Icon icon="brightness-5" />}
                 right={() => <Switch />}
             />
              <TouchableOpacity style={styles.avatarContainer}>
             <View style={styles.avatarWrapper}>
-            <Avatar.Image size={60} source={require('../assets/chicken.png')}/>
+              <Text style={styles.icon}>🐶</Text>
             </View>
             </TouchableOpacity>
-            <View style={styles.textInput}>
+            <View style={styles.input}>
             <TextInput
+                style={styles.textInput}
                 placeholder="Name"
                 value={name}
                 onChangeText={onSaveName}
@@ -51,8 +52,8 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   avatarContainer: {
     marginTop: 70,
-    marginLeft: 100,
-    width: "50%",
+    marginLeft: 110,
+    width: "45%",
     height: "30%",
     padding: 10,
     justifyContent: "center",
@@ -70,11 +71,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  textInput: {
+  input: {
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 25,
-    fontSize: 18,
+  },
+
+  textInput: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "black",
+  },
+  icon: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 10,
+    fontSize: 80,
     fontWeight: "bold",
     color: "black",
   },

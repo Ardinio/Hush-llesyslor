@@ -6,6 +6,7 @@ import { GenericScreenProps } from '../navigation/AppStack';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { selectAllHouseholds } from '../store/household/householdSelectors';
 import { AddHousehold } from '../store/household/householdActions';
+import TaskCard from '../components/TaskCard';
 
 type Props = GenericScreenProps<"HomeScreen">;
 

@@ -27,25 +27,34 @@ type Props = {
   navigation: ProfileScreenNavigationProp;
 };
 
+// TODO
+// Add validation for e-mail, add encryption on password, add snackbar on new account
+
 function LoginScreen({ navigation }: Props) {
   const allAccounts = useAppSelector(selectAllAccounts);
   const dispatch = useAppDispatch();
 
   const [email, setEmail] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
+  const [newEmail, setNewEmail] = React.useState<string>();
+  const [newPassword, setNewPassword] = React.useState<string>();
   const [accountId, setAccountId] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logIn = () => {
-    if (!allAccounts.find((a) => a.Email === email)) return setErrorMsg("Email eller Password är felaktigt")
-    
-    
-
-      setIsLoggedIn(!isLoggedIn);
-      navigation.navigate("HomeScreen"); // send accountID !!
-    
+    if (!email || !password) return setErrorMsg("E-mail eller Password Saknas!")
+    if (!allAccounts.find((a) => a.Email === email.toLowerCase().trim()))
+      return setErrorMsg("Email eller Password är felaktigt");
+    const account = allAccounts.find((a) => a.Email === email.toLowerCase().trim());
+    if (account?.Password !== password.trim())
+      return setErrorMsg("Email eller Password är felaktigt");
+    setAccountId(account?.Id);
+    setIsLoggedIn(!isLoggedIn);
+    setEmail("");
+    setPassword("");
+    navigation.navigate("HomeScreen"); // send accountID !!
   };
 
   const logOut = () => {
@@ -53,30 +62,32 @@ function LoginScreen({ navigation }: Props) {
     setIsLoggedIn(!isLoggedIn);
   };
 
-  const closeModal = () => {
+  const handleModal = () => {
     setModalVisible(!modalVisible);
     setEmail("");
     setPassword("");
+    setNewEmail("");
+    setNewPassword("");
     setErrorMsg("");
   };
 
-  const newAccount = () => {
-    console.log(email); // remove line when finished!!!
-    if (!email || !password)
+  const registerNewAccount = () => {
+    console.log(newEmail); // remove line when finished!!!
+    if (!newEmail || !newPassword)
       return setErrorMsg("E-mail eller Password Saknas!");
-    if (allAccounts.find((a) => a.Email === email))
+    if (allAccounts.find((a) => a.Email === newEmail.toLowerCase().trim()))
       return setErrorMsg("E-postadressen finns redan");
     dispatch(
       AddAccount({
         Id: nextId(),
-        Email: email.trim(),
-        Password: password.trim(),
+        Email: newEmail.toLowerCase().trim(),
+        Password: newPassword.trim(),
       })
     );
-    Alert.alert("New user registered");
+    Alert.alert("New user registered"); // replace Alert with SnackBar !!
     console.log(allAccounts); // remove line when finished!!!
-    setEmail("");
-    setPassword("");
+    setNewEmail("");
+    setNewPassword("");
     setErrorMsg("");
     setModalVisible(!modalVisible);
   };
@@ -104,7 +115,6 @@ function LoginScreen({ navigation }: Props) {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
@@ -113,14 +123,14 @@ function LoginScreen({ navigation }: Props) {
             <TextInput
               style={styles.textInputBox}
               placeholder="E-mail"
-              value={email}
-              onChangeText={(value) => setEmail(value)}
+              value={newEmail}
+              onChangeText={(value) => setNewEmail(value)}
             />
             <TextInput
               style={styles.textInputBox}
               placeholder="Password"
-              value={password}
-              onChangeText={(value) => setPassword(value)}
+              value={newPassword}
+              onChangeText={(value) => setNewPassword(value)}
             />
             <Text style={styles.errorText}>{errorMsg}</Text>
             <View style={styles.buttonsContainer}>
@@ -129,7 +139,7 @@ function LoginScreen({ navigation }: Props) {
                   name="check"
                   style={styles.icon}
                   size={25}
-                  onPress={newAccount}
+                  onPress={registerNewAccount}
                 />
               </View>
               <View style={styles.iconWrapper}>
@@ -137,7 +147,7 @@ function LoginScreen({ navigation }: Props) {
                   name="arrow-circle-down"
                   style={styles.icon}
                   size={25}
-                  onPress={closeModal}
+                  onPress={handleModal}
                 />
               </View>
             </View>
@@ -157,7 +167,7 @@ function LoginScreen({ navigation }: Props) {
         value={password}
         onChangeText={(value) => setPassword(value)}
       />
-      <TouchableHighlight onPress={() => setModalVisible(!modalVisible)}>
+      <TouchableHighlight onPress={handleModal}>
         <Text style={styles.clickableText}>Registrera Konto</Text>
       </TouchableHighlight>
       <Text style={styles.errorText}>{errorMsg}</Text>

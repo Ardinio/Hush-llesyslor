@@ -1,4 +1,4 @@
-export type Users = {
+export type User = {
     Id: number,
     AccountId: number,
     HouseholdId: number,

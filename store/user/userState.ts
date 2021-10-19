@@ -1,7 +1,7 @@
-import { Users } from '../../entities/Users';
+import { User } from '../../entities/User';
 
 export interface UserState {
-  AllUsers: Users[];
+  AllUsers: User[];
 }
 
 export const initialState: UserState = {

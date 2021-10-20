@@ -25,7 +25,9 @@ function HomeScreen({ navigation }: Props) {
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const dispatch = useAppDispatch();
   const [modalVisible, setModalVisible] = useState(false);
-  const [checked, setChecked] = React.useState(false);
+  const [complete, setComplete] = React.useState(false);
+  const [selectedDescription, setSelectedDescription] = useState<string>("");
+  const [selectedTitle, setSelectedTitle] = useState<string>("");
 
   const handleAdd = () => {
     dispatch(
@@ -40,24 +42,47 @@ function HomeScreen({ navigation }: Props) {
   };
   return (
     <View style={styles.container}>
+      <FlatList
+        data={tasks}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(true), setSelectedTitle(item.Title);
+              setSelectedDescription(item.Description);
+            }}
+            underlayColor="none"
+          >
+            <TaskCard task={item} />
+          </TouchableOpacity>
+        )}
+      />
+
       {/* Detta ska till taskScreen */}
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
           <View style={styles.modalView}>
-            <Text>Titel:</Text>
-            <View style={styles.innerContainer}></View>
-            <Text>Beskrivning:</Text>
-            <Text></Text>
-            <View style={styles.innerContainer}>
-              <Text></Text>
-            </View>
-            <Text>Färdig:</Text>
             <View>
+              <View>
+                <Text style={styles.itemText}>Titel:</Text>
+                <View style={styles.innerContainer}>
+                  <Text style={styles.innerContainerText}>{selectedTitle}</Text>
+                </View>
+              </View>
+
+              <View style={styles.marginTop}>
+                <Text style={styles.itemText}>Beskrivning:</Text>
+                <View style={styles.innerContainer}>
+                  <Text style={styles.innerContainerText}>
+                    {selectedDescription}
+                  </Text>
+                </View>
+              </View>
+              <Text style={styles.marginTop}>Färdig:</Text>
               <Checkbox.Android
                 color={"green"}
-                status={checked ? "checked" : "unchecked"}
+                status={complete ? "checked" : "unchecked"}
                 onPress={() => {
-                  setChecked(!checked);
+                  setComplete(!complete);
                 }}
               ></Checkbox.Android>
             </View>
@@ -67,23 +92,11 @@ function HomeScreen({ navigation }: Props) {
                 onPress={() => setModalVisible(!modalVisible)}
                 title="Stäng"
                 color="black"
-                accessibilityLabel="Learn more about this purple button"
               />
             </View>
           </View>
         </View>
       </Modal>
-      <FlatList
-        data={tasks}
-        renderItem={({ item }: any) => (
-          <TouchableOpacity
-            onPress={() => setModalVisible(true)}
-            underlayColor="none"
-          >
-            <TaskCard task={item} />
-          </TouchableOpacity>
-        )}
-      />
 
       {/*  */}
 

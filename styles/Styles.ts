@@ -13,7 +13,27 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 15
+    },
+    item: {
+        backgroundColor: "#FFF",
+        padding: 10,
+        borderRadius: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 10,
+    },
+    itemLeft: {
+        flexDirection: "row",
+        alignItems: 'center',
+        flexWrap: "wrap",
+    },
+    itemText: {
+        fontSize: 14,
+        fontWeight: "bold",
+        marginLeft: 10,
     },
     buttonsContainer: {
         bottom: 10,
@@ -115,4 +135,14 @@ export const styles = StyleSheet.create({
         color: "black",
         fontFamily: "Roboto_400Regular",
     },
+    Card: {
+        width: 300,
+        height: 50,
+        marginTop: 10,
+    },
+    CardContainer: {
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        margin: 15,
+    }
 })

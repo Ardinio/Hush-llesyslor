@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 15
     },
     item: {
         backgroundColor: "#FFF",
@@ -28,7 +29,6 @@ export const styles = StyleSheet.create({
     itemText: {
         fontSize: 14,
         fontWeight: "bold",
-        marginTop: 15,
         marginLeft: 10,
     },
     inputContainer: {
@@ -88,13 +88,11 @@ export const styles = StyleSheet.create({
     Card: {
         width: 300,
         height: 50,
-        marginTop: 16,
-
+        marginTop: 10,
     },
-    cardNumber: {
-        width: 100,
-        height: 100,
-        borderRadius: 100 / 2,
-        backgroundColor: "red",
+    CardContainer: {
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        margin: 15,
     }
 })

@@ -50,8 +50,8 @@ export const styles = StyleSheet.create({
         fontFamily: "Roboto_400Regular"
     },
     buttonContainer: {
-        marginTop: 50,
-        width: "35%",
+        justifyContent: 'center',
+        width: 150,
         height: height / 15,
         padding: 10,
         flexDirection: "row",
@@ -96,13 +96,13 @@ export const styles = StyleSheet.create({
         margin: 15,
     },
     modalView: {
+        alignItems: 'center',
         width: "70%",
-        height: 200,
+        height: 'auto',
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
-        alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -112,4 +112,24 @@ export const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
       },
+
+      innerContainer: { 
+        backgroundColor: '#F2F2F2', 
+        height: 50, 
+        width: 200, 
+        borderRadius: 5, 
+      }, 
+      title: { 
+        fontSize: 12, 
+        color: 'black', 
+        position: 'absolute', 
+        backgroundColor: 'transparent', 
+        top: 12, 
+        left: 10, 
+      }, 
+
+      modalText: {
+        color:'red',
+        textAlign: 'left'
+        }
 })

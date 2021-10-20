@@ -1,5 +1,12 @@
 import * as React from "react";
-import { View, Text, Alert, FlatList, Modal } from "react-native";
+import {
+  View,
+  Text,
+  Alert,
+  FlatList,
+  Modal,
+  Button as ReactNativeButton,
+} from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/AppStack";
@@ -10,7 +17,7 @@ import TaskCard from "../components/TaskCard";
 import { tasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
 import { useState } from "react";
-import { MaterialIcons } from '@expo/vector-icons' 
+import { Checkbox } from "react-native-paper";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -18,6 +25,7 @@ function HomeScreen({ navigation }: Props) {
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const dispatch = useAppDispatch();
   const [modalVisible, setModalVisible] = useState(false);
+  const [checked, setChecked] = React.useState(false);
 
   const handleAdd = () => {
     dispatch(
@@ -32,39 +40,52 @@ function HomeScreen({ navigation }: Props) {
   };
   return (
     <View style={styles.container}>
-      <Modal 
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible} 
-       >
+      {/* Detta ska till taskScreen */}
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
           <View style={styles.modalView}>
-        <MaterialIcons 
-      name='close'
-      size={24}
-      onPress={() => setModalVisible(!modalVisible)}/>
+            <Text>Titel:</Text>
+            <View style={styles.innerContainer}></View>
+            <Text>Beskrivning:</Text>
+            <Text></Text>
+            <View style={styles.innerContainer}>
+              <Text></Text>
+            </View>
+            <Text>Färdig:</Text>
+            <View>
+              <Checkbox.Android
+                color={"green"}
+                status={checked ? "checked" : "unchecked"}
+                onPress={() => {
+                  setChecked(!checked);
+                }}
+              ></Checkbox.Android>
+            </View>
 
-          <Text>
-            Hello from modal
-          </Text>
+            <View style={styles.buttonContainer}>
+              <ReactNativeButton
+                onPress={() => setModalVisible(!modalVisible)}
+                title="Stäng"
+                color="black"
+                accessibilityLabel="Learn more about this purple button"
+              />
+            </View>
+          </View>
         </View>
-        </View>
-        </Modal>
+      </Modal>
       <FlatList
         data={tasks}
         renderItem={({ item }: any) => (
           <TouchableOpacity
-            onPress={() =>
-              setModalVisible(true)
-              
-            }
-            underlayColor='none'
+            onPress={() => setModalVisible(true)}
+            underlayColor="none"
           >
-            <TaskCard 
-            task={item} />
+            <TaskCard task={item} />
           </TouchableOpacity>
         )}
       />
+
+      {/*  */}
 
       <Text>Home Screen</Text>
       <Button

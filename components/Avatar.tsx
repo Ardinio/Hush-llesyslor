@@ -1,48 +1,95 @@
+import React, { useState } from 'react';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, TouchableOpacity } from 'react-native';
+
+
 export interface Avatar {
     id: number;
-    emoji: string;
-    color: string;
+    title: string;
+    backroundColor: string;
+    onPress: () => void;
     // isAvailable: boolean;
 }
 
 export const Avatar = [{
     id: '1',
-    emoji: '🦊',
-    color: '#ffa71b',
+    title: '🦊',
+    backroundColor: '#ffa71b',
 },
 {
     id: '2',
-    emoji: '🐥',
-    color: '#ffff00',
+    title: '🐥',
+    backroundColor: '#ffff00',
 },
 {
     id: '3',
-    emoji: '🐋',
-    color: '#3100ff',
+    title: '🐋',
+    backroundColor: '#3100ff',
 },
 {
     id: '4',
-    emoji: '🐷',
-    color: '#ff99cc',
+    title: '🐷',
+    backroundColor: '#ff99cc',
 },
 {
     id: '5',
-    emoji: '🐸',
-    color: '#c5f404',
+    title: '🐸',
+    backroundColor: '#c5f404',
 },
 {
     id: '6',
-    emoji: '🐶',
-    color: '#876635',
+    title: '🐶',
+    backroundColor: '#876635',
 },
 {
     id: '7',
-    emoji: '🐭',
-    color: '#848484',
+    title: '🐭',
+    backroundColor: '#848484',
 },
 {
     id: '8',
-    emoji: '🦄',
-    color: '#aec9fe',
+    title: '🦄',
+    backroundColor: '#aec9fe',
 },
-]
+];
+
+const Item = ({ title }) => (
+    <View style={styles.item}>
+        <Text style={styles.title}>{title}</Text>
+    </View>
+);
+
+ const AvatarEmoji = () => {
+    const renderItem = ({ item }) => (
+        <Item title={item.title} />
+    );
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <FlatList
+                horizontal
+                data={Avatar}
+                 renderItem={renderItem}
+                keyExtractor={item => item.id}
+            />
+        </SafeAreaView>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: StatusBar.currentHeight || 0,
+    },
+    item: {
+
+        padding: 10,
+        marginVertical: 6,
+        marginHorizontal: 8,
+    },
+    title: {
+        fontSize: 32,
+    },
+});
+
+export default AvatarEmoji;
+

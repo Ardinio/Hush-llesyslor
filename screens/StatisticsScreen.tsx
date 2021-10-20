@@ -11,6 +11,7 @@ import { selectAllTasks } from '../store/task/taskSelectors';
 import { AddTask } from '../store/task/taskActions';
 import { selectAllCompletedTasks, selectAllCompletedTasksByDate } from '../store/completedtask/completedtaskSelectors'
 import { AddCompletedTask } from '../store/completedtask/completedtaskActions';
+import { ChartPie, PieChartData2 } from '../components/ChartPie';
 
 function StatisticsScreen() {
   const allHouseholds = useAppSelector(selectAllHouseholds);
@@ -24,6 +25,8 @@ function StatisticsScreen() {
   console.log('lastWeek: ', lastWeek);              // Debug.
   const allCompletedTasksByDate = useAppSelector(selectAllCompletedTasksByDate(lastWeek, currentDate));
   const dispatch = useAppDispatch();
+  let chartPieData:PieChartData2[];
+  chartPieData = [{avatarId: 'lol', color: '#00ff00', energy: 2}, {avatarId: 'lol2', color: '#ff0000', energy: 3}, {avatarId: 'lol3', color: '#0000ff', energy: 5}];
 
   const handleAddMock = () => {
     dispatch(AddHousehold({Id: 1, Name: 'household 1', GeneratedCode: '123'}));
@@ -62,6 +65,7 @@ function StatisticsScreen() {
       <Text>Statistics Screen</Text>
       <Button title="Mock add" onPress={handleAddMock}></Button>
       <Button title="Mock print" onPress={handlePrint}></Button>
+      <ChartPie data={chartPieData} />
     </View>
   );
 }

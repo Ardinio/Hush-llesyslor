@@ -9,7 +9,7 @@ import { selectAllUsers } from '../store/user/userSelectors';
 import { AddUser } from '../store/user/userActions';
 import { selectAllTasks } from '../store/task/taskSelectors';
 import { AddTask } from '../store/task/taskActions';
-import { selectAllTaskUsers } from '../store/taskuser/taskuserSelectors';
+import { selectAllTaskUsers, selectAllTaskUsersByDate } from '../store/taskuser/taskuserSelectors';
 import { AddTaskUser } from '../store/taskuser/taskuserActions';
 
 function StatisticsScreen() {
@@ -17,6 +17,12 @@ function StatisticsScreen() {
   const allUsers = useAppSelector(selectAllUsers);
   const allTasks = useAppSelector(selectAllTasks);
   const allTaskUsers = useAppSelector(selectAllTaskUsers);
+  const currentDate: Date = new Date();
+  console.log('currentDate: ', currentDate);        // Debug.
+  const lastWeek: Date = new Date(+currentDate);
+  lastWeek.setDate(lastWeek.getDate() - 7);
+  console.log('lastWeek: ', lastWeek);              // Debug.
+  const allTaskUsersByDate = useAppSelector(selectAllTaskUsersByDate(lastWeek, currentDate));
   const dispatch = useAppDispatch();
 
   const handleAddMock = () => {
@@ -27,21 +33,28 @@ function StatisticsScreen() {
     dispatch(AddUser({Id: 3, AccountId: 3, HouseholdId: 1, Name: 'user 3', AvatarId: 1, IsOwner: false}));
     dispatch(AddUser({Id: 4, AccountId: 4, HouseholdId: 2, Name: 'user 4', AvatarId: 1, IsOwner: true}));
     const date:Date = new Date();
+    const date1:Date = new Date('2021-10-15T12:00:00');
+    const date2:Date = new Date('2021-10-01T12:00:00');
+    const date3:Date = new Date('2021-10-19T12:00:00');
+    const date4:Date = new Date('2021-10-18T12:00:00');
     dispatch(AddTask({Id: 1, HouseholdId: 1, Title: 'task 1', Description: 'description 1', LastCheckDate: date, DaysToComplete: 3, EnergyRequired: 3})); 
     dispatch(AddTask({Id: 2, HouseholdId: 1, Title: 'task 2', Description: 'description 2', LastCheckDate: date, DaysToComplete: 2, EnergyRequired: 2})); 
     dispatch(AddTask({Id: 3, HouseholdId: 1, Title: 'task 3', Description: 'description 3', LastCheckDate: date, DaysToComplete: 1, EnergyRequired: 1})); 
-    dispatch(AddTaskUser({Id: 1, TasksId: 1, UserId: 1, CompleteDate: date})); 
-    dispatch(AddTaskUser({Id: 2, TasksId: 2, UserId: 2, CompleteDate: date})); 
-    dispatch(AddTaskUser({Id: 3, TasksId: 3, UserId: 3, CompleteDate: date})); 
+    dispatch(AddTaskUser({Id: 1, TasksId: 1, UserId: 1, CompleteDate: date1}));
+    dispatch(AddTaskUser({Id: 2, TasksId: 2, UserId: 2, CompleteDate: date2}));
+    dispatch(AddTaskUser({Id: 3, TasksId: 3, UserId: 3, CompleteDate: date3}));
+    dispatch(AddTaskUser({Id: 4, TasksId: 3, UserId: 3, CompleteDate: date4}));
+    dispatch(AddTaskUser({Id: 4, TasksId: 2, UserId: 3, CompleteDate: date4}));
     // Alert.alert('Added mock data!');
   }
 
   const handlePrint = () => {
     // Alert.alert('Print (see console)');
-    console.log('allHouseholds: ', allHouseholds);
-    console.log('allUsers: ', allUsers);
-    console.log('allTasks: ', allTasks);
-    console.log('allTaskusers: ', allTaskUsers);
+    // console.log('allHouseholds: ', allHouseholds);
+    // console.log('allUsers: ', allUsers);
+    // console.log('allTasks: ', allTasks);
+    // console.log('allTaskusers: ', allTaskUsers);
+    console.log('allTaskUsersByDate: ', allTaskUsersByDate);
   }
 
   return (

@@ -28,6 +28,8 @@ export const styles = StyleSheet.create({
     itemText: {
         fontSize: 14,
         fontWeight: "bold",
+        marginTop: 15,
+        marginLeft: 10,
     },
     inputContainer: {
         justifyContent: "center",
@@ -83,4 +85,16 @@ export const styles = StyleSheet.create({
         color: "black",
         fontFamily: "Roboto_400Regular",
     },
+    Card: {
+        width: 300,
+        height: 50,
+        marginTop: 16,
+
+    },
+    cardNumber: {
+        width: 100,
+        height: 100,
+        borderRadius: 100 / 2,
+        backgroundColor: "red",
+    }
 })

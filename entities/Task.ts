@@ -1,4 +1,4 @@
-export type Tasks = {
+export type Task = {
   Id: number,
   HouseholdId: number,
   Title: string,

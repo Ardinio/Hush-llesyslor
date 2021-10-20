@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 15
     },
     item: {
         backgroundColor: "#FFF",
@@ -28,6 +29,7 @@ export const styles = StyleSheet.create({
     itemText: {
         fontSize: 14,
         fontWeight: "bold",
+        marginLeft: 10,
     },
     inputContainer: {
         justifyContent: "center",
@@ -86,5 +88,15 @@ export const styles = StyleSheet.create({
     pieChartStyle: {
         height: 200, 
         width: 200,
+    },
+    Card: {
+        width: 300,
+        height: 50,
+        marginTop: 10,
+    },
+    CardContainer: {
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        margin: 15,
     }
 })

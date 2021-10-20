@@ -83,4 +83,8 @@ export const styles = StyleSheet.create({
         color: "black",
         fontFamily: "Roboto_400Regular",
     },
+    pieChartStyle: {
+        height: 200, 
+        width: 200,
+    }
 })

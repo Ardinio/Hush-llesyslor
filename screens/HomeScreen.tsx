@@ -7,6 +7,7 @@ import { useAppSelector, useAppDispatch } from '../store/store';
 import { selectAllHouseholds } from '../store/household/householdSelectors';
 import { AddHousehold } from '../store/household/householdActions';
 import TaskCard from '../components/TaskCard';
+import { ChartPie } from '../components/ChartPie';
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -36,6 +37,7 @@ function HomeScreen() {
       btnType="print"
       onPress={handlePrint}
       />
+      <ChartPie/>
     </View>
   );
 }

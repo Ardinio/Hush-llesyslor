@@ -9,7 +9,7 @@ import { selectAllUsers } from '../store/user/userSelectors';
 import { AddUser } from '../store/user/userActions';
 import { selectAllTasks } from '../store/task/taskSelectors';
 import { AddTask } from '../store/task/taskActions';
-import { selectAllCompletedTasks } from '../store/completedtask/completedtaskSelectors'
+import { selectAllCompletedTasks, selectAllCompletedTasksByDate } from '../store/completedtask/completedtaskSelectors'
 import { AddCompletedTask } from '../store/completedtask/completedtaskActions';
 
 function StatisticsScreen() {
@@ -22,7 +22,7 @@ function StatisticsScreen() {
   const lastWeek: Date = new Date(+currentDate);
   lastWeek.setDate(lastWeek.getDate() - 7);
   console.log('lastWeek: ', lastWeek);              // Debug.
-  // const allTaskUsersByDate = useAppSelector(selectAllTaskUsersByDate(lastWeek, currentDate));
+  const allCompletedTasksByDate = useAppSelector(selectAllCompletedTasksByDate(lastWeek, currentDate));
   const dispatch = useAppDispatch();
 
   const handleAddMock = () => {
@@ -54,7 +54,7 @@ function StatisticsScreen() {
     console.log('allUsers: ', allUsers);
     console.log('allTasks: ', allTasks);
     console.log('allCompletedTasks: ', allCompletedTasks);
-    // console.log('allCompletedTasksByDate: ', allCompletedTasksByDate);
+    console.log('allCompletedTasksByDate: ', allCompletedTasksByDate);
   }
 
   return (

@@ -2,6 +2,12 @@ import { Avatar } from '../entities/Avatar';
 
 export const AllAvatars: Avatar[] = [
   {
+    Id: 0,
+    Path: require('../assets/logo.png'),
+    Color: 'white',
+    Emoji: "Välj Din Avatar!",
+  },
+  {
     Id: 1,
     Path: require('../assets/avatars/fox.png'),
     Color: '#ffa71b',

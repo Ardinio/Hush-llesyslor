@@ -1,15 +1,12 @@
 import * as React from "react";
-import { View, Text, Alert, FlatList } from "react-native";
+import { View, Text, Alert, Modal, } from "react-native";
 import { styles } from "../styles/Styles";
-import { Button } from "../components";
+import { Button, TextInput } from "../components";
 import { GenericScreenProps } from "../navigation/AppStack";
 import { useAppSelector, useAppDispatch } from "../store/store";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
 import { AddHousehold } from "../store/household/householdActions";
-import TaskCard from "../components/TaskCard";
-import { TouchableRipple } from "react-native-paper";
-import { tasks } from "../data/taskData";
-import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -17,11 +14,25 @@ function HomeScreen({ navigation }: Props) {
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const dispatch = useAppDispatch();
 
-  const handleAdd = () => {
+  const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
+  const [houseHoldName, setHouseHoldName] = React.useState<String>()
+  const [errorMsg, setErrorMsg] = React.useState<String>();
+  const [accountId, setAccountId] = React.useState<String>();
+
+  const createNewHouse = () => {
     dispatch(
-      AddHousehold({ Id: 1, Name: "household 1", GeneratedCode: "123" })
+      AddHousehold({ Id: "1", Name: "household 1", GeneratedCode: "123" })
     );
     Alert.alert("Added new household");
+  }
+
+  const closeModal = () => {
+    setHouseHoldName("");
+    setNewHouseModalVisible(false);
+  }
+
+  const handleAdd = () => {
+    
   };
 
   const handlePrint = () => {
@@ -30,9 +41,45 @@ function HomeScreen({ navigation }: Props) {
   };
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={newHouseModalVisible}
+        onRequestClose={() => {
+          setNewHouseModalVisible(!newHouseModalVisible);
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.modalView}>
+            <TextInput
+              placeholder="E-mail"
+              onChangeText={(value) => setHouseHoldName(value)}
+            />
+            <Text style={styles.errorText}>{errorMsg}</Text>
+            <View style={styles.buttonsContainer}>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="check"
+                  style={styles.icon}
+                  size={25}
+                  onPress={createNewHouse}
+                />
+              </View>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="arrow-circle-down"
+                  style={styles.icon}
+                  size={25}
+                  onPress={closeModal}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
       <Text>Home Screen</Text>
 
-      
+
       <View style={styles.buttonsContainer}>
         <Button
           buttonTitle="Household"

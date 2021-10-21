@@ -18,6 +18,9 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 15
     },
+  marginTop: {
+    marginTop: 20,
+  },
     item: {
         backgroundColor: "#FFF",
         padding: 10,

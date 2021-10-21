@@ -105,19 +105,19 @@ export const styles = StyleSheet.create({
         fontFamily: "Roboto_400Regular"
     },
     buttonContainer: {
-        marginTop: 50,
-        width: "35%",
-        height: height / 15,
-        padding: 10,
-        flexDirection: "row",
-        borderRadius: 30,
-        backgroundColor: '#FFFFFF',
-        shadowColor: 'rgba(0, 0, 0, 0.1)',
-        shadowOpacity: 0.8,
-        elevation: 6,
-        shadowRadius: 15,
-        shadowOffset: { width: 1, height: 13 },
-    },
+      justifyContent: 'center',
+      width: 150,
+      height: height / 15,
+      padding: 10,
+      flexDirection: "row",
+      borderRadius: 30,
+      backgroundColor: '#FFFFFF',
+      shadowColor: 'rgba(0, 0, 0, 0.1)',
+      shadowOpacity: 0.8,
+      elevation: 6,
+      shadowRadius: 15,
+      shadowOffset: { width: 1, height: 13 },
+  },
     iconWrapper: {
         width: 30,
         justifyContent: "center",
@@ -191,14 +191,4 @@ export const styles = StyleSheet.create({
         height: 200, 
         width: 200,
     },
-    Card: {
-        width: 300,
-        height: 50,
-        marginTop: 10,
-    },
-    CardContainer: {
-        flexDirection: "row",
-        justifyContent: 'space-between',
-        margin: 15,
-    }
 })

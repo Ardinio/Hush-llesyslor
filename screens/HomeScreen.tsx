@@ -9,6 +9,9 @@ import { AddHousehold } from "../store/household/householdActions";
 import { FontAwesome5 } from "@expo/vector-icons";
 import nextId from "react-id-generator";
 import { v4 as uuidv4 } from "uuid";
+import { Picker } from "@react-native-picker/picker";
+import { Avatar } from "../entities/Avatar";
+import { AllAvatars } from "../data/avatars";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -20,6 +23,7 @@ function HomeScreen({ navigation }: Props) {
   const [houseHoldName, setHouseHoldName] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [accountId, setAccountId] = React.useState<string>();
+  const [avatar, setAvatar] = React.useState<Avatar>();
 
   const createNewHouse = () => {
     const newHouseHold = {
@@ -68,7 +72,22 @@ function HomeScreen({ navigation }: Props) {
               value={houseHoldName}
               onChangeText={(value) => setHouseHoldName(value)}
             />
-            
+            <Text>
+
+            </Text>
+            <Picker
+              selectedValue={avatar}
+              onValueChange={(value, index) => setAvatar(value)}
+              mode="dropdown" // Android only
+              style={styles.picker}
+            >
+              {AllAvatars.map((item, index) => {
+                return (
+                  <Picker.Item label={item.Emoji} value={item.Id} key={index} />
+                );
+              })}
+            </Picker>
+
             <Text style={styles.errorText}>{errorMsg}</Text>
             <View style={styles.buttonsContainer}>
               <View style={styles.iconWrapper}>

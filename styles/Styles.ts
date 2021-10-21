@@ -148,5 +148,13 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: 'space-between',
         margin: 15,
-    }
+    },
+    picker: {
+        width: 90,
+        borderWidth: 2,
+        borderColor: "black",
+        borderRadius: 5,
+        padding: 5,
+        margin: 5,
+      },
 })

@@ -30,29 +30,18 @@ function HomeScreen({ navigation }: Props) {
   };
   return (
     <View style={styles.container}>
-      <FlatList
-        data={tasks}
-        renderItem={({ item }: any) => (
-          <TouchableOpacity
-            onPress={() =>
-              console.log(item, "öppna modul för att läsa mer om tasken")
-              
-            }
-            underlayColor='none'
-          >
-            <TaskCard 
-            task={item} />
-          </TouchableOpacity>
-        )}
-      />
-
       <Text>Home Screen</Text>
-      <Button
-        buttonTitle="Household"
-        btnType="plus-circle"
-        onPress={handleAdd}
-      />
-      <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
+
+      
+      <View style={styles.buttonsContainer}>
+        <Button
+          buttonTitle="Household"
+          btnType="plus-circle"
+          onPress={handleAdd}
+        />
+
+        <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
+      </View>
     </View>
   );
 }

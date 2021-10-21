@@ -1,7 +1,7 @@
 import * as React from "react";
-import { View, Text, Alert, Modal, } from "react-native";
+import { View, Text, Alert, Modal, TextInput, } from "react-native";
 import { styles } from "../styles/Styles";
-import { Button, TextInput } from "../components";
+import { Button, } from "../components";
 import { GenericScreenProps } from "../navigation/AppStack";
 import { useAppSelector, useAppDispatch } from "../store/store";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
@@ -27,6 +27,7 @@ function HomeScreen({ navigation }: Props) {
       AddHousehold(newHouseHold)
     );
     console.log(newHouseHold);
+    setNewHouseModalVisible(!newHouseModalVisible)
     Alert.alert("Added new household");
   }
 
@@ -36,7 +37,7 @@ function HomeScreen({ navigation }: Props) {
   }
 
   const handleAdd = () => {
-    
+    setNewHouseModalVisible(!newHouseModalVisible);
   };
 
   const handlePrint = () => {
@@ -55,8 +56,14 @@ function HomeScreen({ navigation }: Props) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
-            <TextInput
+            {/* <TextInput
               placeholder="E-mail"
+              onChangeText={(value) => setHouseHoldName(value)}
+            /> */}
+            <TextInput
+              style={styles.textInputBox}
+              placeholder="Namn"
+              value={houseHoldName}
               onChangeText={(value) => setHouseHoldName(value)}
             />
             <Text style={styles.errorText}>{errorMsg}</Text>

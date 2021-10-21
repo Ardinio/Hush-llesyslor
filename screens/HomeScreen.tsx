@@ -1,14 +1,14 @@
 import * as React from "react";
-import { View, Text, Alert, Modal, TextInput, } from "react-native";
+import { View, Text, Alert, Modal, TextInput } from "react-native";
 import { styles } from "../styles/Styles";
-import { Button, } from "../components";
+import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/AppStack";
 import { useAppSelector, useAppDispatch } from "../store/store";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
 import { AddHousehold } from "../store/household/householdActions";
 import { FontAwesome5 } from "@expo/vector-icons";
 import nextId from "react-id-generator";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -17,24 +17,26 @@ function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
-  const [houseHoldName, setHouseHoldName] = React.useState<string>()
+  const [houseHoldName, setHouseHoldName] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [accountId, setAccountId] = React.useState<string>();
 
   const createNewHouse = () => {
-    const newHouseHold = { Id: nextId(), Name: houseHoldName!, GeneratedCode: uuidv4() }
-    dispatch(
-      AddHousehold(newHouseHold)
-    );
+    const newHouseHold = {
+      Id: nextId(),
+      Name: houseHoldName!,
+      GeneratedCode: uuidv4(),
+    };
+    dispatch(AddHousehold(newHouseHold));
     console.log(newHouseHold);
-    setNewHouseModalVisible(!newHouseModalVisible)
+    setNewHouseModalVisible(!newHouseModalVisible);
     Alert.alert("Added new household");
-  }
+  };
 
   const closeModal = () => {
     setHouseHoldName("");
     setNewHouseModalVisible(false);
-  }
+  };
 
   const handleAdd = () => {
     setNewHouseModalVisible(!newHouseModalVisible);
@@ -66,6 +68,7 @@ function HomeScreen({ navigation }: Props) {
               value={houseHoldName}
               onChangeText={(value) => setHouseHoldName(value)}
             />
+            
             <Text style={styles.errorText}>{errorMsg}</Text>
             <View style={styles.buttonsContainer}>
               <View style={styles.iconWrapper}>
@@ -89,7 +92,6 @@ function HomeScreen({ navigation }: Props) {
         </View>
       </Modal>
       <Text>Home Screen</Text>
-
 
       <View style={styles.buttonsContainer}>
         <Button

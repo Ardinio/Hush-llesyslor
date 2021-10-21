@@ -19,7 +19,9 @@ export type AppStackParamList = {
   ProfileScreen: { id: number };
   SplashScreen: undefined;
   StatisticsScreen: undefined;
-  TaskScreen: { id: number };
+
+  // removed { id: number } for testing
+  TaskScreen: undefined;
 };
 
 export type GenericNavigationProps = StackNavigationProp<AppStackParamList>;

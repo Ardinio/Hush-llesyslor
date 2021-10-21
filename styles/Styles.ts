@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     margin: 15,
   },
-  modalView: {
+  modalView2: {
     alignItems: "center",
     width: "70%",
     height: "auto",

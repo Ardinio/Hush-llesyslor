@@ -5,7 +5,6 @@ import {
   Alert,
   FlatList,
   Modal,
-  Button as ReactNativeButton,
 } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
@@ -60,7 +59,7 @@ function HomeScreen({ navigation }: Props) {
       {/* Detta ska till taskScreen */}
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
-          <View style={styles.modalView}>
+          <View style={styles.modalView2}>
             <View>
               <View>
                 <Text style={styles.itemText}>Titel:</Text>
@@ -88,10 +87,10 @@ function HomeScreen({ navigation }: Props) {
             </View>
 
             <View style={styles.buttonContainer}>
-              <ReactNativeButton
+              <Button
                 onPress={() => setModalVisible(!modalVisible)}
-                title="Stäng"
-                color="black"
+                buttonTitle="Stäng"
+                btnType="window-close"
               />
             </View>
           </View>

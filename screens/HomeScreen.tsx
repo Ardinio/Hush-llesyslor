@@ -7,6 +7,8 @@ import { useAppSelector, useAppDispatch } from "../store/store";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
 import { AddHousehold } from "../store/household/householdActions";
 import { FontAwesome5 } from "@expo/vector-icons";
+import nextId from "react-id-generator";
+import {v4 as uuidv4} from "uuid"
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -15,14 +17,16 @@ function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
-  const [houseHoldName, setHouseHoldName] = React.useState<String>()
-  const [errorMsg, setErrorMsg] = React.useState<String>();
-  const [accountId, setAccountId] = React.useState<String>();
+  const [houseHoldName, setHouseHoldName] = React.useState<string>()
+  const [errorMsg, setErrorMsg] = React.useState<string>();
+  const [accountId, setAccountId] = React.useState<string>();
 
   const createNewHouse = () => {
+    const newHouseHold = { Id: nextId(), Name: houseHoldName!, GeneratedCode: uuidv4() }
     dispatch(
-      AddHousehold({ Id: "1", Name: "household 1", GeneratedCode: "123" })
+      AddHousehold(newHouseHold)
     );
+    console.log(newHouseHold);
     Alert.alert("Added new household");
   }
 

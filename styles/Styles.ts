@@ -141,12 +141,16 @@ export const styles = StyleSheet.create({
     },
     Card: {
         width: 300,
-        height: 50,
+        height: 'auto',
         marginTop: 10,
     },
     CardContainer: {
         flexDirection: "row",
         justifyContent: 'space-between',
         margin: 15,
+    },
+    title: {
+        fontWeight: 'bold',
+        fontSize: 18
     }
 })

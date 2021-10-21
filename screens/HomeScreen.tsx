@@ -10,6 +10,7 @@ import TaskCard from "../components/TaskCard";
 import { TouchableRipple } from "react-native-paper";
 import { tasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
+import HouseholdCard from "../components/HouseholdCard";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -19,7 +20,7 @@ function HomeScreen({ navigation }: Props) {
 
   const handleAdd = () => {
     dispatch(
-      AddHousehold({ Id: 1, Name: "household 1", GeneratedCode: "123" })
+      AddHousehold({ Id: 2, Name: "household 7", GeneratedCode: "123" })
     );
     Alert.alert("Added new household");
   };
@@ -30,21 +31,26 @@ function HomeScreen({ navigation }: Props) {
   };
   return (
     <View style={styles.container}>
-      <FlatList
-        data={tasks}
-        renderItem={({ item }: any) => (
-          <TouchableOpacity
-            onPress={() =>
-              console.log(item, "öppna modul för att läsa mer om tasken")
-              
-            }
-            underlayColor='none'
-          >
-            <TaskCard 
-            task={item} />
-          </TouchableOpacity>
-        )}
-      />
+
+    <FlatList 
+      data={allHouseholds}
+        renderItem={({ item }) => 
+      <><TouchableOpacity
+            onPress={() => navigation.navigate("TaskScreen")} />
+            <HouseholdCard household={{
+              Id: item.Id,
+              Name: item.Name,
+              GeneratedCode: item.GeneratedCode
+            }} user={{
+              Id: 0,
+              AccountId: 0,
+              HouseholdId: 0,
+              Name: "",
+              AvatarId: 0,
+              IsOwner: false
+            }} /></>
+      
+  }/>
 
       <Text>Home Screen</Text>
       <Button

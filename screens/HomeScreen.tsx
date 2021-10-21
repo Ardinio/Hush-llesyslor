@@ -24,13 +24,8 @@ function HomeScreen({ navigation }: Props) {
     dispatch(
       AddHousehold({ Id: 2, Name: "household 7", GeneratedCode: "123" })
     );
-    Alert.alert("Added new household");
   };
 
-  const handlePrint = () => {
-    Alert.alert("Print (see console)");
-    console.log("allHouseholds: ", allHouseholds);
-  };
   return (
     <View style={styles.container}>
       <FlatList
@@ -50,14 +45,11 @@ function HomeScreen({ navigation }: Props) {
           </>
         )}
       />
-
-      <Text>Home Screen</Text>
       <Button
         buttonTitle="Household"
         btnType="plus-circle"
         onPress={handleAdd}
       />
-      <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
     </View>
   );
 }

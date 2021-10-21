@@ -1,40 +1,65 @@
 import * as React from 'react';
 import { View, Text, Button, Alert } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { selectAllHouseholds } from '../store/household/householdSelectors';
 import { AddHousehold } from '../store/household/householdActions';
-import { selectAllUsers } from '../store/user/userSelectors';
+import { selectAllUsers, selectUserById } from '../store/user/userSelectors';
 import { AddUser } from '../store/user/userActions';
 import { selectAllTasks } from '../store/task/taskSelectors';
 import { AddTask } from '../store/task/taskActions';
-import { selectAllCompletedTasks, selectAllCompletedTasksByDate } from '../store/completedtask/completedtaskSelectors'
+import { selectAllCompletedTasks, selectCompletedTasksByDate } from '../store/completedtask/completedtaskSelectors';
 import { AddCompletedTask } from '../store/completedtask/completedtaskActions';
-import { ChartPie, PieChartData2 } from '../components/ChartPie';
+import { ChartPie, PieChartInputData } from '../components/ChartPie';
+import { singleAvatarById } from '../data/avatars';
+import { singleUserById, singleTaskById } from '../data/selectSingleObject';
 
 function StatisticsScreen() {
+  const dispatch = useAppDispatch();
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
   const allTasks = useAppSelector(selectAllTasks);
   const allCompletedTasks = useAppSelector(selectAllCompletedTasks);
+
   const currentDate: Date = new Date();
   console.log('currentDate: ', currentDate);        // Debug.
   const lastWeek: Date = new Date(+currentDate);
   lastWeek.setDate(lastWeek.getDate() - 7);
   console.log('lastWeek: ', lastWeek);              // Debug.
-  const allCompletedTasksByDate = useAppSelector(selectAllCompletedTasksByDate(lastWeek, currentDate));
-  const dispatch = useAppDispatch();
-  let chartPieData:PieChartData2[];
-  chartPieData = [{avatarId: 1, color: '#00ff00', energy: 2}, {avatarId: 2, color: '#ff0000', energy: 3}, {avatarId: 3, color: '#0000ff', energy: 5}];
+  const allCompletedTasksByDate = useAppSelector(selectCompletedTasksByDate(lastWeek, currentDate));
+
+  // const chartPieData:PieChartInputData[] = [{avatarId: 7, color: '#00ff00', energy: 10}, {avatarId: 2, color: '#ff0000', energy: 3}, {avatarId: 3, color: '#0000ff', energy: 5}];
+
+  const totalChartData = ():PieChartInputData[] => {
+    let chartPieData:PieChartInputData[] = [];
+    // console.log('allCompletedTasksByDate: ', allCompletedTasksByDate);            // Debug.
+    allCompletedTasksByDate.forEach((element) => {
+      console.log('allCompletedTasksByDate element: ', element);
+      const user = singleUserById(allUsers, element.UserId);
+      const avatar = singleAvatarById(user.AvatarId);
+      const task = singleTaskById(allTasks, element.UserId);
+      const pieObject: PieChartInputData = {avatarId: user.AvatarId, color: avatar.Color, energy: task.EnergyRequired}
+      chartPieData.push(pieObject);
+      if(chartPieData.length > 0) {
+        chartPieData.forEach((element2) => {
+          if(element2.avatarId !== avatar.Id) {
+            console.log('user: ', user, ' avatar: ', avatar);
+          }
+          else
+            console.log('SAME')
+        })
+      }
+    });
+    console.log('chartPieData: ', chartPieData);            // Debug
+    return chartPieData;
+  }
 
   const handleAddMock = () => {
     dispatch(AddHousehold({Id: 1, Name: 'household 1', GeneratedCode: '123'}));
     dispatch(AddHousehold({Id: 2, Name: 'household 2', GeneratedCode: '456'}));
-    dispatch(AddUser({Id: 1, AccountId: 1, HouseholdId: 1, Name: 'user 1', AvatarId: 1, IsOwner: true}));
-    dispatch(AddUser({Id: 2, AccountId: 2, HouseholdId: 1, Name: 'user 2', AvatarId: 1, IsOwner: false}));
-    dispatch(AddUser({Id: 3, AccountId: 3, HouseholdId: 1, Name: 'user 3', AvatarId: 1, IsOwner: false}));
-    dispatch(AddUser({Id: 4, AccountId: 4, HouseholdId: 2, Name: 'user 4', AvatarId: 1, IsOwner: true}));
+    dispatch(AddUser({Id: 1, AccountId: 1, HouseholdId: 1, Name: 'user 1', AvatarId: 2, IsOwner: true}));
+    dispatch(AddUser({Id: 2, AccountId: 2, HouseholdId: 1, Name: 'user 2', AvatarId: 3, IsOwner: false}));
+    dispatch(AddUser({Id: 3, AccountId: 3, HouseholdId: 1, Name: 'user 3', AvatarId: 4, IsOwner: false}));
+    dispatch(AddUser({Id: 4, AccountId: 4, HouseholdId: 2, Name: 'user 4', AvatarId: 5, IsOwner: true}));
     const date:Date = new Date();
     const date1:Date = new Date('2021-10-15T12:00:00');
     const date2:Date = new Date('2021-10-01T12:00:00');
@@ -48,16 +73,17 @@ function StatisticsScreen() {
     dispatch(AddCompletedTask({Id: 3, TasksId: 3, UserId: 3, CompleteDate: date3}));
     dispatch(AddCompletedTask({Id: 4, TasksId: 3, UserId: 3, CompleteDate: date4}));
     dispatch(AddCompletedTask({Id: 4, TasksId: 2, UserId: 3, CompleteDate: date4}));
-    // Alert.alert('Added mock data!');
   }
 
   const handlePrint = () => {
     // Alert.alert('Print (see console)');
-    console.log('allHouseholds: ', allHouseholds);
-    console.log('allUsers: ', allUsers);
-    console.log('allTasks: ', allTasks);
-    console.log('allCompletedTasks: ', allCompletedTasks);
-    console.log('allCompletedTasksByDate: ', allCompletedTasksByDate);
+    // console.log('allHouseholds: ', allHouseholds);
+    // console.log('allUsers: ', allUsers);
+    // console.log('allTasks: ', allTasks);
+    // console.log('allCompletedTasks: ', allCompletedTasks);
+    // console.log('allCompletedTasksByDate: ', allCompletedTasksByDate);
+    // allCompletedTasksByDate.forEach((element, index, array) => {console.log('element: ', element, ' index: ', index)});
+    totalChartData();
   }
 
   return (
@@ -65,7 +91,7 @@ function StatisticsScreen() {
       <Text>Statistics Screen</Text>
       <Button title="Mock add" onPress={handleAddMock}></Button>
       <Button title="Mock print" onPress={handlePrint}></Button>
-      <ChartPie data={chartPieData} />
+      <ChartPie data={totalChartData()} />
     </View>
   );
 }

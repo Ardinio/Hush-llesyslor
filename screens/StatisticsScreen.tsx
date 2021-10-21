@@ -26,7 +26,7 @@ function StatisticsScreen() {
   const allCompletedTasksByDate = useAppSelector(selectAllCompletedTasksByDate(lastWeek, currentDate));
   const dispatch = useAppDispatch();
   let chartPieData:PieChartData2[];
-  chartPieData = [{avatarId: 'lol', color: '#00ff00', energy: 2}, {avatarId: 'lol2', color: '#ff0000', energy: 3}, {avatarId: 'lol3', color: '#0000ff', energy: 5}];
+  chartPieData = [{avatarId: 1, color: '#00ff00', energy: 2}, {avatarId: 2, color: '#ff0000', energy: 3}, {avatarId: 3, color: '#0000ff', energy: 5}];
 
   const handleAddMock = () => {
     dispatch(AddHousehold({Id: 1, Name: 'household 1', GeneratedCode: '123'}));

@@ -4,7 +4,7 @@ import { styles } from "../styles/Styles";
 import { Labels } from './ChartPieLabels';
 
 export interface PieChartData2 {
-  avatarId: string;
+  avatarId: number;
   color: string;
   energy: number;
 }
@@ -21,7 +21,7 @@ export const ChartPie: FC<Props> = (props) => {
       svg: {
         fill: value.color
       },
-      key: 'avatar-'+value.avatarId
+      key: value.avatarId
     }))
   return <PieChart style={styles.pieChartStyle} data={pieData} innerRadius={0} padAngle={0} >
     <Labels/>

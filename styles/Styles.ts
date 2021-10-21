@@ -143,6 +143,7 @@ export const styles = StyleSheet.create({
         width: 300,
         height: 'auto',
         marginTop: 10,
+        padding: 8,
     },
     CardContainer: {
         flexDirection: "row",
@@ -152,5 +153,8 @@ export const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 18
+    },
+    italicFont: {
+        fontStyle: 'italic',
     }
 })

@@ -11,12 +11,14 @@ import { TouchableRipple } from "react-native-paper";
 import { tasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
 import HouseholdCard from "../components/HouseholdCard";
+import { selectAllUsers } from "../store/user/userSelectors";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
 function HomeScreen({ navigation }: Props) {
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const dispatch = useAppDispatch();
+  const allUsers = useAppSelector(selectAllUsers);
 
   const handleAdd = () => {
     dispatch(
@@ -31,26 +33,23 @@ function HomeScreen({ navigation }: Props) {
   };
   return (
     <View style={styles.container}>
-
-    <FlatList 
-      data={allHouseholds}
-        renderItem={({ item }) => 
-      <><TouchableOpacity
-            onPress={() => navigation.navigate("TaskScreen")} />
-            <HouseholdCard household={{
-              Id: item.Id,
-              Name: item.Name,
-              GeneratedCode: item.GeneratedCode
-            }} user={{
-              Id: 0,
-              AccountId: 0,
-              HouseholdId: 0,
-              Name: "",
-              AvatarId: 0,
-              IsOwner: false
-            }} /></>
-      
-  }/>
+      <FlatList
+        data={allHouseholds}
+        renderItem={({ item }) => (
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("TaskScreen")}
+            />
+            <HouseholdCard
+              household={{
+                Id: item.Id,
+                Name: item.Name,
+                GeneratedCode: item.GeneratedCode,
+              }}
+            />
+          </>
+        )}
+      />
 
       <Text>Home Screen</Text>
       <Button

@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         width: "70%",
-        // height: 200,
+        minHeight: 200,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
       },
-      textInputBox: {
+      textInputModal: {
         width: 200,
         borderWidth: 1,
         borderColor: "black",
@@ -156,14 +156,4 @@ export const styles = StyleSheet.create({
         padding: 5,
         margin: 5,
       },
-    //   avatarPicker: {
-    //     display: "flex",
-    //     width: 200,
-    //     height: 40,
-    //     justifyContent: "center",
-    //     alignContent: "center",
-    //     borderWidth: 1,
-    //     borderColor: "black",
-    //     borderRadius: 5,
-    //   },
 })

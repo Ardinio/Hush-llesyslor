@@ -55,7 +55,7 @@ function LoginScreen({ navigation }: Props) {
     setIsLoggedIn(!isLoggedIn);
     setEmail("");
     setPassword("");
-    navigation.navigate("HomeScreen"); // send accountID !!
+    navigation.navigate("HomeScreen", {id: accountId!}); // send accountID !!
   };
 
   const logOut = () => {

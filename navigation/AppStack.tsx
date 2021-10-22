@@ -14,7 +14,7 @@ import {
 } from "../screens/index";
 
 export type AppStackParamList = {
-  HomeScreen: undefined;
+  HomeScreen: { id: string };
   LoginScreen: undefined;
   ProfileScreen: { id: number };
   SplashScreen: undefined;
@@ -50,13 +50,11 @@ const AppStack: FC = () => {
           component={ ProfileScreen }
           options={{ title: "Profil" }}
         />
-
         <Screen
           name="StatisticsScreen"
           component={ StatisticsScreen }
           options={{ title: "Statistics" }}
         />
-
         <Screen
           name="TaskScreen"
           component={TaskScreen}

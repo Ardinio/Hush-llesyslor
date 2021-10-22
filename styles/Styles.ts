@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         width: "70%",
-        height: 200,
+        // height: 200,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -94,6 +94,8 @@ export const styles = StyleSheet.create({
         height: height / 13,
         padding: 10,
         flexDirection: "row",
+        borderWidth: 1,
+        borderColor: "black",
         borderRadius: 10,
         fontSize: 18,
         color: '#000000',
@@ -158,5 +160,20 @@ export const styles = StyleSheet.create({
     italicFont: {
         fontStyle: 'italic',
         marginTop: 5,
-    }
+    },
+    picker: {
+        width: 200,
+        padding: 5,
+        margin: 5,
+      },
+    //   avatarPicker: {
+    //     display: "flex",
+    //     width: 200,
+    //     height: 40,
+    //     justifyContent: "center",
+    //     alignContent: "center",
+    //     borderWidth: 1,
+    //     borderColor: "black",
+    //     borderRadius: 5,
+    //   },
 })

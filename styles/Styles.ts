@@ -152,9 +152,11 @@ export const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
+        marginBottom: 5,
     },
     italicFont: {
         fontStyle: 'italic',
+        marginTop: 5,
     }
 })

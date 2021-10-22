@@ -12,6 +12,7 @@ import { tasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
 import HouseholdCard from "../components/HouseholdCard";
 import { selectAllUsers } from "../store/user/userSelectors";
+import { AddUser } from "../store/user/userActions";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -23,6 +24,17 @@ function HomeScreen({ navigation }: Props) {
   const handleAdd = () => {
     dispatch(
       AddHousehold({ Id: 2, Name: "household 7", GeneratedCode: "123" })
+    );
+  };
+
+  const handleAddUser = () => {
+    dispatch(
+      AddUser({ Id: 1,
+        AccountId: 1,
+        HouseholdId: 1,
+        Name: "Emina",
+        AvatarId: 2,
+        IsOwner: true })
     );
   };
 
@@ -44,6 +56,11 @@ function HomeScreen({ navigation }: Props) {
             />
           </>
         )}
+      />
+      <Button
+        buttonTitle="User"
+        btnType="plus-circle"
+        onPress={handleAddUser}
       />
       <Button
         buttonTitle="Household"

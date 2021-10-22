@@ -7,19 +7,18 @@ import { selectAllUsers } from "../store/user/userSelectors";
 import { styles } from "../styles/Styles";
 
 interface Props {
-    allUsers: User;
-    avatar: Avatar;
+  allUsers: User;
 }
 
-const HouseholdList = ({ allUsers, avatar }: Props) => {
-    const users = useAppSelector(selectAllUsers);
+const HouseholdList = ({ allUsers }: Props) => {
+  const users = useAppSelector(selectAllUsers);
 
-    return (
-        <>
-        <View>
-            <Text>{avatar.Path}{allUsers.Name}</Text> 
+  return (
+    <>
+      <View>
+        <Text>{allUsers.Name}</Text>
       </View>
-      </>
+    </>
   );
 };
 

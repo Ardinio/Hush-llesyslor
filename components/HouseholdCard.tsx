@@ -32,10 +32,6 @@ const user = useAppSelector(selectAllUsers);
                             Name: item.Name,
                             AvatarId: item.AvatarId,
                             IsOwner: item.IsOwner
-                        }} avatar={{
-                            Id: item.Path,
-                            Path: undefined,
-                            Color: ""
                         }}                />
                 </>
             )}

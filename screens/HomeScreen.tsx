@@ -1,5 +1,14 @@
 import * as React from "react";
-import { View, Text, Alert, Modal, TextInput, Image } from "react-native";
+import {
+  View,
+  Text,
+  Alert,
+  Modal,
+  TextInput,
+  Image,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/AppStack";
@@ -15,6 +24,7 @@ import { Household } from "../entities/Household";
 import { AllAvatars } from "../data/avatars";
 import { AddUser } from "../store/user/userActions";
 import { selectAllUsers } from "../store/user/userSelectors";
+import HouseholdCard from "../components/HouseholdCard";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -86,6 +96,23 @@ function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
+      <FlatList
+        data={allHouseholds}
+        renderItem={({ item }) => (
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("TaskScreen")}
+            />
+            <HouseholdCard
+              household={{
+                Id: item.Id,
+                Name: item.Name,
+                GeneratedCode: item.GeneratedCode,
+              }}
+            />
+          </>
+        )}
+      />
       <Modal
         animationType="slide"
         transparent={true}
@@ -174,7 +201,6 @@ function HomeScreen({ navigation }: Props) {
           </View>
         </View>
       </Modal>
-      <Text>Home Screen</Text>
 
       <View style={styles.buttonsContainer}>
         <Button

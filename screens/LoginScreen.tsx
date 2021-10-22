@@ -12,7 +12,7 @@ import { AddAccount } from "../store/account/accountActions";
 import { styles } from "../styles/Styles";
 import nextId from "react-id-generator";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { AppStackParamList } from "../navigation/AppStack";
+import { AppStackParamList } from "../navigation/RootNavigator";
 import { Button } from "../components";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useAppDispatch, useAppSelector } from "../store/store";

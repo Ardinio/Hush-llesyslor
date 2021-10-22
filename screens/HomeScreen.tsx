@@ -34,6 +34,7 @@ function HomeScreen({ navigation }: Props) {
 
   const createNewHouse = () => {
     if (!houseHoldName) return setErrorMsg("Hushållet måste ha ett namn!");
+    if (allHouseholds.find((h) => h.Name.toLowerCase() === houseHoldName.toLowerCase())) return setErrorMsg("Namnet finns redan, välj ett annat")
     setNewHouseHold({
       Id: nextId(),
       Name: houseHoldName,
@@ -45,10 +46,10 @@ function HomeScreen({ navigation }: Props) {
   };
 
   const newUser = () => {
-    if (!userName || !avatarId)
+    if (!userName || !avatarId || avatarId === 0)
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
-    if (avatarId === 0)
-      return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
+    // if (avatarId === 0)
+    //   return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     console.log(newHouseHold);
     dispatch(AddHousehold(newHouseHold!));
     dispatch(
@@ -98,9 +99,9 @@ function HomeScreen({ navigation }: Props) {
           <View style={styles.modalView}>
             <TextInput
               style={styles.textInputBox}
-              placeholder="Hushållets Namn"
+              placeholder="Ange Ett Namn På Hushållet"
               value={houseHoldName}
-              onChangeText={(value) => setHouseHoldName(value)}
+              onChangeText={(value) => setHouseHoldName(value.trim())}
             />
             <Text style={styles.errorText}>{errorMsg}</Text>
             <View style={styles.buttonsContainer}>
@@ -136,7 +137,7 @@ function HomeScreen({ navigation }: Props) {
           <View style={styles.modalView}>
             <TextInput
               style={styles.textInputBox}
-              placeholder="Ditt Namn"
+              placeholder="Ange Ditt Namn"
               value={userName}
               onChangeText={(value) => setUserName(value)}
             />

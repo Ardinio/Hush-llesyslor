@@ -94,6 +94,10 @@ export const styles = StyleSheet.create({
         height: 150,
         width: 150,
     },
+    pieChartStyleBig: {
+        height: 200,
+        width: 200,
+    },
     pieChartContainer: {
         display: 'flex',
         flexDirection: 'row',

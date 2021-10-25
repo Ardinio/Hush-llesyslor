@@ -49,7 +49,7 @@ function StatisticsScreen() {
         <Text>Statistics Screen</Text>
         <Button title="Mock add" onPress={handleAddMock}></Button>
         <Text>Total</Text>
-        <ChartPie data={allCompletedTasksByDateTotal} />
+        <ChartPie data={allCompletedTasksByDateTotal} isBig={true} />
           <View style={styles.pieChartContainer}>
         {allCompletedTasksByDateByTask.map((value) => (
           <View key={value.taskId} style={styles.pieShartTaskContainer}>

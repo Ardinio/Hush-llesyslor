@@ -85,9 +85,28 @@ export const styles = StyleSheet.create({
         color: "black",
         fontFamily: "Roboto_400Regular",
     },
+    statisticsScreenContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
     pieChartStyle: {
-        height: 200, 
-        width: 200,
+        height: 150,
+        width: 150,
+    },
+    pieChartContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        width: '100%'
+    },
+    pieShartTaskContainer: {
+      marginHorizontal: 10,
+      marginVertical: 5
+    },
+    pieShartTaskContainerText: {
+      textAlign: 'center'
     },
     Card: {
         width: 300,

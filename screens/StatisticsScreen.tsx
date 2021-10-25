@@ -7,6 +7,7 @@ import { AddTask } from '../store/task/taskActions';
 import { selectCompletedTasksTotalByDate, selectCompletedTasksByTask } from '../store/completedtask/completedtaskSelectors';
 import { AddCompletedTask } from '../store/completedtask/completedtaskActions';
 import { ChartPie } from '../components/ChartPie';
+import { styles } from "../styles/Styles";
 
 function StatisticsScreen() {
   const dispatch = useAppDispatch();
@@ -37,21 +38,26 @@ function StatisticsScreen() {
     dispatch(AddCompletedTask({Id: 3, TasksId: 3, UserId: 3, CompleteDate: date3}));
     dispatch(AddCompletedTask({Id: 4, TasksId: 3, UserId: 3, CompleteDate: date4}));
     dispatch(AddCompletedTask({Id: 5, TasksId: 2, UserId: 3, CompleteDate: date4}));
+    dispatch(AddCompletedTask({Id: 6, TasksId: 3, UserId: 4, CompleteDate: date4}));
+    dispatch(AddCompletedTask({Id: 7, TasksId: 1, UserId: 2, CompleteDate: date4}));
+    dispatch(AddCompletedTask({Id: 8, TasksId: 1, UserId: 1, CompleteDate: date4}));
   }
 
   return (
     <ScrollView>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={styles.statisticsScreenContainer}>
         <Text>Statistics Screen</Text>
         <Button title="Mock add" onPress={handleAddMock}></Button>
         <Text>Total</Text>
         <ChartPie data={allCompletedTasksByDateTotal} />
+          <View style={styles.pieChartContainer}>
         {allCompletedTasksByDateByTask.map((value) => (
-          <View key={value.taskId}>
-            <Text>Task id: {value.taskId}</Text>
+          <View key={value.taskId} style={styles.pieShartTaskContainer}>
+            <Text style={styles.pieShartTaskContainerText}>Task id: {value.taskId}</Text>
             <ChartPie data={value.pieChartData} />
           </View>
         ))}
+          </View>
       </View>
     </ScrollView>
   );

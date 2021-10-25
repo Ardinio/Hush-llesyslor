@@ -34,6 +34,7 @@ function HomeScreen({ navigation }: Props) {
   const [avatarId, setAvatarId] = React.useState<number>();
   const [accountId, setAccountId] = React.useState<string>("test-id1");
 
+  // Nollställer all data när modal stängs
   const closeModal = () => {
     setErrorMsg("");
     setHouseHoldName("");
@@ -41,6 +42,7 @@ function HomeScreen({ navigation }: Props) {
     setHouseHoldCode("");
     setAvatarId(undefined);
     setNewHouseHold(undefined);
+    setHouseHold(undefined);
     setNewHouseModalVisible(false);
     setNewUserModalVisible(false);
     setJoinHouseModalVisible(false);
@@ -63,7 +65,9 @@ function HomeScreen({ navigation }: Props) {
     if (!houseHoldCode) return setErrorMsg("Du måste ange en kod!")
     const house = allHouseholds.find((h) => h.GeneratedCode === houseHoldCode);
     if (!house) return setErrorMsg("Hittar inget hushåll med den koden!")
-    // kolla om användaren redan finns i hushållet!
+    const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
+    const user = usersInHouse?.find((u) => u.AccountId === accountId)
+    if (user) return setErrorMsg("Du är redan med i det här hushållet!")
     setHouseHold(house);
     setNewUserModalVisible(true);
     setErrorMsg("");
@@ -155,7 +159,47 @@ function HomeScreen({ navigation }: Props) {
           </View>
         </View>
       </Modal>
-      {/* Modal to create new User/Profile in New HouseHold */}
+      {/* Modal to join existing HouseHold */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={joinHouseModalVisible}
+        onRequestClose={() => {
+          setJoinHouseModalVisible(!joinHouseModalVisible);
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.modalView}>
+            <Text style={styles.buttonText}>Gå Med I HusHåll</Text>
+            <TextInput
+              style={styles.textInputBox}
+              placeholder="Ange Koden För Hushållet"
+              value={houseHoldCode}
+              onChangeText={(value) => setHouseHoldCode(value)}
+            />
+            <Text style={styles.errorText}>{errorMsg}</Text>
+            <View style={styles.buttonsContainer}>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="check"
+                  style={styles.icon}
+                  size={25}
+                  onPress={joinHouse}
+                />
+              </View>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="arrow-circle-down"
+                  style={styles.icon}
+                  size={25}
+                  onPress={closeModal}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      {/* Modal to create new User/Profile for HouseHold */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -208,48 +252,8 @@ function HomeScreen({ navigation }: Props) {
           </View>
         </View>
       </Modal>
-      {/* Modal to join existing HouseHold */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={joinHouseModalVisible}
-        onRequestClose={() => {
-          setJoinHouseModalVisible(!joinHouseModalVisible);
-        }}
-      >
-        <View style={styles.container}>
-          <View style={styles.modalView}>
-            <Text style={styles.buttonText}>Gå Med I HusHåll</Text>
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="Ange Koden För Hushållet"
-              value={houseHoldCode}
-              onChangeText={(value) => setHouseHoldCode(value)}
-            />
-            <Text style={styles.errorText}>{errorMsg}</Text>
-            <View style={styles.buttonsContainer}>
-              <View style={styles.iconWrapper}>
-                <FontAwesome5
-                  name="check"
-                  style={styles.icon}
-                  size={25}
-                  onPress={joinHouse}
-                />
-              </View>
-              <View style={styles.iconWrapper}>
-                <FontAwesome5
-                  name="arrow-circle-down"
-                  style={styles.icon}
-                  size={25}
-                  onPress={closeModal}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-      </Modal>
       <Text>Home Screen</Text>
-      {/* Ta Bort Knapp När Klar!!! */}
+      {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
       <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
       <View style={styles.buttonsContainer}>
         <Button buttonTitle="New House" btnType="plus-circle" onPress={handleAdd} />

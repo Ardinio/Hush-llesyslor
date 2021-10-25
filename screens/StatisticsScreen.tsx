@@ -12,10 +12,8 @@ function StatisticsScreen() {
   const dispatch = useAppDispatch();
 
   const currentDate: Date = new Date();
-  console.log('currentDate: ', currentDate);        // Debug.
   const lastWeek: Date = new Date(+currentDate);
   lastWeek.setDate(lastWeek.getDate() - 7);
-  console.log('lastWeek: ', lastWeek);              // Debug.
   const allCompletedTasksByDateTotal = useAppSelector(selectCompletedTasksTotalByDate(lastWeek, currentDate));
   const allCompletedTasksByDateByTask = useAppSelector(selectCompletedTasksByTask(lastWeek, currentDate));
 
@@ -49,9 +47,9 @@ function StatisticsScreen() {
         <Text>Total</Text>
         <ChartPie data={allCompletedTasksByDateTotal} />
         {allCompletedTasksByDateByTask.map((value) => (
-          <View key={value.TaskId}>
-            <Text>Task id: {value.TaskId}</Text>
-            <ChartPie data={value.pieChartArray} />
+          <View key={value.taskId}>
+            <Text>Task id: {value.taskId}</Text>
+            <ChartPie data={value.pieChartData} />
           </View>
         ))}
       </View>

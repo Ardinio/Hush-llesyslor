@@ -69,7 +69,7 @@ function HomeScreen({ navigation }: Props) {
     const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
     if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!")
     const user = usersInHouse?.find((u) => u.AccountId === accountId)
-    // if (user) return setErrorMsg("Du är redan med i det här hushållet!") //kommenterad för testning, Raden kollar om användaren redan finns i hushållet
+    if (user) return setErrorMsg("Du är redan med i det här hushållet!")
     const avatars = AllAvatars.filter((a) => !usersInHouse.map(u => u.AvatarId).includes(a.Id))
     setAvatarsAvailable(avatars)
     setHouseHold(house);

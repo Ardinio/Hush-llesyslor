@@ -32,7 +32,8 @@ function HomeScreen({ navigation }: Props) {
   const [userName, setUserName] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [avatarId, setAvatarId] = React.useState<number>();
-  const [accountId, setAccountId] = React.useState<string>("test-id1");
+  const [avatarsAvailable, setAvatarsAvailable] = React.useState(AllAvatars)
+  const [accountId, setAccountId] = React.useState<string>("test-id1"); // ändra "test-id1" till ip på aktiv användare
 
   // Nollställer all data när modal stängs
   const closeModal = () => {
@@ -66,8 +67,11 @@ function HomeScreen({ navigation }: Props) {
     const house = allHouseholds.find((h) => h.GeneratedCode === houseHoldCode);
     if (!house) return setErrorMsg("Hittar inget hushåll med den koden!")
     const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
+    if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!")
     const user = usersInHouse?.find((u) => u.AccountId === accountId)
-    if (user) return setErrorMsg("Du är redan med i det här hushållet!")
+    // if (user) return setErrorMsg("Du är redan med i det här hushållet!") //kommenterad för testning, Raden kollar om användaren redan finns i hushållet
+    const avatars = AllAvatars.filter((a) => !usersInHouse.map(u => u.AvatarId).includes(a.Id))
+    setAvatarsAvailable(avatars)
     setHouseHold(house);
     setNewUserModalVisible(true);
     setErrorMsg("");
@@ -77,7 +81,7 @@ function HomeScreen({ navigation }: Props) {
     if (!userName || !avatarId || avatarId === 0)
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     if (newHouseHold) {
-      console.log("nytt hushåll")
+      console.log("nytt hushåll") // Ta Bort
       dispatch(AddHousehold(newHouseHold!));
       dispatch(
         AddUser({
@@ -90,7 +94,7 @@ function HomeScreen({ navigation }: Props) {
         })
       );
     } else if (houseHold){
-      console.log("gå med i hushåll")
+      console.log("gå med i hushåll") // Ta Bort      
       dispatch(
         AddUser({
           Id: nextId(),
@@ -224,7 +228,7 @@ function HomeScreen({ navigation }: Props) {
               mode="dropdown" // Android only
               style={styles.picker}
             >
-              {AllAvatars.map((item, index) => {
+              {avatarsAvailable.map((item, index) => {
                 return (
                   <Picker.Item label={item.Emoji} value={item.Id} key={index} />
                 );

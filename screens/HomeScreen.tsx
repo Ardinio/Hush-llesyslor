@@ -23,9 +23,12 @@ function HomeScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
+  const [joinHouseModalVisible, setJoinHouseModalVisible] = React.useState(false);
   const [newUserModalVisible, setNewUserModalVisible] = React.useState(false);
   const [houseHoldName, setHouseHoldName] = React.useState<string>();
+  const [houseHoldCode, setHouseHoldCode] = React.useState<string>();
   const [newHouseHold, setNewHouseHold] = React.useState<Household>();
+  const [houseHold, setHouseHold] = React.useState<Household>();
   const [userName, setUserName] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [avatarId, setAvatarId] = React.useState<number>();
@@ -35,10 +38,12 @@ function HomeScreen({ navigation }: Props) {
     setErrorMsg("");
     setHouseHoldName("");
     setUserName("");
+    setHouseHoldCode("");
     setAvatarId(undefined);
     setNewHouseHold(undefined);
     setNewHouseModalVisible(false);
     setNewUserModalVisible(false);
+    setJoinHouseModalVisible(false);
   };
 
   const createNewHouse = () => {
@@ -47,33 +52,60 @@ function HomeScreen({ navigation }: Props) {
     setNewHouseHold({
       Id: nextId(),
       Name: houseHoldName.trim(),
-      GeneratedCode: uuidv4(),
+      GeneratedCode: uuidv4().substring(0, 13),
     });
     setNewHouseModalVisible(false);
     setNewUserModalVisible(true);
     setErrorMsg("");
   };
 
+  const joinHouse = () => {
+    if (!houseHoldCode) return setErrorMsg("Du måste ange en kod!")
+    const house = allHouseholds.find((h) => h.GeneratedCode === houseHoldCode);
+    if (!house) return setErrorMsg("Hittar inget hushåll med den koden!")
+    // kolla om användaren redan finns i hushållet!
+    setHouseHold(house);
+    setNewUserModalVisible(true);
+    setErrorMsg("");
+  }
+
   const newUser = () => {
     if (!userName || !avatarId || avatarId === 0)
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
-    console.log(newHouseHold);
-    dispatch(AddHousehold(newHouseHold!));
-    dispatch(
-      AddUser({
-        Id: nextId(),
-        AccountId: accountId,
-        HouseholdId: newHouseHold?.Id!,
-        Name: userName,
-        AvatarId: avatarId,
-        IsOwner: true,
-      })
-    );
+    if (newHouseHold) {
+      console.log("nytt hushåll")
+      dispatch(AddHousehold(newHouseHold!));
+      dispatch(
+        AddUser({
+          Id: nextId(),
+          AccountId: accountId,
+          HouseholdId: newHouseHold.Id,
+          Name: userName,
+          AvatarId: avatarId,
+          IsOwner: true,
+        })
+      );
+    } else if (houseHold){
+      console.log("gå med i hushåll")
+      dispatch(
+        AddUser({
+          Id: nextId(),
+          AccountId: accountId,
+          HouseholdId: houseHold.Id,
+          Name: userName,
+          AvatarId: avatarId,
+          IsOwner: false,
+        })
+      )};
     closeModal();
   };  
 
   const handleAdd = () => {
     setNewHouseModalVisible(!newHouseModalVisible);
+  };
+
+  const handleJoin = () => {
+    setJoinHouseModalVisible(!joinHouseModalVisible);
   };
 
   const handlePrint = () => {
@@ -134,7 +166,8 @@ function HomeScreen({ navigation }: Props) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
-          <Text style={styles.buttonText}>Skapa Din Profil</Text>
+          <Text style={styles.buttonText}>Skapa Din Profil För</Text>
+          <Text style={styles.buttonText}>{newHouseHold?.Name || houseHold?.Name}</Text>
             <TextInput
               style={styles.textInputBox}
               placeholder="Ange Ditt Namn"
@@ -175,10 +208,52 @@ function HomeScreen({ navigation }: Props) {
           </View>
         </View>
       </Modal>
+      {/* Modal to join existing HouseHold */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={joinHouseModalVisible}
+        onRequestClose={() => {
+          setJoinHouseModalVisible(!joinHouseModalVisible);
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.modalView}>
+            <Text style={styles.buttonText}>Gå Med I HusHåll</Text>
+            <TextInput
+              style={styles.textInputBox}
+              placeholder="Ange Koden För Hushållet"
+              value={houseHoldCode}
+              onChangeText={(value) => setHouseHoldCode(value)}
+            />
+            <Text style={styles.errorText}>{errorMsg}</Text>
+            <View style={styles.buttonsContainer}>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="check"
+                  style={styles.icon}
+                  size={25}
+                  onPress={joinHouse}
+                />
+              </View>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="arrow-circle-down"
+                  style={styles.icon}
+                  size={25}
+                  onPress={closeModal}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
       <Text>Home Screen</Text>
+      {/* Ta Bort Knapp När Klar!!! */}
+      <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
       <View style={styles.buttonsContainer}>
-        <Button buttonTitle="Household" btnType="plus-circle" onPress={handleAdd} />
-        <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
+        <Button buttonTitle="New House" btnType="plus-circle" onPress={handleAdd} />
+        <Button buttonTitle="Join House" btnType="sign-in-alt" onPress={handleJoin} />
       </View>
     </View>
   );

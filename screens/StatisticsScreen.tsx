@@ -1,17 +1,12 @@
 import * as React from 'react';
-import { View, Text, Button, Alert, ScrollView } from 'react-native';
+import { View, Text, Button, ScrollView } from 'react-native';
 import { useAppSelector, useAppDispatch } from '../store/store';
-import { selectAllHouseholds } from '../store/household/householdSelectors';
 import { AddHousehold } from '../store/household/householdActions';
-import { selectAllUsers, selectUserById } from '../store/user/userSelectors';
 import { AddUser } from '../store/user/userActions';
-import { selectAllTasks } from '../store/task/taskSelectors';
 import { AddTask } from '../store/task/taskActions';
-import { selectAllCompletedTasks, selectCompletedTasksTotalByDate, selectCompletedTasksByTask } from '../store/completedtask/completedtaskSelectors';
+import { selectCompletedTasksTotalByDate, selectCompletedTasksByTask } from '../store/completedtask/completedtaskSelectors';
 import { AddCompletedTask } from '../store/completedtask/completedtaskActions';
-import { ChartPie, PieChartInputData } from '../components/ChartPie';
-import { singleAvatarById } from '../data/avatars';
-import { singleUserById, singleTaskById } from '../data/selectSingleObject';
+import { ChartPie } from '../components/ChartPie';
 
 function StatisticsScreen() {
   const dispatch = useAppDispatch();
@@ -54,7 +49,7 @@ function StatisticsScreen() {
         <Text>Total</Text>
         <ChartPie data={allCompletedTasksByDateTotal} />
         {allCompletedTasksByDateByTask.map((value) => (
-          <View>
+          <View key={value.TaskId}>
             <Text>Task id: {value.TaskId}</Text>
             <ChartPie data={value.pieChartArray} />
           </View>

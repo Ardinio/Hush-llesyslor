@@ -1,58 +1,185 @@
 import * as React from "react";
-import { View, Text, Alert, FlatList } from "react-native";
+import { View, Text, Alert, Modal, TextInput, } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/AppStack";
 import { useAppSelector, useAppDispatch } from "../store/store";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
 import { AddHousehold } from "../store/household/householdActions";
-import TaskCard from "../components/TaskCard";
-import { TouchableRipple } from "react-native-paper";
-import { tasks } from "../data/taskData";
-import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
+import { FontAwesome5 } from "@expo/vector-icons";
+import nextId from "react-id-generator";
+import { v4 as uuidv4 } from "uuid";
+import { Picker } from "@react-native-picker/picker";
+import { Household } from "../entities/Household";
+import { AllAvatars } from "../data/avatars";
+import { AddUser } from "../store/user/userActions";
+import { selectAllUsers } from "../store/user/userSelectors";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
 function HomeScreen({ navigation }: Props) {
   const allHouseholds = useAppSelector(selectAllHouseholds);
+  const allUsers = useAppSelector(selectAllUsers);
   const dispatch = useAppDispatch();
 
-  const handleAdd = () => {
+  const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
+  const [newUserModalVisible, setNewUserModalVisible] = React.useState(false);
+  const [houseHoldName, setHouseHoldName] = React.useState<string>();
+  const [newHouseHold, setNewHouseHold] = React.useState<Household>();
+  const [userName, setUserName] = React.useState<string>();
+  const [errorMsg, setErrorMsg] = React.useState<string>();
+  const [avatarId, setAvatarId] = React.useState<number>();
+  const [accountId, setAccountId] = React.useState<string>("test-id1");
+
+  const closeModal = () => {
+    setErrorMsg("");
+    setHouseHoldName("");
+    setUserName("");
+    setAvatarId(undefined);
+    setNewHouseHold(undefined);
+    setNewHouseModalVisible(false);
+    setNewUserModalVisible(false);
+  };
+
+  const createNewHouse = () => {
+    if (!houseHoldName) return setErrorMsg("Hushållet måste ha ett namn!");
+    if (allHouseholds.find((h) => h.Name.toLowerCase() === houseHoldName.toLowerCase())) return setErrorMsg("Namnet finns redan, välj ett annat")
+    setNewHouseHold({
+      Id: nextId(),
+      Name: houseHoldName.trim(),
+      GeneratedCode: uuidv4(),
+    });
+    setNewHouseModalVisible(false);
+    setNewUserModalVisible(true);
+    setErrorMsg("");
+  };
+
+  const newUser = () => {
+    if (!userName || !avatarId || avatarId === 0)
+      return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
+    console.log(newHouseHold);
+    dispatch(AddHousehold(newHouseHold!));
     dispatch(
-      AddHousehold({ Id: 1, Name: "household 1", GeneratedCode: "123" })
+      AddUser({
+        Id: nextId(),
+        AccountId: accountId,
+        HouseholdId: newHouseHold?.Id!,
+        Name: userName,
+        AvatarId: avatarId,
+        IsOwner: true,
+      })
     );
-    Alert.alert("Added new household");
+    closeModal();
+  };  
+
+  const handleAdd = () => {
+    setNewHouseModalVisible(!newHouseModalVisible);
   };
 
   const handlePrint = () => {
     Alert.alert("Print (see console)");
     console.log("allHouseholds: ", allHouseholds);
+    console.log("allUsers: ", allUsers);
   };
   return (
     <View style={styles.container}>
-      <FlatList
-        data={tasks}
-        renderItem={({ item }: any) => (
-          <TouchableOpacity
-            onPress={() =>
-              console.log(item, "öppna modul för att läsa mer om tasken")
-              
-            }
-            underlayColor='none'
-          >
-            <TaskCard 
-            task={item} />
-          </TouchableOpacity>
-        )}
-      />
-
+      {/* Modal to create new HouseHold */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={newHouseModalVisible}
+        onRequestClose={() => {
+          setNewHouseModalVisible(!newHouseModalVisible);
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.modalView}>
+            <Text style={styles.buttonText}>Skapa Nytt HusHåll</Text>
+            <TextInput
+              style={styles.textInputBox}
+              placeholder="Ange Ett Namn På Hushållet"
+              value={houseHoldName}
+              onChangeText={(value) => setHouseHoldName(value)}
+            />
+            <Text style={styles.errorText}>{errorMsg}</Text>
+            <View style={styles.buttonsContainer}>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="check"
+                  style={styles.icon}
+                  size={25}
+                  onPress={createNewHouse}
+                />
+              </View>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="arrow-circle-down"
+                  style={styles.icon}
+                  size={25}
+                  onPress={closeModal}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      {/* Modal to create new User/Profile in New HouseHold */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={newUserModalVisible}
+        onRequestClose={() => {
+          setNewUserModalVisible(!newUserModalVisible);
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.modalView}>
+          <Text style={styles.buttonText}>Skapa Din Profil</Text>
+            <TextInput
+              style={styles.textInputBox}
+              placeholder="Ange Ditt Namn"
+              value={userName}
+              onChangeText={(value) => setUserName(value)}
+            />
+            <Picker
+              selectedValue={avatarId}
+              onValueChange={(value, index) => setAvatarId(value)}
+              mode="dropdown" // Android only
+              style={styles.picker}
+            >
+              {AllAvatars.map((item, index) => {
+                return (
+                  <Picker.Item label={item.Emoji} value={item.Id} key={index} />
+                );
+              })}
+            </Picker>
+            <Text style={styles.errorText}>{errorMsg}</Text>
+            <View style={styles.buttonsContainer}>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="check"
+                  style={styles.icon}
+                  size={25}
+                  onPress={newUser}
+                />
+              </View>
+              <View style={styles.iconWrapper}>
+                <FontAwesome5
+                  name="arrow-circle-down"
+                  style={styles.icon}
+                  size={25}
+                  onPress={closeModal}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
       <Text>Home Screen</Text>
-      <Button
-        buttonTitle="Household"
-        btnType="plus-circle"
-        onPress={handleAdd}
-      />
-      <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
+      <View style={styles.buttonsContainer}>
+        <Button buttonTitle="Household" btnType="plus-circle" onPress={handleAdd} />
+        <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
+      </View>
     </View>
   );
 }

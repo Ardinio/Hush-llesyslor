@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         width: "70%",
-        height: 200,
+        minHeight: 220,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -94,6 +94,8 @@ export const styles = StyleSheet.create({
         height: height / 13,
         padding: 10,
         flexDirection: "row",
+        borderWidth: 1,
+        borderColor: "black",
         borderRadius: 10,
         fontSize: 18,
         color: '#000000',
@@ -148,5 +150,10 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: 'space-between',
         margin: 15,
-    }
+    },
+    picker: {
+        width: 200,
+        padding: 5,
+        margin: 5,
+      },
 })

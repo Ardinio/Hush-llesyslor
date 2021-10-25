@@ -1,5 +1,5 @@
 export type Household = {
-  Id: number,
+  Id: string,
   Name: string,
   GeneratedCode: string
 }

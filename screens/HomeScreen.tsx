@@ -94,8 +94,9 @@ function HomeScreen({ navigation }: Props) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
+            <Text style={styles.buttonText}>Skapa Nytt HusHåll</Text>
             <TextInput
-              style={styles.textInputModal}
+              style={styles.textInputBox}
               placeholder="Ange Ett Namn På Hushållet"
               value={houseHoldName}
               onChangeText={(value) => setHouseHoldName(value)}
@@ -133,8 +134,9 @@ function HomeScreen({ navigation }: Props) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
+          <Text style={styles.buttonText}>Skapa Din Profil</Text>
             <TextInput
-              style={styles.textInputModal}
+              style={styles.textInputBox}
               placeholder="Ange Ditt Namn"
               value={userName}
               onChangeText={(value) => setUserName(value)}

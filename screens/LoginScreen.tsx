@@ -123,13 +123,13 @@ function LoginScreen({ navigation }: Props) {
         <View style={styles.container}>
           <View style={styles.modalView}>
             <TextInput
-              style={styles.textInputModal}
+              style={styles.textInputBox}
               placeholder="E-mail"
               value={newEmail}
               onChangeText={(value) => setNewEmail(value)}
             />
             <TextInput
-              style={styles.textInputModal}
+              style={styles.textInputBox}
               placeholder="Password"
               value={newPassword}
               onChangeText={(value) => setNewPassword(value)}
@@ -158,13 +158,13 @@ function LoginScreen({ navigation }: Props) {
       </Modal>
       <Image style={styles.loginLogo} source={require("../assets/logo.png")} />
       <TextInput
-        style={styles.textInputModal}
+        style={styles.textInputBox}
         placeholder="E-mail"
         value={email}
         onChangeText={(value) => setEmail(value)}
       />
       <TextInput
-        style={styles.textInputModal}
+        style={styles.textInputBox}
         placeholder="Password"
         value={password}
         onChangeText={(value) => setPassword(value)}

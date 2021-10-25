@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         width: "70%",
-        minHeight: 200,
+        minHeight: 220,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
       },
-      textInputModal: {
+      textInputBox: {
         width: 200,
         borderWidth: 1,
         borderColor: "black",

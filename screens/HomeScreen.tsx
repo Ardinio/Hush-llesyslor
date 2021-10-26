@@ -1,14 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  Alert,
-  Modal,
-  TextInput,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Alert, Modal, TextInput, FlatList } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/RootNavigator";
@@ -25,6 +16,7 @@ import { AddUser } from "../store/user/userActions";
 import { selectAllUsers } from "../store/user/userSelectors";
 import HouseholdCard from "../components/HouseholdCard";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { TouchableRipple } from "react-native-paper";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -54,7 +46,12 @@ function HomeScreen({ navigation }: Props) {
 
   const createNewHouse = () => {
     if (!houseHoldName) return setErrorMsg("Hushållet måste ha ett namn!");
-    if (allHouseholds.find((h) => h.Name.toLowerCase() === houseHoldName.toLowerCase())) return setErrorMsg("Namnet finns redan, välj ett annat")
+    if (
+      allHouseholds.find(
+        (h) => h.Name.toLowerCase() === houseHoldName.toLowerCase()
+      )
+    )
+      return setErrorMsg("Namnet finns redan, välj ett annat");
     setNewHouseHold({
       Id: nextId(),
       Name: houseHoldName.trim(),
@@ -68,7 +65,7 @@ function HomeScreen({ navigation }: Props) {
     if (!userName || !avatarId)
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     if (avatarId === "")
-    //if (!userName || !avatarId || avatarId === 0)
+      //if (!userName || !avatarId || avatarId === 0)
 
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     console.log(newHouseHold);
@@ -84,7 +81,7 @@ function HomeScreen({ navigation }: Props) {
       })
     );
     closeModal();
-  };  
+  };
 
   const handleAdd = () => {
     setNewHouseModalVisible(!newHouseModalVisible);
@@ -96,126 +93,136 @@ function HomeScreen({ navigation }: Props) {
     console.log("allUsers: ", allUsers);
   };
 
+  console.log("hej");
+
   return (
     <SafeAreaProvider>
-    <View style={styles.container}>
-
-      <FlatList
-        data={allHouseholds}
-        renderItem={({ item }) => (
-          <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("TaskScreen")}
-            />
-            <HouseholdCard
-              household={{
-                Id: item.Id,
-                Name: item.Name,
-                GeneratedCode: item.GeneratedCode,
-              }}
-            />
-          </>
-        )}
-      />
-
-      {/* Modal to create new HouseHold */}
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={newHouseModalVisible}
-        onRequestClose={() => {
-          setNewHouseModalVisible(!newHouseModalVisible);
-        }}
-      >
-        <View style={styles.container}>
-          <View style={styles.modalView}>
-            <Text style={styles.buttonText}>Skapa Nytt HusHåll</Text>
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="Ange Ett Namn På Hushållet"
-              value={houseHoldName}
-              onChangeText={(value) => setHouseHoldName(value)}
-            />
-            <Text style={styles.errorText}>{errorMsg}</Text>
-            <View style={styles.buttonsContainer}>
-              <View style={styles.iconWrapper}>
-                <FontAwesome5
-                  name="check"
-                  style={styles.icon}
-                  size={25}
-                  onPress={createNewHouse}
+      <View style={styles.container}>
+        <FlatList
+          data={allHouseholds}
+          renderItem={({ item }) => (
+            <>
+              <TouchableRipple
+                onPress={() => navigation.navigate("TaskScreen")}
+              >
+                <HouseholdCard
+                  household={{
+                    Id: item.Id,
+                    Name: item.Name,
+                    GeneratedCode: item.GeneratedCode,
+                  }}
                 />
-              </View>
-              <View style={styles.iconWrapper}>
-                <FontAwesome5
-                  name="arrow-circle-down"
-                  style={styles.icon}
-                  size={25}
-                  onPress={closeModal}
-                />
+              </TouchableRipple>
+            </>
+          )}
+        />
+
+        {/* Modal to create new HouseHold */}
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={newHouseModalVisible}
+          onRequestClose={() => {
+            setNewHouseModalVisible(!newHouseModalVisible);
+          }}
+        >
+          <View style={styles.container}>
+            <View style={styles.modalView}>
+              <Text style={styles.buttonText}>Skapa Nytt HusHåll</Text>
+              <TextInput
+                style={styles.textInputBox}
+                placeholder="Ange Ett Namn På Hushållet"
+                value={houseHoldName}
+                onChangeText={(value) => setHouseHoldName(value)}
+              />
+              <Text style={styles.errorText}>{errorMsg}</Text>
+              <View style={styles.buttonsContainer}>
+                <View style={styles.iconWrapper}>
+                  <FontAwesome5
+                    name="check"
+                    style={styles.icon}
+                    size={25}
+                    onPress={createNewHouse}
+                  />
+                </View>
+                <View style={styles.iconWrapper}>
+                  <FontAwesome5
+                    name="arrow-circle-down"
+                    style={styles.icon}
+                    size={25}
+                    onPress={closeModal}
+                  />
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </Modal>
-      {/* Modal to create new User/Profile in New HouseHold */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={newUserModalVisible}
-        onRequestClose={() => {
-          setNewUserModalVisible(!newUserModalVisible);
-        }}
-      >
-        <View style={styles.container}>
-          <View style={styles.modalView}>
-          <Text style={styles.buttonText}>Skapa Din Profil</Text>
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="Ange Ditt Namn"
-              value={userName}
-              onChangeText={(value) => setUserName(value)}
-            />
-            <Picker
-              selectedValue={avatarId}
-              onValueChange={(value, index) => setAvatarId(value)}
-              mode="dropdown" // Android only
-              style={styles.picker}
-            >
-              {AllAvatars.map((item, index) => {
-                return (
-                  <Picker.Item label={item.Emoji} value={item.Id} key={index} />
-                );
-              })}
-            </Picker>
-            <Text style={styles.errorText}>{errorMsg}</Text>
-            <View style={styles.buttonsContainer}>
-              <View style={styles.iconWrapper}>
-                <FontAwesome5
-                  name="check"
-                  style={styles.icon}
-                  size={25}
-                  onPress={newUser}
-                />
-              </View>
-              <View style={styles.iconWrapper}>
-                <FontAwesome5
-                  name="arrow-circle-down"
-                  style={styles.icon}
-                  size={25}
-                  onPress={closeModal}
-                />
+        </Modal>
+        {/* Modal to create new User/Profile in New HouseHold */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={newUserModalVisible}
+          onRequestClose={() => {
+            setNewUserModalVisible(!newUserModalVisible);
+          }}
+        >
+          <View style={styles.container}>
+            <View style={styles.modalView}>
+              <Text style={styles.buttonText}>Skapa Din Profil</Text>
+              <TextInput
+                style={styles.textInputBox}
+                placeholder="Ange Ditt Namn"
+                value={userName}
+                onChangeText={(value) => setUserName(value)}
+              />
+              <Picker
+                selectedValue={avatarId}
+                onValueChange={(value, index) => setAvatarId(value)}
+                mode="dropdown" // Android only
+                style={styles.picker}
+              >
+                {AllAvatars.map((item, index) => {
+                  return (
+                    <Picker.Item
+                      label={item.Emoji}
+                      value={item.Id}
+                      key={index}
+                    />
+                  );
+                })}
+              </Picker>
+              <Text style={styles.errorText}>{errorMsg}</Text>
+              <View style={styles.buttonsContainer}>
+                <View style={styles.iconWrapper}>
+                  <FontAwesome5
+                    name="check"
+                    style={styles.icon}
+                    size={25}
+                    onPress={newUser}
+                  />
+                </View>
+                <View style={styles.iconWrapper}>
+                  <FontAwesome5
+                    name="arrow-circle-down"
+                    style={styles.icon}
+                    size={25}
+                    onPress={closeModal}
+                  />
+                </View>
               </View>
             </View>
           </View>
+        </Modal>
+        <View style={styles.buttonsContainer}>
+          <Button
+            buttonTitle="Household"
+            btnType="plus-circle"
+            onPress={handleAdd}
+          />
+          <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
         </View>
-      </Modal>
-      <View style={styles.buttonsContainer}>
-        <Button buttonTitle="Household" btnType="plus-circle" onPress={handleAdd} />
-        <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
       </View>
-    </View>
     </SafeAreaProvider>
   );
 }

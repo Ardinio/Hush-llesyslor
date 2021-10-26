@@ -15,7 +15,7 @@ function HomeScreen({ navigation }: Props) {
 
   const handleAdd = () => {
     dispatch(
-      AddHousehold({ Id: 1, Name: "household 1", GeneratedCode: "123" })
+      AddHousehold({ Id: "1", Name: "household 1", GeneratedCode: "123" })
     );
     Alert.alert("Added new household");
   };

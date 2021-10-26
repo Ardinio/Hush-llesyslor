@@ -6,7 +6,6 @@ import TaskCard from "../components/TaskCard";
 import { tasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
 import { useState } from "react";
-import { Checkbox } from "react-native-paper";
 
 function TaskScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,22 +49,34 @@ function TaskScreen() {
                   </Text>
                 </View>
               </View>
-              <Text style={styles.marginTop}>Färdig:</Text>
+              {/* TODO: Bestämma med gruppen om det ska vara en checkbox eller knapp 
+              kommenterat bort checkbox.*/}
+              {/*
+            <Text style={styles.marginTop}>Färdig:</Text>
               <Checkbox.Android
                 color={"green"}
                 status={complete ? "checked" : "unchecked"}
                 onPress={() => {
                   setComplete(!complete);
                 }}
-              ></Checkbox.Android>
+              ></Checkbox.Android> */}
             </View>
 
-            <View style={styles.buttonContainer}>
+            <View style={styles.marginTop}>
               <Button
-                onPress={() => setModalVisible(!modalVisible)}
-                buttonTitle="Stäng"
-                btnType="window-close"
+                onPress={() => {
+                  setComplete(!complete);
+                }}
+                buttonTitle="Färdig"
+                btnType="check"
               />
+              <View style={styles.marginTop}>
+                <Button
+                  onPress={() => setModalVisible(!modalVisible)}
+                  buttonTitle="Stäng"
+                  btnType="window-close"
+                />
+              </View>
             </View>
           </View>
         </View>

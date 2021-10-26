@@ -1,9 +1,10 @@
-import { Users } from '../../entities/Users';
+import { User } from "../../entities/User";
+import { mockedUser } from "../../data/userData";
 
 export interface UserState {
-  AllUsers: Users[];
+  users: User[];
 }
 
 export const initialState: UserState = {
-  AllUsers: []
-}
+  users: mockedUser,
+};

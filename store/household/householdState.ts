@@ -1,9 +1,12 @@
-import { Households } from '../../entities/Households';
+import { mockedHousehold } from "../../data/householdData";
+import { Household } from "../../entities/Household";
 
 export interface HouseholdState {
-  AllHouseholds: Households[];
+  households: Household[];
+  activeHouseholdId: string;
 }
 
 export const initialState: HouseholdState = {
-  AllHouseholds: []
-}
+  households: mockedHousehold,
+  activeHouseholdId: "1",
+};

@@ -1,9 +1,10 @@
-import { Accounts } from '../../entities/Accounts';
+import { mockedAccount } from "../../data/accountData";
+import { Account } from "../../entities/Account";
 
 export interface AccountState {
-  AllAccounts: Accounts[];
+  account: Account;
 }
 
 export const initialState: AccountState = {
-  AllAccounts: []
+  account: mockedAccount
 }

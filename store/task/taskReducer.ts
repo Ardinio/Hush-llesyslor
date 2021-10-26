@@ -5,7 +5,7 @@ function taskReducer(state: TaskState = initialState, action: TaskActions): Task
   if (action.type === 'task/addTask') {
     return {
       ...state,
-      AllTasks: [ ...state.AllTasks, action.payload ]
+      task: [ ...state.task, action.payload ]
     }
   }
   else

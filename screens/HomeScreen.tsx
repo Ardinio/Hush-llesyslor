@@ -32,12 +32,6 @@ function HomeScreen({ navigation }: Props) {
         btnType="plus-circle"
         onPress={handleAdd}
       />
-
-      <Button
-        buttonTitle="Sysslor"
-        btnType="angle-right"
-        onPress={() => navigation.navigate("TaskScreen")}
-      />
       <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
     </View>
   );

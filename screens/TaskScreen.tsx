@@ -3,7 +3,7 @@ import { View, Text, Alert, FlatList, Modal } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import TaskCard from "../components/TaskCard";
-import { mockedTasks } from "../data/taskData"
+import { mockedTasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
 import { useState } from "react";
 

@@ -5,7 +5,7 @@ function userReducer(state: UserState = initialState, action: UserActions): User
   if (action.type === 'user/addUser') {
     return {
       ...state,
-      AllUsers: [ ...state.AllUsers, action.payload ]
+      users: [ ...state.users, action.payload ]
     }
   }
   else

@@ -39,7 +39,7 @@ function HomeScreen({ navigation }: Props) {
   const [newHouseHold, setNewHouseHold] = React.useState<Household>();
   const [userName, setUserName] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
-  const [avatarId, setAvatarId] = React.useState<number>();
+  const [avatarId, setAvatarId] = React.useState<string>();
   const [accountId, setAccountId] = React.useState<string>("test-id1");
 
   const createNewHouse = () => {
@@ -56,7 +56,7 @@ function HomeScreen({ navigation }: Props) {
   const newUser = () => {
     if (!userName || !avatarId)
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
-    if (avatarId === 0)
+    if (avatarId === "")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     console.log(newHouseHold);
     dispatch(AddHousehold(newHouseHold!));

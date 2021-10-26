@@ -5,7 +5,7 @@ function householdReducer(state: HouseholdState = initialState, action: Househol
   if (action.type === 'household/addHousehold') {
     return {
       ...state,
-      AllHouseholds: [ ...state.AllHouseholds, action.payload ]
+      households: [ ...state.households, action.payload ]
     }
   }
   else

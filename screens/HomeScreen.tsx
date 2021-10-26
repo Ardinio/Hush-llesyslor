@@ -1,5 +1,13 @@
 import * as React from "react";
-import { View, Text, Alert, Modal, TextInput, } from "react-native";
+import {
+  View,
+  Text,
+  Alert,
+  Modal,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/AppStack";
@@ -14,6 +22,8 @@ import { Household } from "../entities/Household";
 import { AllAvatars } from "../data/avatars";
 import { AddUser } from "../store/user/userActions";
 import { selectAllUsers } from "../store/user/userSelectors";
+import HouseholdCard from "../components/HouseholdCard";
+import { selectAccount } from "../store/account/accountSelectors";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -21,6 +31,7 @@ function HomeScreen({ navigation }: Props) {
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
   const dispatch = useAppDispatch();
+  const activeAccount = useAppSelector(selectAccount);
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
   const [joinHouseModalVisible, setJoinHouseModalVisible] = React.useState(false);
@@ -31,9 +42,8 @@ function HomeScreen({ navigation }: Props) {
   const [houseHold, setHouseHold] = React.useState<Household>();
   const [userName, setUserName] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
-  const [avatarId, setAvatarId] = React.useState<number>();
+  const [avatarId, setAvatarId] = React.useState<string>();
   const [avatarsAvailable, setAvatarsAvailable] = React.useState(AllAvatars)
-  const [accountId, setAccountId] = React.useState<string>("test-id1"); // ändra "test-id1" till ip på aktiv användare
 
   // Nollställer all data när modal stängs
   const closeModal = () => {
@@ -41,6 +51,7 @@ function HomeScreen({ navigation }: Props) {
     setHouseHoldName("");
     setUserName("");
     setHouseHoldCode("");
+    setAvatarsAvailable(AllAvatars)
     setAvatarId(undefined);
     setNewHouseHold(undefined);
     setHouseHold(undefined);
@@ -55,7 +66,7 @@ function HomeScreen({ navigation }: Props) {
     setNewHouseHold({
       Id: nextId(),
       Name: houseHoldName.trim(),
-      GeneratedCode: uuidv4().substring(0, 13),
+      GeneratedCode: uuidv4().substring(0, 8),
     });
     setNewHouseModalVisible(false);
     setNewUserModalVisible(true);
@@ -68,8 +79,8 @@ function HomeScreen({ navigation }: Props) {
     if (!house) return setErrorMsg("Hittar inget hushåll med den koden!")
     const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
     if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!")
-    const user = usersInHouse?.find((u) => u.AccountId === accountId)
-    if (user) return setErrorMsg("Du är redan med i det här hushållet!")
+    const user = usersInHouse?.find((u) => u.AccountId === activeAccount.Id)
+    // if (user) return setErrorMsg("Du är redan med i det här hushållet!")
     const avatars = AllAvatars.filter((a) => !usersInHouse.map(u => u.AvatarId).includes(a.Id))
     setAvatarsAvailable(avatars)
     setHouseHold(house);
@@ -78,7 +89,7 @@ function HomeScreen({ navigation }: Props) {
   }
 
   const newUser = () => {
-    if (!userName || !avatarId || avatarId === 0)
+    if (!userName || !avatarId || avatarId === "0")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     if (newHouseHold) {
       console.log("nytt hushåll") // Ta Bort
@@ -86,7 +97,7 @@ function HomeScreen({ navigation }: Props) {
       dispatch(
         AddUser({
           Id: nextId(),
-          AccountId: accountId,
+          AccountId: activeAccount.Id,
           HouseholdId: newHouseHold.Id,
           Name: userName,
           AvatarId: avatarId,
@@ -98,7 +109,7 @@ function HomeScreen({ navigation }: Props) {
       dispatch(
         AddUser({
           Id: nextId(),
-          AccountId: accountId,
+          AccountId: activeAccount.Id,
           HouseholdId: houseHold.Id,
           Name: userName,
           AvatarId: avatarId,
@@ -121,8 +132,29 @@ function HomeScreen({ navigation }: Props) {
     console.log("allHouseholds: ", allHouseholds);
     console.log("allUsers: ", allUsers);
   };
+
   return (
     <View style={styles.container}>
+      {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
+      <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
+      <FlatList
+        data={allHouseholds}
+        renderItem={({ item }) => (
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("TaskScreen")}
+            />
+            <HouseholdCard
+              household={{
+                Id: item.Id,
+                Name: item.Name,
+                GeneratedCode: item.GeneratedCode,
+              }}
+            />
+          </>
+        )}
+
+      />
       {/* Modal to create new HouseHold */}
       <Modal
         animationType="slide"
@@ -256,9 +288,7 @@ function HomeScreen({ navigation }: Props) {
           </View>
         </View>
       </Modal>
-      <Text>Home Screen</Text>
-      {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
-      <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
+      
       <View style={styles.buttonsContainer}>
         <Button buttonTitle="New House" btnType="plus-circle" onPress={handleAdd} />
         <Button buttonTitle="Join House" btnType="sign-in-alt" onPress={handleJoin} />

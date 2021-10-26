@@ -1,3 +1,3 @@
 import { RootState } from '../store';
 
-export const selectAllAccounts = (state: RootState) => state.account.AllAccounts;
+export const selectAccount = (state: RootState) => state.account.account;

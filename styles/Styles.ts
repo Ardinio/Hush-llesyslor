@@ -103,7 +103,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Roboto_400Regular",
   },
   buttonContainer: {
-    width: "90%",
+    width: 150,
     height: height / 15,
     padding: 10,
     flexDirection: "row",

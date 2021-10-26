@@ -9,4 +9,12 @@ export const mockedUser: User[] = [
     AvatarId: "1",
     IsOwner: true,
   },
+  {
+    Id: "2",
+    AccountId: "1",
+    HouseholdId: "1",
+    Name: "Bobbo",
+    AvatarId: "2",
+    IsOwner: false,
+  },
 ];

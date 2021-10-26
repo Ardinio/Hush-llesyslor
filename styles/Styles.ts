@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         width: "70%",
-        // height: 200,
+        minHeight: 220,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -166,14 +166,4 @@ export const styles = StyleSheet.create({
         padding: 5,
         margin: 5,
       },
-    //   avatarPicker: {
-    //     display: "flex",
-    //     width: 200,
-    //     height: 40,
-    //     justifyContent: "center",
-    //     alignContent: "center",
-    //     borderWidth: 1,
-    //     borderColor: "black",
-    //     borderRadius: 5,
-    //   },
 })

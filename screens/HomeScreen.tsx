@@ -19,7 +19,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import nextId from "react-id-generator";
 import { v4 as uuidv4 } from "uuid";
 import { Picker } from "@react-native-picker/picker";
-import { Avatar } from "../entities/Avatar";
 import { Household } from "../entities/Household";
 import { AllAvatars } from "../data/avatars";
 import { AddUser } from "../store/user/userActions";
@@ -42,11 +41,22 @@ function HomeScreen({ navigation }: Props) {
   const [avatarId, setAvatarId] = React.useState<string>();
   const [accountId, setAccountId] = React.useState<string>("test-id1");
 
+  const closeModal = () => {
+    setErrorMsg("");
+    setHouseHoldName("");
+    setUserName("");
+    setAvatarId(undefined);
+    setNewHouseHold(undefined);
+    setNewHouseModalVisible(false);
+    setNewUserModalVisible(false);
+  };
+
   const createNewHouse = () => {
     if (!houseHoldName) return setErrorMsg("Hushållet måste ha ett namn!");
+    if (allHouseholds.find((h) => h.Name.toLowerCase() === houseHoldName.toLowerCase())) return setErrorMsg("Namnet finns redan, välj ett annat")
     setNewHouseHold({
       Id: nextId(),
-      Name: houseHoldName,
+      Name: houseHoldName.trim(),
       GeneratedCode: uuidv4(),
     });
     setNewHouseModalVisible(false);
@@ -57,6 +67,8 @@ function HomeScreen({ navigation }: Props) {
     if (!userName || !avatarId)
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     if (avatarId === "")
+    //if (!userName || !avatarId || avatarId === 0)
+
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     console.log(newHouseHold);
     dispatch(AddHousehold(newHouseHold!));
@@ -70,19 +82,8 @@ function HomeScreen({ navigation }: Props) {
         IsOwner: true,
       })
     );
-    setNewUserModalVisible(false);
-    setErrorMsg("");
-  };
-
-  const closeModal = () => {
-    setErrorMsg("");
-    setHouseHoldName("");
-    setUserName("");
-    setAvatarId(undefined);
-    setNewHouseHold(undefined);
-    setNewHouseModalVisible(false);
-    setNewUserModalVisible(false);
-  };
+    closeModal();
+  };  
 
   const handleAdd = () => {
     setNewHouseModalVisible(!newHouseModalVisible);
@@ -96,6 +97,7 @@ function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
+
       <FlatList
         data={allHouseholds}
         renderItem={({ item }) => (
@@ -113,6 +115,9 @@ function HomeScreen({ navigation }: Props) {
           </>
         )}
       />
+
+      {/* Modal to create new HouseHold */}
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -123,9 +128,10 @@ function HomeScreen({ navigation }: Props) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
+            <Text style={styles.buttonText}>Skapa Nytt HusHåll</Text>
             <TextInput
               style={styles.textInputBox}
-              placeholder="Hushållets Namn"
+              placeholder="Ange Ett Namn På Hushållet"
               value={houseHoldName}
               onChangeText={(value) => setHouseHoldName(value)}
             />
@@ -151,6 +157,7 @@ function HomeScreen({ navigation }: Props) {
           </View>
         </View>
       </Modal>
+      {/* Modal to create new User/Profile in New HouseHold */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -161,9 +168,10 @@ function HomeScreen({ navigation }: Props) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
+          <Text style={styles.buttonText}>Skapa Din Profil</Text>
             <TextInput
               style={styles.textInputBox}
-              placeholder="Ditt Namn"
+              placeholder="Ange Ditt Namn"
               value={userName}
               onChangeText={(value) => setUserName(value)}
             />
@@ -201,14 +209,8 @@ function HomeScreen({ navigation }: Props) {
           </View>
         </View>
       </Modal>
-
       <View style={styles.buttonsContainer}>
-        <Button
-          buttonTitle="Household"
-          btnType="plus-circle"
-          onPress={handleAdd}
-        />
-
+        <Button buttonTitle="Household" btnType="plus-circle" onPress={handleAdd} />
         <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
       </View>
     </View>

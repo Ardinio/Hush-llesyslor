@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
   itemText: {
     fontSize: 14,
     fontWeight: "bold",
-    marginLeft: 10,
+    marginLeft: 4,
   },
   buttonsContainer: {
     bottom: 10,
@@ -103,8 +103,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Roboto_400Regular",
   },
   buttonContainer: {
-    marginTop: 50,
-    width: "35%",
+    width: "90%",
     height: height / 15,
     padding: 10,
     flexDirection: "row",
@@ -171,9 +170,13 @@ export const styles = StyleSheet.create({
     marginTop: 20,
   },
   innerContainer: {
-    margin: 10,
+    backgroundColor: "#EEEDE7",
+    borderRadius: 10,
+    height: 50,
+    width: 150,
   },
   innerContainerText: {
-    margin: 20,
+    marginTop: 10,
+    marginLeft: 8,
   },
 });

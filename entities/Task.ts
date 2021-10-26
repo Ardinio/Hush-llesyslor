@@ -3,7 +3,6 @@ export type Task = {
   HouseholdId: string,
   Title: string,
   Description: string,
-  LastCheckDate: Date,
-  DaysToComplete: number,
+  recurringInDays: number,
   EnergyRequired: number
 }

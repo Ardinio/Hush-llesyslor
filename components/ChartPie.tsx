@@ -4,7 +4,7 @@ import { styles } from "../styles/Styles";
 import { Labels } from './ChartPieLabels';
 
 export interface PieChartInputData {
-  avatarId: number;
+  avatarId: string;
   color: string;
   energy: number;
 }

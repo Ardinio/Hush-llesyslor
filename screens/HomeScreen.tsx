@@ -1,5 +1,14 @@
 import * as React from "react";
-import { View, Text, Alert, Modal, TextInput, } from "react-native";
+import {
+  View,
+  Text,
+  Alert,
+  Modal,
+  TextInput,
+  Image,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/AppStack";
@@ -14,6 +23,7 @@ import { Household } from "../entities/Household";
 import { AllAvatars } from "../data/avatars";
 import { AddUser } from "../store/user/userActions";
 import { selectAllUsers } from "../store/user/userSelectors";
+import HouseholdCard from "../components/HouseholdCard";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -28,7 +38,7 @@ function HomeScreen({ navigation }: Props) {
   const [newHouseHold, setNewHouseHold] = React.useState<Household>();
   const [userName, setUserName] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
-  const [avatarId, setAvatarId] = React.useState<number>();
+  const [avatarId, setAvatarId] = React.useState<string>();
   const [accountId, setAccountId] = React.useState<string>("test-id1");
 
   const closeModal = () => {
@@ -53,9 +63,12 @@ function HomeScreen({ navigation }: Props) {
     setNewUserModalVisible(true);
     setErrorMsg("");
   };
-
   const newUser = () => {
-    if (!userName || !avatarId || avatarId === 0)
+    if (!userName || !avatarId)
+      return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
+    if (avatarId === "")
+    //if (!userName || !avatarId || avatarId === 0)
+
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     console.log(newHouseHold);
     dispatch(AddHousehold(newHouseHold!));
@@ -81,9 +94,30 @@ function HomeScreen({ navigation }: Props) {
     console.log("allHouseholds: ", allHouseholds);
     console.log("allUsers: ", allUsers);
   };
+
   return (
     <View style={styles.container}>
+
+      <FlatList
+        data={allHouseholds}
+        renderItem={({ item }) => (
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("TaskScreen")}
+            />
+            <HouseholdCard
+              household={{
+                Id: item.Id,
+                Name: item.Name,
+                GeneratedCode: item.GeneratedCode,
+              }}
+            />
+          </>
+        )}
+      />
+
       {/* Modal to create new HouseHold */}
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -175,7 +209,6 @@ function HomeScreen({ navigation }: Props) {
           </View>
         </View>
       </Modal>
-      <Text>Home Screen</Text>
       <View style={styles.buttonsContainer}>
         <Button
           buttonTitle="Statistics"

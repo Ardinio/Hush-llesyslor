@@ -166,13 +166,23 @@ export const styles = StyleSheet.create({
     },
     Card: {
         width: 300,
-        height: 50,
+        height: 'auto',
         marginTop: 10,
+        padding: 8,
     },
     CardContainer: {
         flexDirection: "row",
         justifyContent: 'space-between',
         margin: 15,
+    },
+    title: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginBottom: 5,
+    },
+    italicFont: {
+        fontStyle: 'italic',
+        marginTop: 5,
     },
     picker: {
         width: 200,

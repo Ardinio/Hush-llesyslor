@@ -5,7 +5,7 @@ function completedTaskReducer(state: CompletedTaskState = initialState, action: 
   if (action.type === 'completedtask/addCompletedTask') {
     return {
       ...state,
-      AllCompletedTasks: [ ...state.AllCompletedTasks, action.payload ]
+      completedTasks: [ ...state.completedTasks, action.payload ]
     }
   }
   else

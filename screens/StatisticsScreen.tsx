@@ -21,14 +21,14 @@ function StatisticsScreen() {
   const handleAddMock = () => {
     dispatch(AddHousehold({Id: '1', Name: 'household 1', GeneratedCode: '123'}));
     dispatch(AddHousehold({Id: '2', Name: 'household 2', GeneratedCode: '456'}));
-    dispatch(AddUser({Id: '1', AccountId: '1', HouseholdId: '1', Name: 'user 1', AvatarId: 2, IsOwner: true}));
-    dispatch(AddUser({Id: '2', AccountId: '2', HouseholdId: '1', Name: 'user 2', AvatarId: 3, IsOwner: false}));
-    dispatch(AddUser({Id: '3', AccountId: '3', HouseholdId: '1', Name: 'user 3', AvatarId: 4, IsOwner: false}));
-    dispatch(AddUser({Id: '4', AccountId: '4', HouseholdId: '2', Name: 'user 4', AvatarId: 5, IsOwner: true}));
+    dispatch(AddUser({Id: '1', AccountId: '1', HouseholdId: '1', Name: 'user 1', AvatarId: '2', IsOwner: true}));
+    dispatch(AddUser({Id: '2', AccountId: '2', HouseholdId: '1', Name: 'user 2', AvatarId: '3', IsOwner: false}));
+    dispatch(AddUser({Id: '3', AccountId: '3', HouseholdId: '1', Name: 'user 3', AvatarId: '4', IsOwner: false}));
+    dispatch(AddUser({Id: '4', AccountId: '4', HouseholdId: '2', Name: 'user 4', AvatarId: '5', IsOwner: true}));
     const date:Date = new Date();
-    dispatch(AddTask({Id: '1', HouseholdId: '1', Title: 'task 1', Description: 'description 1', LastCheckDate: date, DaysToComplete: 3, EnergyRequired: 3})); 
-    dispatch(AddTask({Id: '2', HouseholdId: '1', Title: 'task 2', Description: 'description 2', LastCheckDate: date, DaysToComplete: 2, EnergyRequired: 2})); 
-    dispatch(AddTask({Id: '3', HouseholdId: '1', Title: 'task 3', Description: 'description 3', LastCheckDate: date, DaysToComplete: 1, EnergyRequired: 1})); 
+    dispatch(AddTask({Id: '1', HouseholdId: '1', Title: 'task 1', Description: 'description 1', recurringInDays: 3, EnergyRequired: 3})); 
+    dispatch(AddTask({Id: '2', HouseholdId: '1', Title: 'task 2', Description: 'description 2', recurringInDays: 2, EnergyRequired: 2})); 
+    dispatch(AddTask({Id: '3', HouseholdId: '1', Title: 'task 3', Description: 'description 3', recurringInDays: 1, EnergyRequired: 1})); 
     const date1:Date = new Date('2021-10-15T12:00:00');
     const date2:Date = new Date('2021-10-23T12:00:00');
     const date3:Date = new Date('2021-10-21T12:00:00');

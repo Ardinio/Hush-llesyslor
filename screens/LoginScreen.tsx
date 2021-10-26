@@ -16,7 +16,7 @@ import { AppStackParamList } from "../navigation/AppStack";
 import { Button } from "../components";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { selectAllAccounts } from "../store/account/accountSelectors";
+import { selectAccount } from "../store/account/accountSelectors";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -32,7 +32,7 @@ type Props = {
 // Add validation for e-mail, add encryption on password, add snackbar on new account
 
 function LoginScreen({ navigation }: Props) {
-  const allAccounts = useAppSelector(selectAllAccounts);
+  const accounts = useAppSelector(selectAccount);
   const dispatch = useAppDispatch();
 
   const [email, setEmail] = React.useState<string>();
@@ -45,13 +45,13 @@ function LoginScreen({ navigation }: Props) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logIn = () => {
-    if (!email || !password) return setErrorMsg("E-mail eller Password Saknas!")
-    if (!allAccounts.find((a) => a.Email === email.toLowerCase().trim()))
-      return setErrorMsg("Email eller Password är felaktigt");
-    const account = allAccounts.find((a) => a.Email === email.toLowerCase().trim());
-    if (account?.Password !== password.trim())
-      return setErrorMsg("Email eller Password är felaktigt");
-    setAccountId(account?.Id);
+    // if (!email || !password) return setErrorMsg("E-mail eller Password Saknas!")
+    // if (accounts.Email !== email.toLowerCase().trim())
+    //   return setErrorMsg("Email eller Password är felaktigt");
+    // const account = accounts((a) => a.Email === email.toLowerCase().trim());
+    // if (account?.Password !== password.trim())
+    //   return setErrorMsg("Email eller Password är felaktigt");
+    // setAccountId(account?.Id);
     setIsLoggedIn(!isLoggedIn);
     setEmail("");
     setPassword("");
@@ -74,24 +74,24 @@ function LoginScreen({ navigation }: Props) {
   };
 
   const registerNewAccount = () => {
-    console.log(newEmail); // remove line when finished!!!
-    if (!newEmail || !newPassword)
-      return setErrorMsg("E-mail eller Password Saknas!");
-    if (allAccounts.find((a) => a.Email === newEmail.toLowerCase().trim()))
-      return setErrorMsg("E-postadressen finns redan");
-    dispatch(
-      AddAccount({
-        Id: nextId(),
-        Email: newEmail.toLowerCase().trim(),
-        Password: newPassword.trim(),
-      })
-    );
-    Alert.alert("New user registered"); // replace Alert with SnackBar !!
-    console.log(allAccounts); // remove line when finished!!!
-    setNewEmail("");
-    setNewPassword("");
-    setErrorMsg("");
-    setModalVisible(!modalVisible);
+    // console.log(newEmail); // remove line when finished!!!
+    // if (!newEmail || !newPassword)
+    //   return setErrorMsg("E-mail eller Password Saknas!");
+    // if (accounts.find((a) => a.Email === newEmail.toLowerCase().trim()))
+    //   return setErrorMsg("E-postadressen finns redan");
+    // dispatch(
+    //   AddAccount({
+    //     Id: nextId(),
+    //     Email: newEmail.toLowerCase().trim(),
+    //     Password: newPassword.trim(),
+    //   })
+    // );
+    // Alert.alert("New user registered"); // replace Alert with SnackBar !!
+    // console.log(accounts); // remove line when finished!!!
+    // setNewEmail("");
+    // setNewPassword("");
+    // setErrorMsg("");
+    // setModalVisible(!modalVisible);
   };
 
   if (isLoggedIn) {

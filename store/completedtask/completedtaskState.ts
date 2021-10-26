@@ -1,9 +1,10 @@
-import { CompletedTask } from '../../entities/CompletedTask';
+import { mockedCompletedTask } from "../../data/completedTaskData";
+import { CompletedTask } from "../../entities/CompletedTask";
 
 export interface CompletedTaskState {
-  AllCompletedTasks: CompletedTask[];
+  completedTasks: CompletedTask[];
 }
 
 export const initialState: CompletedTaskState = {
-  AllCompletedTasks: []
-}
+  completedTasks: mockedCompletedTask
+};

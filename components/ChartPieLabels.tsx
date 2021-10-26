@@ -26,7 +26,7 @@ export const Labels = (props: Partial<LabelsProps>) => {
               width={20}
               height={20}
               preserveAspectRatio="xMidYMid slice"
-              href={singleAvatarPath(+data.key)}
+              href={singleAvatarPath(String(data.key))}
             />
           </G>
         )

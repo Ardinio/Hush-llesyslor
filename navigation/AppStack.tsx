@@ -14,7 +14,7 @@ import {
 } from "../screens/index";
 
 export type AppStackParamList = {
-  HomeScreen: undefined;
+  HomeScreen: { id: string };
   LoginScreen: undefined;
   ProfileScreen: { id: number };
   SplashScreen: undefined;
@@ -36,27 +36,25 @@ const AppStack: FC = () => {
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: true }}>
         <Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{ title: "Home" }}
-        />
-        <Screen
           name="LoginScreen"
           component={LoginScreen}
           options={{ title: "Login" }}
+        />
+        <Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ title: "Home" }}
         />
         <Screen
           name="ProfileScreen"
           component={ ProfileScreen }
           options={{ title: "Profil" }}
         />
-
         <Screen
           name="StatisticsScreen"
           component={ StatisticsScreen }
           options={{ title: "Statistics" }}
         />
-
         <Screen
           name="TaskScreen"
           component={TaskScreen}

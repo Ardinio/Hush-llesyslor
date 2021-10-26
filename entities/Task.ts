@@ -1,6 +1,6 @@
 export type Task = {
-  Id: number,
-  HouseholdId: number,
+  Id: string,
+  HouseholdId: string,
   Title: string,
   Description: string,
   LastCheckDate: Date,

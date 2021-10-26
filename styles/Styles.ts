@@ -6,6 +6,10 @@ export const styles = StyleSheet.create({
     text: {
         color: "#ffffff"
     },
+    root: {
+        flex: 1,
+        alignItems: 'center',
+    },
     container: {
         flex: 1,
         alignItems: 'center',
@@ -31,6 +35,52 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 10,
     },
+    buttonsContainer: {
+        bottom: 10,
+        justifyContent: "space-around",
+        flexDirection: "row",
+        backgroundColor: "transparent",
+        position: 'absolute',
+        width: "100%"
+      },
+    errorText: {
+        color: "red",
+        fontSize: 12,
+    },
+    clickableText: {
+        color: "steelblue",
+        textAlign: "center",
+        fontWeight: "600",
+        paddingBottom: 10,    
+    },
+    modalView: {
+        width: "70%",
+        minHeight: 220,
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      textInputBox: {
+        width: 200,
+        borderWidth: 1,
+        borderColor: "black",
+        borderRadius: 5,
+        padding: 5,
+        margin: 5,
+      },
+      loginLogo: {
+        marginTop: 20,
+      },
     inputContainer: {
         justifyContent: "center",
         width: width / 1.1,
@@ -44,6 +94,8 @@ export const styles = StyleSheet.create({
         height: height / 13,
         padding: 10,
         flexDirection: "row",
+        borderWidth: 1,
+        borderColor: "black",
         borderRadius: 10,
         fontSize: 18,
         color: '#000000',
@@ -121,5 +173,10 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: 'space-between',
         margin: 15,
-    }
+    },
+    picker: {
+        width: 200,
+        padding: 5,
+        margin: 5,
+      },
 })

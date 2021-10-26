@@ -1,5 +1,6 @@
 export type Avatar = {
   Id: number,
   Path: any,
-  Color: string
+  Color: string,
+  Emoji: string
 }

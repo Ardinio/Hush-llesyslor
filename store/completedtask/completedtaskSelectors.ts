@@ -8,8 +8,8 @@ export const selectCompletedTasksTotalByDate = (startdate: Date, enddate: Date) 
   const byDate = state.completedtask.AllCompletedTasks.filter((x) => { return x.CompleteDate.getTime() > startdate.getTime() && x.CompleteDate.getTime() < enddate.getTime() });
   const pieChartData: PieChartInputData[] = [];
   byDate.forEach((value) => {
-    const user = state.user.AllUsers.find((x) => x.Id === value.UserId) ?? { Id: -1, AccountId: -1, HouseholdId: -1, Name: '', AvatarId: -1, IsOwner: false };
-    const task = state.task.AllTasks.find((x) => x.Id === value.TasksId) ?? { Id: -1, HouseholdId: -1, Title: '', Description: '', LastCheckDate: new Date(-1), DaysToComplete: -1, EnergyRequired: -1 };
+    const user = state.user.AllUsers.find((x) => x.Id === value.UserId) ?? { Id: '', AccountId: -1, HouseholdId: -1, Name: '', AvatarId: -1, IsOwner: false };
+    const task = state.task.AllTasks.find((x) => x.Id === value.TasksId) ?? { Id: '', HouseholdId: '', Title: '', Description: '', LastCheckDate: new Date(-1), DaysToComplete: -1, EnergyRequired: -1 };
     const avatar = singleAvatarById(user.AvatarId);
     const indexFromPieChartData: number = pieChartData.findIndex((x) => x.avatarId === user.AvatarId);
     if (indexFromPieChartData >= 0) {
@@ -23,7 +23,7 @@ export const selectCompletedTasksTotalByDate = (startdate: Date, enddate: Date) 
 }
 
 export type tasksContainer = {
-  taskId: number,
+  taskId: string,
   pieChartData: PieChartInputData[]
 }
 
@@ -33,8 +33,8 @@ export const selectCompletedTasksByTask = (startdate: Date, enddate: Date) => (s
   byDate.forEach((value) => {
     const indexFromContainer: number = tasksPieChartsContainer.findIndex((x) => x.taskId === value.TasksId);
     if (indexFromContainer >= 0) {
-      const user = state.user.AllUsers.find((x) => x.Id === value.UserId) ?? { Id: -1, AccountId: -1, HouseholdId: -1, Name: '', AvatarId: -1, IsOwner: false };
-      const task = state.task.AllTasks.find((x) => x.Id === value.TasksId) ?? { Id: -1, HouseholdId: -1, Title: '', Description: '', LastCheckDate: new Date(-1), DaysToComplete: -1, EnergyRequired: -1 };
+      const user = state.user.AllUsers.find((x) => x.Id === value.UserId) ?? { Id: '', AccountId: '', HouseholdId: '', Name: '', AvatarId: -1, IsOwner: false };
+      const task = state.task.AllTasks.find((x) => x.Id === value.TasksId) ?? { Id: '', HouseholdId: '', Title: '', Description: '', LastCheckDate: new Date(-1), DaysToComplete: -1, EnergyRequired: -1 };
       const indexFromPieChart: number = tasksPieChartsContainer[indexFromContainer].pieChartData.findIndex((x) => x.avatarId === user.AvatarId);
       if (indexFromPieChart >= 0) {
         tasksPieChartsContainer[indexFromContainer].pieChartData[indexFromPieChart].energy = tasksPieChartsContainer[indexFromContainer].pieChartData[indexFromPieChart].energy + task.EnergyRequired;
@@ -46,9 +46,9 @@ export const selectCompletedTasksByTask = (startdate: Date, enddate: Date) => (s
     }
     else {
       const pieChartDataToPush: PieChartInputData[] = [];
-      const taskId: number = value.TasksId;
-      const user = state.user.AllUsers.find((x) => x.Id === value.UserId) ?? { Id: -1, AccountId: -1, HouseholdId: -1, Name: '', AvatarId: -1, IsOwner: false };
-      const task = state.task.AllTasks.find((x) => x.Id === value.TasksId) ?? { Id: -1, HouseholdId: -1, Title: '', Description: '', LastCheckDate: new Date(-1), DaysToComplete: -1, EnergyRequired: -1 };
+      const taskId: string = value.TasksId;
+      const user = state.user.AllUsers.find((x) => x.Id === value.UserId) ?? { Id: '', AccountId: '', HouseholdId: '', Name: '', AvatarId: -1, IsOwner: false };
+      const task = state.task.AllTasks.find((x) => x.Id === value.TasksId) ?? { Id: '', HouseholdId: '', Title: '', Description: '', LastCheckDate: new Date(-1), DaysToComplete: -1, EnergyRequired: -1 };
       const avatar = singleAvatarById(user.AvatarId);
       pieChartDataToPush.push({ avatarId: user.AvatarId, color: avatar.Color, energy: task.EnergyRequired });
       tasksPieChartsContainer.push({ taskId: taskId, pieChartData: pieChartDataToPush });

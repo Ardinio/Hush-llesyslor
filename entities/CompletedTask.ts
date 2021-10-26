@@ -1,6 +1,6 @@
 export type CompletedTask = {
-  Id: number,
-  TasksId: number,
-  UserId: number,
+  Id: string,
+  TasksId: string,
+  UserId: string,
   CompleteDate: Date
 }

@@ -7,7 +7,7 @@ import { FC } from "react";
 import BadgeComponent from "./BadgeComponent";
 
 interface Props {
-  task: TaskData;
+  task: TaskData
 }
 
 const TaskCard: FC<Props> = ({ task }) => {

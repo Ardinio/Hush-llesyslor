@@ -3,6 +3,6 @@ export type User = {
     AccountId: string,
     HouseholdId: string,
     Name: string,
-    AvatarId: number,
+    AvatarId: string,
     IsOwner: boolean
 }

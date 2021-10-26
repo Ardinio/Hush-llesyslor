@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { useAppSelector } from '../store/store';
-import { selectCompletedTasksTotalByDate, selectCompletedTasksByTask } from '../store/completedtask/completedtaskSelectors';
+import { selectCompletedTasksTotal, selectCompletedTasksByTasks } from '../store/completedtask/completedtaskSelectors';
 import { ChartPie } from '../components/ChartPie';
 import { styles } from "../styles/Styles";
 
@@ -9,8 +9,8 @@ function StatisticsScreen() {
   const currentDate: Date = new Date();
   const lastWeek: Date = new Date(+currentDate);
   lastWeek.setDate(lastWeek.getDate() - 7);
-  const allCompletedTasksByDateTotal = useAppSelector(selectCompletedTasksTotalByDate(lastWeek, currentDate));
-  const allCompletedTasksByDateByTask = useAppSelector(selectCompletedTasksByTask(lastWeek, currentDate));
+  const allCompletedTasksByDateTotal = useAppSelector(selectCompletedTasksTotal(lastWeek, currentDate));
+  const allCompletedTasksByDateByTask = useAppSelector(selectCompletedTasksByTasks(lastWeek, currentDate));
 
   return (
     <ScrollView>
@@ -21,7 +21,7 @@ function StatisticsScreen() {
           <View style={styles.pieChartContainer}>
         {allCompletedTasksByDateByTask.map((value) => (
           <View key={value.taskId} style={styles.pieShartTaskContainer}>
-            <Text style={styles.pieShartTaskContainerText}>Task id: {value.taskId}</Text>
+            <Text style={styles.pieShartTaskContainerText}>{value.taskTitle}</Text>
             <ChartPie data={value.pieChartData} />
           </View>
         ))}

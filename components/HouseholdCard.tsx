@@ -1,49 +1,35 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Card } from "react-native-paper";
-import { Household } from "../entities/Household";
+import { selectAllHouseholds } from "../store/household/householdSelectors";
 import { useAppSelector } from "../store/store";
-import { selectAllUsers } from "../store/user/userSelectors";
 import { styles } from "../styles/Styles";
-import HouseholdList from "./HouseholdList";
 
-interface Props {
-  household: Household;
-}
-
-const HouseholdCard = ({ household }: Props) => {
-  const user = useAppSelector(selectAllUsers);
+const HouseholdCard = ({}) => {
+  const allHouseholds = useAppSelector(selectAllHouseholds);
+  const households = useAppSelector((state) => {
+    return state.household.households.map((household) => {
+      const user = state.user.users.find((u) => u.HouseholdId === household.Id);
+      return { household, user };
+    });
+  });
 
   return (
-    <Card style={styles.Card}>
-      <Text style={styles.title}>{household?.Name}</Text>
-      <View>
-        <FlatList
-          data={user}
-          renderItem={({ item }) => (
-            <>
-              <HouseholdList
-                allUsers={{
-                  Id: item.Id,
-                  AccountId: item.AccountID,
-                  HouseholdId: item.HouseholdId,
-                  Name: item.Name,
-                  AvatarId: item.AvatarId,
-                  IsOwner: item.IsOwner,
-                }}
-              />
-            </>
-          )}
-        />
+    <View>
+      {households.map(({ household, user }, i) => (
+        <Card key={i} style={styles.Card}>
+          <Text style={styles.title}>{household?.Name}</Text>
+          <View>
+            <Text>{user?.Name}</Text>
+          </View>
 
-        <View></View>
-      </View>
-
-      <Text style={styles.italicFont}>
-        Kod för att gå med i hushållet: {household?.GeneratedCode}
-      </Text>
-    </Card>
+          <Text style={styles.italicFont}>
+            Kod för att gå med i hushållet: {household?.GeneratedCode}
+          </Text>
+        </Card>
+      ))}
+    </View>
   );
 };
 

@@ -24,6 +24,7 @@ import { AllAvatars } from "../data/avatars";
 import { AddUser } from "../store/user/userActions";
 import { selectAllUsers } from "../store/user/userSelectors";
 import HouseholdCard from "../components/HouseholdCard";
+import { TouchableRipple } from "react-native-paper";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -53,7 +54,12 @@ function HomeScreen({ navigation }: Props) {
 
   const createNewHouse = () => {
     if (!houseHoldName) return setErrorMsg("Hushållet måste ha ett namn!");
-    if (allHouseholds.find((h) => h.Name.toLowerCase() === houseHoldName.toLowerCase())) return setErrorMsg("Namnet finns redan, välj ett annat")
+    if (
+      allHouseholds.find(
+        (h) => h.Name.toLowerCase() === houseHoldName.toLowerCase()
+      )
+    )
+      return setErrorMsg("Namnet finns redan, välj ett annat");
     setNewHouseHold({
       Id: nextId(),
       Name: houseHoldName.trim(),
@@ -67,7 +73,7 @@ function HomeScreen({ navigation }: Props) {
     if (!userName || !avatarId)
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     if (avatarId === "")
-    //if (!userName || !avatarId || avatarId === 0)
+      //if (!userName || !avatarId || avatarId === 0)
 
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     console.log(newHouseHold);
@@ -83,7 +89,7 @@ function HomeScreen({ navigation }: Props) {
       })
     );
     closeModal();
-  };  
+  };
 
   const handleAdd = () => {
     setNewHouseModalVisible(!newHouseModalVisible);
@@ -97,24 +103,9 @@ function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-
-      <FlatList
-        data={allHouseholds}
-        renderItem={({ item }) => (
-          <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("TaskScreen")}
-            />
-            <HouseholdCard
-              household={{
-                Id: item.Id,
-                Name: item.Name,
-                GeneratedCode: item.GeneratedCode,
-              }}
-            />
-          </>
-        )}
-      />
+      <TouchableRipple onPress={() => navigation.navigate("TaskScreen")}>
+        <HouseholdCard />
+      </TouchableRipple>
 
       {/* Modal to create new HouseHold */}
 
@@ -168,7 +159,7 @@ function HomeScreen({ navigation }: Props) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
-          <Text style={styles.buttonText}>Skapa Din Profil</Text>
+            <Text style={styles.buttonText}>Skapa Din Profil</Text>
             <TextInput
               style={styles.textInputBox}
               placeholder="Ange Ditt Namn"
@@ -210,7 +201,11 @@ function HomeScreen({ navigation }: Props) {
         </View>
       </Modal>
       <View style={styles.buttonsContainer}>
-        <Button buttonTitle="Household" btnType="plus-circle" onPress={handleAdd} />
+        <Button
+          buttonTitle="Household"
+          btnType="plus-circle"
+          onPress={handleAdd}
+        />
         <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
       </View>
     </View>

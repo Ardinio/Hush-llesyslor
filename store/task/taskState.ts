@@ -1,9 +1,10 @@
+import { mockedTasks } from '../../data/taskData';
 import { Task } from '../../entities/Task';
 
 export interface TaskState {
-  AllTasks: Task[];
+  task: Task[];
 }
 
 export const initialState: TaskState = {
-  AllTasks: []
+  task: mockedTasks
 }

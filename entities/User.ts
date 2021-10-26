@@ -1,8 +1,8 @@
 export type User = {
-    Id: number,
-    AccountId: number,
-    HouseholdId: number,
+    Id: string,
+    AccountId: string,
+    HouseholdId: string,
     Name: string,
-    AvatarId: number,
+    AvatarId: string,
     IsOwner: boolean
 }

@@ -12,12 +12,12 @@ import {
 import BottomTabsNavigator from "./BottomTabsNavigator";
 
 export type AppStackParamList = {
-  HomeScreen: undefined;
+  HomeScreen: { id: string };
   LoginScreen: undefined;
   ProfileScreen: { id: number };
   SplashScreen: undefined;
   StatisticsScreen: undefined;
-  TaskScreen: { id: number };
+  TaskScreen: undefined;
 };
 
 export type GenericNavigationProps = StackNavigationProp<AppStackParamList>;
@@ -48,13 +48,11 @@ const RootNavigator: FC = () => {
           component={ BottomTabsNavigator }
           options={{ title: "Profil" }}
         />
-
         <Screen
           name="StatisticsScreen"
           component={ BottomTabsNavigator }
           options={{ title: "Statistics" }}
         />
-
         <Screen
           name="TaskScreen"
           component={TaskScreen}

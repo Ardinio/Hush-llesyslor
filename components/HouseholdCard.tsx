@@ -5,20 +5,10 @@ import { AllAvatars } from "../data/avatars";
 import { useAppSelector } from "../store/store";
 import { styles } from "../styles/Styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { selectHouseholdsWithUsers } from "../store/household/householdSelectors";
 
 const HouseholdCard = ({}) => {
-  const households = useAppSelector((state) => {
-    return state.household.households.map((household) => {
-      const users = state.user.users.filter(
-        (u) => u.HouseholdId === household.Id
-      );
-      const usersWithAvatar = users.map((user) => {
-        const avatar = AllAvatars.find((a) => a.Id === user?.AvatarId);
-        return { ...user, avatar };
-      });
-      return { ...household, users: usersWithAvatar };
-    });
-  });
+  const households = useAppSelector(selectHouseholdsWithUsers);
 
   return (
     //TODO: Check CSS to reuse several classes

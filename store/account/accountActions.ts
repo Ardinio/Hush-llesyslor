@@ -8,7 +8,7 @@ export interface AddAccountAction {
 
 export type AccountActions = AddAccountAction;
 
-export const AddAccount = (account: Account): AppThunk => 
-  async (dispatch, getState) => {
-    dispatch({ type: 'account/addAccount', payload: account })
-  }
+export const AddAccount = (account: Account): AppThunk =>
+    async (dispatch, getState) => {
+        dispatch({ type: 'account/addAccount', payload: account });
+    };

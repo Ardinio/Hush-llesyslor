@@ -5,11 +5,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TaskCard from '../components/TaskCard';
 
 function TaskScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Task Screen</Text>
-    </View>
-  );
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Task Screen</Text>
+        </View>
+    );
 }
 
 export default TaskScreen;

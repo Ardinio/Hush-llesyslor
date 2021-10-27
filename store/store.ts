@@ -15,12 +15,12 @@ import databaseReducer from './database/databaseReducer';
 import { DatabaseActions } from './database/databaseActions';
 
 const rootReducer = combineReducers({
-  account: accountReducer,
-  household: householdReducer,
-  user: userReducer,
-  task: taskReducer,
-  completedtask: completedTaskReducer,
-  database: databaseReducer
+    account: accountReducer,
+    household: householdReducer,
+    user: userReducer,
+    task: taskReducer,
+    completedtask: completedTaskReducer,
+    database: databaseReducer
 });
 
 const thunkMiddleware = applyMiddleware<AppThunkDispatch>(thunk);
@@ -33,7 +33,7 @@ export type AppThunkDispatch = ThunkDispatch <
   unknown,
   KnownActions
 >;
-      
+
 export type AppThunk<ReturnType = void> = ThunkAction <
   ReturnType,
   RootState,

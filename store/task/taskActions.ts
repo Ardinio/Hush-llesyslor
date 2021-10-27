@@ -8,7 +8,7 @@ export interface AddTaskAction {
 
 export type TaskActions = AddTaskAction;
 
-export const AddTask = (task: Task): AppThunk => 
-  async (dispatch, getState) => {
-    dispatch({ type: 'task/addTask', payload: task })
-  }
+export const AddTask = (task: Task): AppThunk =>
+    async (dispatch, getState) => {
+        dispatch({ type: 'task/addTask', payload: task });
+    };

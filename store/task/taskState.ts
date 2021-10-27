@@ -6,5 +6,5 @@ export interface TaskState {
 }
 
 export const initialState: TaskState = {
-  task: mockedTasks
-}
+    task: mockedTasks
+};

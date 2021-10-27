@@ -6,7 +6,7 @@ export const mockedUser: User[] = [
     AccountId: "1",
     HouseholdId: "1",
     Name: "Emina",
-    AvatarId: "1",
+    AvatarId: "4",
     IsOwner: true,
   },
   {
@@ -14,7 +14,7 @@ export const mockedUser: User[] = [
     AccountId: "1",
     HouseholdId: "1",
     Name: "Bobbo",
-    AvatarId: "2",
+    AvatarId: "5",
     IsOwner: false,
   },
   {

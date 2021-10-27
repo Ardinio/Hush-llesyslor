@@ -24,7 +24,6 @@ import { AllAvatars } from "../data/avatars";
 import { AddUser } from "../store/user/userActions";
 import { selectAllUsers } from "../store/user/userSelectors";
 import HouseholdCard from "../components/HouseholdCard";
-import { TouchableRipple } from "react-native-paper";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -103,9 +102,14 @@ function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <TouchableRipple onPress={() => navigation.navigate("TaskScreen")}>
-        <HouseholdCard />
-      </TouchableRipple>
+      <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")} />
+      <HouseholdCard
+      // household={{
+      //   Id: item.Id,
+      //   Name: item.Name,
+      //   GeneratedCode: item.GeneratedCode,
+      // }}
+      />
 
       {/* Modal to create new HouseHold */}
 

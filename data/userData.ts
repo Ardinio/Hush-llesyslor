@@ -19,7 +19,7 @@ export const mockedUser: User[] = [
   },
   {
     Id: "3",
-    AccountId: "1",
+    AccountId: "3",
     HouseholdId: "2",
     Name: "Jon",
     AvatarId: "1",
@@ -27,7 +27,7 @@ export const mockedUser: User[] = [
   },
   {
     Id: "4",
-    AccountId: "1",
+    AccountId: "4",
     HouseholdId: "2",
     Name: "Sansa",
     AvatarId: "2",
@@ -35,7 +35,7 @@ export const mockedUser: User[] = [
   },
   {
     Id: "5",
-    AccountId: "1",
+    AccountId: "5",
     HouseholdId: "2",
     Name: "Arya",
     AvatarId: "3",
@@ -43,7 +43,7 @@ export const mockedUser: User[] = [
   },
   {
     Id: "6",
-    AccountId: "1",
+    AccountId: "6",
     HouseholdId: "2",
     Name: "Robb",
     AvatarId: "4",

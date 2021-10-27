@@ -169,4 +169,13 @@ export const styles = StyleSheet.create({
   textAlign: {
     flexDirection: "row",
   },
+  descriptionText: {
+    marginLeft: 15,
+    fontStyle: "italic",
+  },
+  container2: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 15,
+  }
 });

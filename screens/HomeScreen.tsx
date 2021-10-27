@@ -5,8 +5,6 @@ import {
   Alert,
   Modal,
   TextInput,
-  Image,
-  FlatList,
   TouchableOpacity,
 } from "react-native";
 import { styles } from "../styles/Styles";
@@ -102,17 +100,11 @@ function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")} />
-      <HouseholdCard
-      // household={{
-      //   Id: item.Id,
-      //   Name: item.Name,
-      //   GeneratedCode: item.GeneratedCode,
-      // }}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")}>
+        <HouseholdCard />
+      </TouchableOpacity>
 
       {/* Modal to create new HouseHold */}
-
       <Modal
         animationType="slide"
         transparent={true}

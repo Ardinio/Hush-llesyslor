@@ -11,8 +11,8 @@ import taskReducer from './task/taskReducer';
 import { TaskActions } from './task/taskActions';
 import completedTaskReducer from './completedtask/completedtaskReducer';
 import { CompletedTaskActions } from './completedtask/completedtaskActions';
-import databaseReducer from './databse/databaseReducer';
-import { DatabaseActions } from './databse/databaseActions';
+import databaseReducer from './database/databaseReducer';
+import { DatabaseActions } from './database/databaseActions';
 
 const rootReducer = combineReducers({
   account: accountReducer,

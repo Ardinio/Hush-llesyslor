@@ -179,4 +179,28 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 8,
   },
+  statisticsScreenContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  pieChartStyleBig: {
+    height: 200,
+    width: 200,
+  },
+  pieChartContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    width: "100%",
+  },
+  pieShartTaskContainer: {
+    marginHorizontal: 10,
+    marginVertical: 5,
+  },
+  pieShartTaskContainerText: {
+    textAlign: "center",
+  },
 });

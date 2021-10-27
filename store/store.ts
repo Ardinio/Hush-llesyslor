@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
     database: databaseReducer
 });
 
-const thunkMiddleware = applyMiddleware<AppThunkDispatch>(thunk);
+const thunkMiddleware = applyMiddleware<AppThunkDispatch>(thunk)
 const store = createStore(rootReducer, thunkMiddleware);
 
 type KnownActions = AccountActions | HouseholdActions | UserActions | TaskActions | CompletedTaskActions | DatabaseActions;

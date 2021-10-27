@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
-import { GenericScreenProps } from "../navigation/AppStack";
+import { GenericScreenProps } from "../navigation/RootNavigator";
 import { useAppSelector, useAppDispatch } from "../store/store";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
 import { AddHousehold } from "../store/household/householdActions";
@@ -24,6 +24,7 @@ import { AddUser } from "../store/user/userActions";
 import { selectAllUsers } from "../store/user/userSelectors";
 import HouseholdCard from "../components/HouseholdCard";
 import { selectAccount } from "../store/account/accountSelectors";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -134,6 +135,7 @@ function HomeScreen({ navigation }: Props) {
   };
 
   return (
+    <SafeAreaProvider>
     <View style={styles.container}>
       {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
       <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
@@ -294,6 +296,7 @@ function HomeScreen({ navigation }: Props) {
         <Button buttonTitle="Join House" btnType="sign-in-alt" onPress={handleJoin} />
       </View>
     </View>
+    </SafeAreaProvider>
   );
 }
 

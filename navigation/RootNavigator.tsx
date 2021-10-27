@@ -2,13 +2,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
   StackNavigationProp,
-  StackScreenProps
+  StackScreenProps,
 } from "@react-navigation/stack";
 import React, { FC, useEffect, useState } from "react";
-import {
-  LoginScreen,
-  TaskScreen
-} from "../screens/index";
+import { LoginScreen, TaskScreen } from "../screens/index";
 import BottomTabsNavigator from "./BottomTabsNavigator";
 
 export type AppStackParamList = {
@@ -34,23 +31,23 @@ const RootNavigator: FC = () => {
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
         <Screen
-          name="HomeScreen"
-          component={ BottomTabsNavigator }
-          options={{ title: "Home" }}
-        />
-        <Screen
           name="LoginScreen"
           component={LoginScreen}
           options={{ title: "Login" }}
         />
         <Screen
+          name="HomeScreen"
+          component={BottomTabsNavigator}
+          options={{ title: "Home" }}
+        />
+        <Screen
           name="ProfileScreen"
-          component={ BottomTabsNavigator }
+          component={BottomTabsNavigator}
           options={{ title: "Profil" }}
         />
         <Screen
           name="StatisticsScreen"
-          component={ BottomTabsNavigator }
+          component={BottomTabsNavigator}
           options={{ title: "Statistics" }}
         />
         <Screen
@@ -59,7 +56,7 @@ const RootNavigator: FC = () => {
           options={{ title: "Task" }}
         />
       </Navigator>
-      </NavigationContainer>
+    </NavigationContainer>
   );
 };
 

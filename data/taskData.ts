@@ -1,28 +1,20 @@
-export interface TaskData {
-    Id: number,
-  HouseholdId: number,
-  Title: string,
-  Description: string,
-  LastCheckDate?: Date,
-  DaysToComplete: number,
-  EnergyRequired: number
-}
+import { Task } from "../entities/Task";
 
-export const tasks: TaskData[] = [
-    {
-        Id: 1,
-  HouseholdId: 1,
-  Title: "Dammsuga",
-  Description: "Hela huset",
-  DaysToComplete: 1,
-  EnergyRequired: 1
-    },
-    {
-        Id: 2,
-  HouseholdId: 1,
-  Title: "Diska",
-  Description: "allting",
-  DaysToComplete: 1,
-  EnergyRequired: 1
-    }
-]
+export const mockedTasks: Task[] = [
+  {
+    Id: "1",
+    HouseholdId: "1",
+    Title: "Dammsuga",
+    Description: "Hela huset",
+    recurringInDays: 6,
+    EnergyRequired: 8,
+  },
+  {
+    Id: "2",
+    HouseholdId: "1",
+    Title: "Diska",
+    Description: "allting",
+    recurringInDays: 2,
+    EnergyRequired: 1,
+  },
+];

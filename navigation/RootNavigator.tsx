@@ -2,24 +2,19 @@ import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
   StackNavigationProp,
-  StackScreenProps
+  StackScreenProps,
 } from "@react-navigation/stack";
 import React, { FC, useEffect, useState } from "react";
-import {
-  HomeScreen,
-  LoginScreen,
-  ProfileScreen,
-  StatisticsScreen,
-  TaskScreen
-} from "../screens/index";
+import { LoginScreen, TaskScreen } from "../screens/index";
+import BottomTabsNavigator from "./BottomTabsNavigator";
 
 export type AppStackParamList = {
-  HomeScreen: undefined;
+  HomeScreen: { id: string };
   LoginScreen: undefined;
   ProfileScreen: { id: number };
   SplashScreen: undefined;
   StatisticsScreen: undefined;
-  TaskScreen: { id: number };
+  TaskScreen: undefined;
 };
 
 export type GenericNavigationProps = StackNavigationProp<AppStackParamList>;
@@ -29,12 +24,12 @@ export type GenericScreenProps<customScreen extends keyof AppStackParamList> =
 
 const { Navigator, Screen } = createStackNavigator<AppStackParamList>();
 
-const AppStack: FC = () => {
+const RootNavigator: FC = () => {
   const [user, setUser] = useState<any>(null);
 
   return (
     <NavigationContainer>
-      <Navigator screenOptions={{ headerShown: true }}>
+      <Navigator screenOptions={{ headerShown: false }}>
         <Screen
           name="LoginScreen"
           component={LoginScreen}
@@ -42,21 +37,19 @@ const AppStack: FC = () => {
         />
         <Screen
           name="HomeScreen"
-          component={HomeScreen}
+          component={BottomTabsNavigator}
           options={{ title: "Home" }}
         />
         <Screen
           name="ProfileScreen"
-          component={ ProfileScreen }
+          component={BottomTabsNavigator}
           options={{ title: "Profil" }}
         />
-
         <Screen
           name="StatisticsScreen"
-          component={ StatisticsScreen }
+          component={BottomTabsNavigator}
           options={{ title: "Statistics" }}
         />
-
         <Screen
           name="TaskScreen"
           component={TaskScreen}
@@ -67,4 +60,4 @@ const AppStack: FC = () => {
   );
 };
 
-export default AppStack;
+export default RootNavigator;

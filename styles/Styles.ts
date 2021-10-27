@@ -14,7 +14,8 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 15
+        marginTop: 15,
+        marginBottom: 15
     },
     item: {
         backgroundColor: "#FFF",
@@ -55,7 +56,7 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         width: "70%",
-        height: 200,
+        minHeight: 220,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -94,6 +95,8 @@ export const styles = StyleSheet.create({
         height: height / 13,
         padding: 10,
         flexDirection: "row",
+        borderWidth: 1,
+        borderColor: "black",
         borderRadius: 10,
         fontSize: 18,
         color: '#000000',
@@ -135,18 +138,56 @@ export const styles = StyleSheet.create({
         color: "black",
         fontFamily: "Roboto_400Regular",
     },
+    statisticsScreenContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
     pieChartStyle: {
-        height: 200, 
+        height: 150,
+        width: 150,
+    },
+    pieChartStyleBig: {
+        height: 200,
         width: 200,
+    },
+    pieChartContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        width: '100%'
+    },
+    pieShartTaskContainer: {
+      marginHorizontal: 10,
+      marginVertical: 5
+    },
+    pieShartTaskContainerText: {
+      textAlign: 'center'
     },
     Card: {
         width: 300,
-        height: 50,
+        height: 'auto',
         marginTop: 10,
+        padding: 8,
     },
     CardContainer: {
         flexDirection: "row",
         justifyContent: 'space-between',
         margin: 15,
-    }
+    },
+    title: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginBottom: 5,
+    },
+    italicFont: {
+        fontStyle: 'italic',
+        marginTop: 5,
+    },
+    picker: {
+        width: 200,
+        padding: 5,
+        margin: 5,
+      },
 })

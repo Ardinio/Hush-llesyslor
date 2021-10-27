@@ -6,4 +6,9 @@ export const mockedHousehold: Household[] = [
     Name: "Hushåll",
     GeneratedCode: "222",
   },
+  {
+    Id: "2",
+    Name: "House Stark",
+    GeneratedCode: "WinterIsComing",
+  },
 ];

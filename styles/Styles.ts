@@ -200,6 +200,19 @@ export const styles = StyleSheet.create({
     pieShartTaskContainerText: {
       textAlign: 'center'
     },
+    marginTop: {
+      marginTop: 20,
+    },
+    innerContainer: {
+      backgroundColor: "#EEEDE7",
+      borderRadius: 10,
+      height: 50,
+      width: 150,
+    },
+    innerContainerText: {
+      marginTop: 10,
+      marginLeft: 8,
+    },
    
     
 });

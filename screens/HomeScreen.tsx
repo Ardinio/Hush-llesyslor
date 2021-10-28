@@ -145,20 +145,16 @@ function HomeScreen({ navigation }: Props) {
 
   return (
     <SafeAreaProvider>
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")}>
-        <HouseholdCard />
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.container2}>
+          <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")}>
+            <HouseholdCard />
+          </TouchableOpacity>
+        </View>
 
-      {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
-      <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
+        {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
+        <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
 
-        {/* Denna knapp ska bort, detta är för demo av tasks nu  */}
-        <Button
-          buttonTitle="Tasks"
-          btnType="print"
-          onPress={() => navigation.navigate("TaskScreen")}
-        />
         {/* Modal to create new HouseHold */}
         <Modal
           animationType="slide"

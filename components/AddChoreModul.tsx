@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, Alert, FlatList, Modal } from "react-native";
+import { View, Text, Alert, FlatList, Modal, TextInput } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { useState } from "react";
@@ -7,23 +7,38 @@ import { useState } from "react";
 function AddChoreModul() {
   const [modalVisible, setModalVisible] = useState(false);
   const [complete, setComplete] = React.useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
-          <View style={styles.modalView}>
+          <View style={styles.modalView2}>
             <View>
               <View>
-                <Text style={styles.itemText}>Titel:</Text>
                 <View style={styles.innerContainer}>
+                  <TextInput
+                    style={styles.textBox}
+                    placeholder="Titel"
+                    placeholderTextColor="grey"
+                    value={title}
+                    onChangeText={(value) => setTitle(value)}
+                  />
                   <Text style={styles.innerContainerText}></Text>
                 </View>
               </View>
 
               <View style={styles.marginTop}>
-                <Text style={styles.itemText}>Beskrivning:</Text>
                 <View style={styles.innerContainer}>
+                  <TextInput
+                    style={styles.textBox}
+                    placeholder="Beskrivning"
+                    placeholderTextColor="grey"
+                    value={title}
+                    onChangeText={(value) => setTitle(value)}
+                  />
+
                   <Text style={styles.innerContainerText}></Text>
                 </View>
               </View>

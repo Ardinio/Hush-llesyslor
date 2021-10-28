@@ -137,10 +137,6 @@ export const styles = StyleSheet.create({
     color: "black",
     fontFamily: "Roboto_400Regular",
   },
-  pieChartStyle: {
-    height: 200,
-    width: 200,
-  },
   Card: {
     width: 300,
     height: "auto",
@@ -184,7 +180,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
+  pieChartStyle: {
+    height: 160,
+    width: 160,
+  },
   pieChartStyleBig: {
     height: 200,
     width: 200,

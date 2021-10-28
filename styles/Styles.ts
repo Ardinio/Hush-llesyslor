@@ -137,10 +137,6 @@ export const styles = StyleSheet.create({
     color: "black",
     fontFamily: "Roboto_400Regular",
   },
-  pieChartStyle: {
-    height: 150,
-    width: 150,
-  },
   Card: {
     width: 300,
     height: "auto",
@@ -176,29 +172,34 @@ export const styles = StyleSheet.create({
   container2: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
+  },
+  pieChartStyle: {
+    height: 150,
+    width: 150,
+  },
+  pieChartStyleBig: {
+    height: 200,
+    width: 200,
+  },
+  pieChartContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    width: "100%",
+  },
+  pieShartTaskContainer: {
+    marginHorizontal: 10,
+    marginVertical: 5,
+  },
+  pieShartTaskContainerText: {
+    textAlign: "center",
   },
    statisticsScreenContainer: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center'
-    },
-    pieChartStyleBig: {
-        height: 200,
-        width: 200,
-    },
-    pieChartContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        width: '100%'
-    },
-    pieShartTaskContainer: {
-      marginHorizontal: 10,
-      marginVertical: 5
-    },
-    pieShartTaskContainerText: {
-      textAlign: 'center'
     },
     marginTop: {
       marginTop: 20,
@@ -213,7 +214,4 @@ export const styles = StyleSheet.create({
       marginTop: 10,
       marginLeft: 8,
     },
-   
-    
 });
-

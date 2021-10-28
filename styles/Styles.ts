@@ -3,7 +3,6 @@ import { Dimensions, StyleSheet } from "react-native";
 const { height, width } = Dimensions.get("screen");
 
 export const styles = StyleSheet.create({
-
   text: {
     color: "#ffffff",
   },
@@ -16,6 +15,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 15,
+    marginBottom: 15,
   },
   item: {
     backgroundColor: "#FFF",
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
   itemText: {
     fontSize: 14,
     fontWeight: "bold",
-    marginLeft: 10,
+    marginLeft: 4,
   },
   buttonsContainer: {
     bottom: 10,
@@ -103,8 +103,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Roboto_400Regular",
   },
   buttonContainer: {
-    marginTop: 50,
-    width: "35%",
+    width: 150,
     height: height / 15,
     padding: 10,
     flexDirection: "row",
@@ -138,6 +137,10 @@ export const styles = StyleSheet.create({
     color: "black",
     fontFamily: "Roboto_400Regular",
   },
+  pieChartStyle: {
+    height: 150,
+    width: 150,
+  },
   Card: {
     width: 300,
     height: "auto",
@@ -156,7 +159,7 @@ export const styles = StyleSheet.create({
   },
   italicFont: {
     fontStyle: "italic",
-    marginTop: 10,
+    marginTop: 5,
   },
   picker: {
     width: 200,
@@ -173,16 +176,11 @@ export const styles = StyleSheet.create({
   container2: {
     flex: 1,
     alignItems: "center",
-    marginTop: 15,
   },
    statisticsScreenContainer: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center'
-    },
-    pieChartStyle: {
-        height: 150,
-        width: 150,
     },
     pieChartStyleBig: {
         height: 200,

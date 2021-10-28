@@ -1,49 +1,45 @@
 import * as React from "react";
-import { Text, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { Card } from "react-native-paper";
-import { Household } from "../entities/Household";
+import { AllAvatars } from "../data/avatars";
 import { useAppSelector } from "../store/store";
-import { selectAllUsers } from "../store/user/userSelectors";
 import { styles } from "../styles/Styles";
-import HouseholdList from "./HouseholdList";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { selectHouseholdsWithUsers } from "../store/household/householdSelectors";
 
-interface Props {
-  household: Household;
-}
-
-const HouseholdCard = ({ household }: Props) => {
-  const user = useAppSelector(selectAllUsers);
+const HouseholdCard = ({}) => {
+  const households = useAppSelector(selectHouseholdsWithUsers);
 
   return (
-    <Card style={styles.Card}>
-      <Text style={styles.title}>{household?.Name}</Text>
-      <View>
-        <FlatList
-          data={user}
-          renderItem={({ item }) => (
-            <>
-              <HouseholdList
-                allUsers={{
-                  Id: item.Id,
-                  AccountId: item.AccountID,
-                  HouseholdId: item.HouseholdId,
-                  Name: item.Name,
-                  AvatarId: item.AvatarId,
-                  IsOwner: item.IsOwner,
-                }}
-              />
-            </>
-          )}
-        />
-
-        <View></View>
-      </View>
-
-      <Text style={styles.italicFont}>
-        Kod för att gå med i hushållet: {household?.GeneratedCode}
-      </Text>
-    </Card>
+    //TODO: Check CSS to reuse several classes
+    <View style={styles.container2}>
+      {households.map(({ Name, users, GeneratedCode }, i) => (
+        <Card key={i} style={styles.Card}>
+          <View style={styles.textAlign}>
+            <Text style={styles.title}>{Name}</Text>
+            <TouchableOpacity
+              onPress={() =>
+                console.log("Ska modal öppnas här för att redigera hushåll? ")
+              }
+            >
+              <MaterialCommunityIcons name="pencil" size={20} />
+            </TouchableOpacity>
+          </View>
+          {users.map(({ Name, avatar, IsOwner }, i) => (
+            <View key={i} style={styles.textAlign}>
+              <Text>{avatar?.Emoji}</Text>
+              <Text>{Name}</Text>
+              <Text style={styles.descriptionText}>
+                {IsOwner ? "(ägare)" : null}
+              </Text>
+            </View>
+          ))}
+          <Text style={styles.italicFont}>
+            Kod för att gå med i hushållet: {GeneratedCode}
+          </Text>
+        </Card>
+      ))}
+    </View>
   );
 };
 

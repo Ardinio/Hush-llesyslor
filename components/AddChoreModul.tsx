@@ -17,9 +17,11 @@ function AddChoreModul() {
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
           <View style={styles.modalView2}>
+            <Text>Skapa en ny syssla</Text>
+
             <View>
               <View>
-                <View style={styles.innerContainer}>
+                <View style={[styles.innerContainer, styles.marginTop]}>
                   <TextInput
                     style={styles.textBox}
                     placeholder="Titel"

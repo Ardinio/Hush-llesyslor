@@ -2,10 +2,10 @@ import * as React from "react";
 import {
   View,
   Text,
-  Alert,
   Modal,
   TextInput,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
@@ -138,11 +138,16 @@ function HomeScreen({ navigation }: Props) {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        {/* Ta bort de 2 Text nedan när klart */}
+        <Text>ID:{activeAccount.Id}</Text>
+        <Text>E-post:{activeAccount.Email}</Text>
+        <ScrollView>
         <View style={styles.container2}>
           <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")}>
             <HouseholdCard />
           </TouchableOpacity>
         </View>
+        </ScrollView>
         {/* Modal to create new HouseHold */}
         <Modal
           animationType="slide"
@@ -282,7 +287,6 @@ function HomeScreen({ navigation }: Props) {
             </View>
           </View>
         </Modal>
-
         <View style={styles.buttonsContainer}>
           <Button
             buttonTitle="New House"

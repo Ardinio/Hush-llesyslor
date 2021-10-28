@@ -17,6 +17,7 @@ import { Button } from "../components";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { selectAccount } from "../store/account/accountSelectors";
+import { selectAllAccountsFromDatabase } from "../store/database/databaseSelectors";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -32,7 +33,8 @@ type Props = {
 // Add validation for e-mail, add encryption on password, add snackbar on new account
 
 function LoginScreen({ navigation }: Props) {
-  const accounts = useAppSelector(selectAccount);
+  const activeAccount = useAppSelector(selectAccount);
+  const allAccounts = useAppSelector(selectAllAccountsFromDatabase)
   const dispatch = useAppDispatch();
 
   const [email, setEmail] = React.useState<string>();
@@ -45,17 +47,18 @@ function LoginScreen({ navigation }: Props) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logIn = () => {
-    // if (!email || !password) return setErrorMsg("E-mail eller Password Saknas!")
-    // if (accounts.Email !== email.toLowerCase().trim())
-    //   return setErrorMsg("Email eller Password är felaktigt");
-    // const account = accounts((a) => a.Email === email.toLowerCase().trim());
-    // if (account?.Password !== password.trim())
-    //   return setErrorMsg("Email eller Password är felaktigt");
-    // setAccountId(account?.Id);
+    if (!email || !password) return setErrorMsg("E-mail eller Password Saknas!")
+    const account = allAccounts.find((a) => a.Email === email.toLowerCase().trim());
+    if (!account) return setErrorMsg("Finns inget konto registrerat på den E-postAdressen")
+    if (account.Email !== email.toLowerCase().trim())
+      return setErrorMsg("Email eller Password är felaktigt");
+    if (account.Password !== password.trim())
+      return setErrorMsg("Email eller Password är felaktigt");
+    dispatch(AddAccount(account))
     setIsLoggedIn(!isLoggedIn);
     setEmail("");
     setPassword("");
-    navigation.navigate("HomeScreen", {id: accountId!}); // send accountID !!
+    navigation.navigate("HomeScreen");
   };
 
   const logOut = () => {
@@ -112,6 +115,7 @@ function LoginScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
+      {/* Modal för registrering av nytt konto */}
       <Modal
         animationType="slide"
         transparent={true}

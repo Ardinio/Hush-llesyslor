@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
         backgroundColor: "transparent",
         position: 'absolute',
         width: "100%"
-      },
+    },
     errorText: {
         color: "red",
         fontSize: 12,
@@ -52,11 +52,11 @@ export const styles = StyleSheet.create({
         color: "steelblue",
         textAlign: "center",
         fontWeight: "600",
-        paddingBottom: 10,    
+        paddingBottom: 10,
     },
     modalView: {
         width: "70%",
-        minHeight: 220,
+        height: 220,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -64,24 +64,24 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-      },
-      textInputBox: {
+    },
+    textInputBox: {
         width: 200,
         borderWidth: 1,
         borderColor: "black",
         borderRadius: 5,
         padding: 5,
         margin: 5,
-      },
-      loginLogo: {
+    },
+    loginLogo: {
         marginTop: 20,
-      },
+    },
     inputContainer: {
         justifyContent: "center",
         width: width / 1.1,
@@ -139,7 +139,7 @@ export const styles = StyleSheet.create({
         fontFamily: "Roboto_400Regular",
     },
     pieChartStyle: {
-        height: 200, 
+        height: 200,
         width: 200,
     },
     Card: {
@@ -153,7 +153,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         margin: 15,
     },
-    title: {
+    title: {
         fontWeight: 'bold',
         fontSize: 18,
         marginBottom: 5,
@@ -166,5 +166,45 @@ export const styles = StyleSheet.create({
         width: 200,
         padding: 5,
         margin: 5,
-      },
+    },
+    avatarContainer: {
+        marginTop: 70,
+        marginLeft: 110,
+        width: "45%",
+        height: "30%",
+        padding: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 100,
+        backgroundColor: '#FFFFFF',
+        shadowColor: 'rgba(0, 0, 0, 0.1)',
+        shadowOpacity: 0.8,
+        elevation: 6,
+        shadowRadius: 15,
+        shadowOffset: { width: 1, height: 13 },
+    },
+    avatarWrapper: {
+        width: 170,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    input: {
+        justifyContent: "center",
+        alignItems: "center",
+        paddingTop: 25,
+    },
+
+    textInput: {
+        fontSize: 22,
+        fontWeight: "bold",
+        color: "black",
+    },
+    icon1: {
+        justifyContent: "center",
+        alignItems: "center",
+        // paddingTop: 5,
+        fontSize: 80,
+        // fontWeight: "bold",
+        color: "black",
+    },
 })

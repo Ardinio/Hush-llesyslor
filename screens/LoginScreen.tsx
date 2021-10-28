@@ -6,9 +6,8 @@ import {
   TouchableHighlight,
   Modal,
   Image,
-  Alert,
 } from "react-native";
-import { AddAccount } from "../store/account/accountActions";
+import { SetActiveAccount } from "../store/account/accountActions";
 import { styles } from "../styles/Styles";
 import nextId from "react-id-generator";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -28,10 +27,6 @@ type Props = {
   navigation: ProfileScreenNavigationProp;
 };
 
-// TODO
-// Add Formik
-// Add validation for e-mail, add encryption on password, add snackbar on new account
-
 function LoginScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
   const allAccounts = useAppSelector(selectAllAccountsFromDatabase)
@@ -41,10 +36,8 @@ function LoginScreen({ navigation }: Props) {
   const [password, setPassword] = React.useState<string>();
   const [newEmail, setNewEmail] = React.useState<string>();
   const [newPassword, setNewPassword] = React.useState<string>();
-  const [accountId, setAccountId] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logIn = () => {
     if (!email || !password) return setErrorMsg("E-mail eller Password Saknas!")
@@ -54,8 +47,11 @@ function LoginScreen({ navigation }: Props) {
       return setErrorMsg("Email eller Password är felaktigt");
     if (account.Password !== password.trim())
       return setErrorMsg("Email eller Password är felaktigt");
-    dispatch(AddAccount(account))
-    setIsLoggedIn(!isLoggedIn);
+    dispatch(SetActiveAccount({
+      Id: account.Id,
+      Email: account.Email,
+      isLoggedIn: true,
+    }))
     setEmail("");
     setPassword("");
     navigation.navigate("HomeScreen");
@@ -63,8 +59,11 @@ function LoginScreen({ navigation }: Props) {
 
   const logOut = () => {
     setErrorMsg("");
-    setAccountId("");
-    setIsLoggedIn(!isLoggedIn);
+    dispatch(SetActiveAccount({
+      Id: "",
+      Email: "",
+      isLoggedIn: false,
+    }))
   };
 
   const handleModal = () => {
@@ -97,7 +96,7 @@ function LoginScreen({ navigation }: Props) {
     // setModalVisible(!modalVisible);
   };
 
-  if (isLoggedIn) {
+  if (activeAccount.isLoggedIn) {
     return (
       <View style={styles.root}>
         <Image

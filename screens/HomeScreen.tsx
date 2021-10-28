@@ -5,7 +5,6 @@ import {
   Alert,
   Modal,
   TextInput,
-  FlatList,
   TouchableOpacity,
 } from "react-native";
 import { styles } from "../styles/Styles";
@@ -147,27 +146,15 @@ function HomeScreen({ navigation }: Props) {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        <View style={styles.container2}>
+          <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")}>
+            <HouseholdCard />
+          </TouchableOpacity>
+        </View>
+
         {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
         <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
 
-        {/* Denna knapp ska bort, detta är för demo av tasks nu  */}
-        <Button
-          buttonTitle="Tasks"
-          btnType="print"
-          onPress={() => navigation.navigate("TaskScreen")}
-        />
-
-        <FlatList
-          data={allHouseholds}
-          renderItem={({ item }) => (
-            <>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("TaskScreen")}
-              />
-              <HouseholdCard />
-            </>
-          )}
-        />
         {/* Modal to create new HouseHold */}
         <Modal
           animationType="slide"

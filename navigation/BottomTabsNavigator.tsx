@@ -1,10 +1,11 @@
 import React from "react";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   HomeScreen,
   ProfileScreen,
-  StatisticsScreen
+  StatisticsScreen,
+  TaskScreen
 } from "../screens/index";
 
 
@@ -12,6 +13,7 @@ type RootTabParams = {
   Home: undefined;
   Statistics: undefined;
   Profile: undefined;
+  Tasks: undefined;
 };
 
 const Tabs = createBottomTabNavigator<RootTabParams>();
@@ -39,6 +41,13 @@ const BottomTabsNavigator = () => {
       component={ProfileScreen} 
       options={{ tabBarIcon: ({ color }) =>
           <MaterialCommunityIcons name="face-profile" size={24} color={color} />
+      }}
+      />
+      <Tabs.Screen 
+      name="Tasks" 
+      component={TaskScreen} 
+      options={{ tabBarIcon: ({ color }) =>
+      <FontAwesome5 name="tasks" size={24} color={color} />
       }}
       />
     </Tabs.Navigator>

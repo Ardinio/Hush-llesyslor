@@ -26,7 +26,7 @@ const { Navigator, Screen } = createStackNavigator<AppStackParamList>();
 
 const RootNavigator: FC = () => {
   const [user, setUser] = useState<any>(null);
-
+  
   return (
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
@@ -52,8 +52,8 @@ const RootNavigator: FC = () => {
         />
         <Screen
           name="TaskScreen"
-          component={TaskScreen}
-          options={{ title: "Task" }}
+          component={BottomTabsNavigator}
+          options={{ title: "Tasks" }}
         />
       </Navigator>
     </NavigationContainer>

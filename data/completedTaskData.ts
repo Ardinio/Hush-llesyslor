@@ -8,37 +8,37 @@ export const mockedCompletedTask: CompletedTask[] = [
   {
     Id: "1",
     TasksId: "1",
-    UserId: "2",
+    UserId: "1",
     CompleteDate: date1,
   },
   {
     Id: "2",
     TasksId: "2",
-    UserId: "1",
+    UserId: "2",
     CompleteDate: date2,
   },
   {
     Id: "3",
     TasksId: "1",
-    UserId: "2",
+    UserId: "3",
     CompleteDate: date3,
   },
   {
     Id: "4",
     TasksId: "3",
-    UserId: "3",
+    UserId: "7",
     CompleteDate: date1,
   },
   {
     Id: "5",
     TasksId: "3",
-    UserId: "4",
+    UserId: "8",
     CompleteDate: date2,
   },
   {
     Id: "6",
     TasksId: "4",
-    UserId: "3",
+    UserId: "9",
     CompleteDate: date3,
   },
 ]

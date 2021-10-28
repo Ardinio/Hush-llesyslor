@@ -162,27 +162,21 @@ export const styles = StyleSheet.create({
     padding: 5,
     margin: 5,
   },
-  marginTop: {
-    marginTop: 20,
+  textAlign: {
+    flexDirection: "row",
   },
-  innerContainer: {
-    backgroundColor: "#EEEDE7",
-    borderRadius: 10,
-    height: 50,
-    width: 150,
+  descriptionText: {
+    marginLeft: 15,
+    fontStyle: "italic",
   },
-  innerContainerText: {
-    marginTop: 10,
-    marginLeft: 8,
-  },
-  statisticsScreenContainer: {
+  container2: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   pieChartStyle: {
-    height: 160,
-    width: 160,
+    height: 150,
+    width: 150,
   },
   pieChartStyleBig: {
     height: 200,
@@ -202,4 +196,22 @@ export const styles = StyleSheet.create({
   pieShartTaskContainerText: {
     textAlign: "center",
   },
+   statisticsScreenContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    marginTop: {
+      marginTop: 20,
+    },
+    innerContainer: {
+      backgroundColor: "#EEEDE7",
+      borderRadius: 10,
+      height: 50,
+      width: 150,
+    },
+    innerContainerText: {
+      marginTop: 10,
+      marginLeft: 8,
+    },
 });

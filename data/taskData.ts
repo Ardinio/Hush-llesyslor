@@ -15,7 +15,7 @@ export const mockedTasks: Task[] = [
     Title: "Diska",
     Description: "Allting!",
     recurringInDays: 2,
-    EnergyRequired: 1,
+    EnergyRequired: 2,
   },
   {
     Id: "3",
@@ -23,6 +23,14 @@ export const mockedTasks: Task[] = [
     Title: "Sopa",
     Description: "House Stark får snabbt skitiga golv, behöver sopas dagligen.",
     recurringInDays: 1,
-    EnergyRequired: 4,
+    EnergyRequired: 6,
+  },
+  {
+    Id: "4",
+    HouseholdId: "2",
+    Title: "Moppa",
+    Description: "Många leriga boots.",
+    recurringInDays: 1,
+    EnergyRequired: 8,
   },
 ];

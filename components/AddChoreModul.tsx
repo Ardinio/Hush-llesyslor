@@ -3,6 +3,8 @@ import { View, Text, Alert, FlatList, Modal, TextInput } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { useState } from "react";
+import RepeatCarousel from "./RepeatCarousel";
+import ValueCarousel from "./ValueCarousel";
 
 function AddChoreModul() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,9 +40,9 @@ function AddChoreModul() {
                     value={title}
                     onChangeText={(value) => setTitle(value)}
                   />
-
-                  <Text style={styles.innerContainerText}></Text>
                 </View>
+                <RepeatCarousel />
+                <ValueCarousel />
               </View>
             </View>
 

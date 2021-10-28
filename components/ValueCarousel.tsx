@@ -9,7 +9,7 @@ function ValueCarousel() {
   const [content, setContent] = useState(false);
   const number = [1, 2, 4, 6, 8];
   return (
-    <View style={[ styles.marginTop]}>
+    <View style={[styles.carouselContainer, styles.marginTop]}>
       <TouchableOpacity onPress={() => setContent(!content)}>
         {content ? (
           <View>
@@ -17,7 +17,7 @@ function ValueCarousel() {
               {number.map((n) => (
                 <Badge
                   size={26}
-                  style={[styles.itemText, styles.container]}
+                  style={[styles.itemText, styles.container, styles.badge]}
                 >
                   {n}
                 </Badge>
@@ -26,8 +26,8 @@ function ValueCarousel() {
           </View>
         ) : (
           <View style={styles.CardContainer}>
-            <Text>Värde:</Text>
-            <Badge style={[styles.itemText]}>7</Badge>
+            <Text style={styles.carouselText}>Värde:</Text>
+            <Badge style={[styles.itemText, styles.badge]}>7</Badge>
             <View></View>
           </View>
         )}

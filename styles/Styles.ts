@@ -235,4 +235,16 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  carouselContainer: {
+    backgroundColor: "#ffff",
+    borderRadius: 10,
+    height: 50,
+    width: 280,
+  },
+  badge: {
+    backgroundColor: "#EEEDE7",
+  },
+  carouselText: {
+    fontWeight: "bold",
+  },
 });

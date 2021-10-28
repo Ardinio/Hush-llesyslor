@@ -1,16 +1,15 @@
 import * as React from "react";
 import { FC } from "react";
 import { Badge } from "react-native-paper";
-import { TaskData } from "../data/taskData";
+import { Task } from "../entities/Task";
 import { styles } from "../styles/Styles";
 
 interface Props {
-  task: TaskData;
+  task: Task;
 }
 
-const BadgeComponent: FC<Props> = ({ task }) => (
-    <Badge style={styles.itemText}>{task.DaysToComplete}</Badge>
-  );
-  
-  export default BadgeComponent;
-  
+const BadgeComponent = ({ task }: Props) => (
+  <Badge style={styles.itemText}>{task.recurringInDays}</Badge>
+);
+
+export default BadgeComponent;

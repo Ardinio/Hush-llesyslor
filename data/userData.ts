@@ -42,15 +42,7 @@ export const mockedUser: User[] = [
     IsOwner: true,
   },
   {
-    Id: "2",
-    AccountId: "1",
-    HouseholdId: "1",
-    Name: "Bobbo",
-    AvatarId: "2",
-    IsOwner: false,
-  },
-  {
-    Id: "3",
+    Id: "6",
     AccountId: "1",
     HouseholdId: "2",
     Name: "Jon",
@@ -58,7 +50,7 @@ export const mockedUser: User[] = [
     IsOwner: true,
   },
   {
-    Id: "4",
+    Id: "7",
     AccountId: "1",
     HouseholdId: "2",
     Name: "Sansa",
@@ -66,7 +58,7 @@ export const mockedUser: User[] = [
     IsOwner: false,
   },
   {
-    Id: "5",
+    Id: "8",
     AccountId: "1",
     HouseholdId: "2",
     Name: "Arya",
@@ -74,7 +66,7 @@ export const mockedUser: User[] = [
     IsOwner: false,
   },
   {
-    Id: "6",
+    Id: "9",
     AccountId: "1",
     HouseholdId: "2",
     Name: "Robb",
@@ -82,7 +74,7 @@ export const mockedUser: User[] = [
     IsOwner: false,
   },
   {
-    Id: "7",
+    Id: "10",
     AccountId: "1",
     HouseholdId: "2",
     Name: "Bran",
@@ -90,7 +82,7 @@ export const mockedUser: User[] = [
     IsOwner: false,
   },
   {
-    Id: "8",
+    Id: "11",
     AccountId: "1",
     HouseholdId: "2",
     Name: "Rickon",

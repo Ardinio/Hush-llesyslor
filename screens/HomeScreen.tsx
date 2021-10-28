@@ -87,7 +87,7 @@ function HomeScreen({ navigation }: Props) {
     const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
     if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!");
     const user = usersInHouse?.find((u) => u.AccountId === activeAccount.Id);
-    // if (user) return setErrorMsg("Du är redan med i det här hushållet!")
+    if (user) return setErrorMsg("Du är redan med i det här hushållet!")
     const avatars = AllAvatars.filter(
       (a) => !usersInHouse.map((u) => u.AvatarId).includes(a.Id)
     );
@@ -101,7 +101,6 @@ function HomeScreen({ navigation }: Props) {
     if (!userName || !avatarId || avatarId === "0")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     if (newHouseHold) {
-      console.log("nytt hushåll"); // Ta Bort
       dispatch(AddHousehold(newHouseHold!));
       dispatch(
         AddUser({
@@ -114,7 +113,6 @@ function HomeScreen({ navigation }: Props) {
         })
       );
     } else if (houseHold) {
-      console.log("gå med i hushåll"); // Ta Bort
       dispatch(
         AddUser({
           Id: nextId(),
@@ -137,12 +135,6 @@ function HomeScreen({ navigation }: Props) {
     setJoinHouseModalVisible(!joinHouseModalVisible);
   };
 
-  const handlePrint = () => {
-    Alert.alert("Print (see console)");
-    console.log("allHouseholds: ", allHouseholds);
-    console.log("allUsers: ", allUsers);
-  };
-
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
@@ -151,10 +143,6 @@ function HomeScreen({ navigation }: Props) {
             <HouseholdCard />
           </TouchableOpacity>
         </View>
-
-        {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
-        <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
-
         {/* Modal to create new HouseHold */}
         <Modal
           animationType="slide"

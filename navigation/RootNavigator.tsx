@@ -4,8 +4,8 @@ import {
   StackNavigationProp,
   StackScreenProps,
 } from "@react-navigation/stack";
-import React, { FC, useEffect, useState } from "react";
-import { LoginScreen, TaskScreen } from "../screens/index";
+import React, { FC } from "react";
+import { LoginScreen } from "../screens/index";
 import BottomTabsNavigator from "./BottomTabsNavigator";
 
 export type AppStackParamList = {
@@ -25,8 +25,7 @@ export type GenericScreenProps<customScreen extends keyof AppStackParamList> =
 const { Navigator, Screen } = createStackNavigator<AppStackParamList>();
 
 const RootNavigator: FC = () => {
-  const [user, setUser] = useState<any>(null);
-  
+
   return (
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>

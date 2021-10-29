@@ -72,7 +72,8 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   textInputBox: {
-    width: 200,
+    width: "70%",
+    minWidth: 200,
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 5,

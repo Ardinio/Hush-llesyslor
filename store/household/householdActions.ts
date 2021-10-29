@@ -6,9 +6,19 @@ export interface AddHouseholdAction {
   payload: Household;
 }
 
-export type HouseholdActions = AddHouseholdAction;
+export interface EditHouseholdAction {
+  type: 'household/editHousehold';
+  payload: Household;
+}
 
-export const AddHousehold = (household: Household): AppThunk => 
+export type HouseholdActions = AddHouseholdAction | EditHouseholdAction;
+
+export const AddHousehold = (household: Household): AppThunk =>
   async (dispatch, getState) => {
     dispatch({ type: 'household/addHousehold', payload: household })
+  }
+
+export const EditHousehold = (household: Household): AppThunk =>
+  async (dispatch, getState) => {
+    dispatch({ type: 'household/editHousehold', payload: household })
   }

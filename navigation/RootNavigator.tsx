@@ -9,7 +9,7 @@ import { LoginScreen, TaskScreen } from "../screens/index";
 import BottomTabsNavigator from "./BottomTabsNavigator";
 
 export type AppStackParamList = {
-  HomeScreen: { id: string };
+  HomeScreen: undefined;
   LoginScreen: undefined;
   ProfileScreen: { id: number };
   SplashScreen: undefined;

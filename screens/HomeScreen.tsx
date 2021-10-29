@@ -2,10 +2,10 @@ import * as React from "react";
 import {
   View,
   Text,
-  Alert,
   Modal,
   TextInput,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
@@ -86,7 +86,7 @@ function HomeScreen({ navigation }: Props) {
     const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
     if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!");
     const user = usersInHouse?.find((u) => u.AccountId === activeAccount.Id);
-    // if (user) return setErrorMsg("Du är redan med i det här hushållet!")
+    if (user) return setErrorMsg("Du är redan med i det här hushållet!")
     const avatars = AllAvatars.filter(
       (a) => !usersInHouse.map((u) => u.AvatarId).includes(a.Id)
     );
@@ -101,7 +101,6 @@ function HomeScreen({ navigation }: Props) {
     if (!userName || !avatarId || avatarId === "0")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     if (newHouseHold) {
-      console.log("nytt hushåll"); // Ta Bort
       dispatch(AddHousehold(newHouseHold!));
       dispatch(
         AddUser({
@@ -114,7 +113,6 @@ function HomeScreen({ navigation }: Props) {
         })
       );
     } else if (houseHold) {
-      console.log("gå med i hushåll"); // Ta Bort
       dispatch(
         AddUser({
           Id: nextId(),
@@ -137,24 +135,19 @@ function HomeScreen({ navigation }: Props) {
     setJoinHouseModalVisible(!joinHouseModalVisible);
   };
 
-  const handlePrint = () => {
-    Alert.alert("Print (see console)");
-    console.log("allHouseholds: ", allHouseholds);
-    console.log("allUsers: ", allUsers);
-  };
-
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        {/* Ta bort de 2 Text nedan när klart */}
+        <Text>ID:{activeAccount.Id}</Text>
+        <Text>E-post:{activeAccount.Email}</Text>
+        <ScrollView>
         <View style={styles.container2}>
           <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")}>
             <HouseholdCard />
           </TouchableOpacity>
         </View>
-
-        {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
-        <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
-
+        </ScrollView>
         {/* Modal to create new HouseHold */}
         <Modal
           animationType="slide"
@@ -294,7 +287,6 @@ function HomeScreen({ navigation }: Props) {
             </View>
           </View>
         </Modal>
-
         <View style={styles.buttonsContainer}>
           <Button
             buttonTitle="New House"

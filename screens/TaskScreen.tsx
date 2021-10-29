@@ -16,7 +16,7 @@ function TaskScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
+      {/* <FlatList
         data={mockedTasks}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -29,7 +29,8 @@ function TaskScreen() {
             <TaskCard task={item} />
           </TouchableOpacity>
         )}
-      />
+      /> */}
+      <TaskCard />
 
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>

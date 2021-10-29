@@ -1,16 +1,52 @@
 import * as React from "react";
-import { View, Text, Alert, FlatList, Modal, TextInput } from "react-native";
+import { View, Text, Modal, TextInput, Alert } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { useState } from "react";
 import RepeatCarousel from "./RepeatCarousel";
 import ValueCarousel from "./ValueCarousel";
+import nextId from "react-id-generator";
+import { Task } from "../entities/Task";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { AddTask } from "../store/task/taskActions";
+import { selectAllTasks } from "../store/task/taskSelectors";
 
 function AddChoreModul() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [complete, setComplete] = React.useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [recurringInDays, setRecurringInDays] = useState<number>();
+  const [energyRequired, setEnergyRequired] = useState<number>();
+  const [errorMsg, setErrorMsg] = React.useState<string>();
+  const [task, setTask] = useState<Task>();
+  const dispatch = useAppDispatch();
+  const allTask = useAppSelector(selectAllTasks);
+
+  const closeModal = () => {
+    setErrorMsg("");
+    setTitle("");
+    setDescription("");
+    setModalVisible(false);
+  };
+
+  const addNewTask = () => {
+    if (!title || !description)
+      return setErrorMsg("Du måste fylla i alla fält");
+
+    dispatch(
+      AddTask({
+        Id: nextId(),
+        HouseholdId: "100",
+        Title: title,
+        Description: description,
+        recurringInDays: recurringInDays,
+        EnergyRequired: energyRequired,
+      })
+    );
+
+    console.log(title);
+    closeModal();
+  };
 
   return (
     <View style={styles.container}>
@@ -29,6 +65,8 @@ function AddChoreModul() {
                     value={title}
                     onChangeText={(value) => setTitle(value)}
                   />
+                  <Text style={styles.errorText}>{errorMsg}</Text>
+
                   <Text style={styles.innerContainerText}></Text>
                 </View>
               </View>
@@ -39,26 +77,29 @@ function AddChoreModul() {
                     style={styles.textBox}
                     placeholder="Beskrivning"
                     placeholderTextColor="grey"
-                    value={title}
-                    onChangeText={(value) => setTitle(value)}
+                    value={description}
+                    onChangeText={(value) => setDescription(value)}
                   />
+                  <Text style={styles.errorText}>{errorMsg}</Text>
                 </View>
-                <RepeatCarousel />
-                <ValueCarousel />
+                <RepeatCarousel
+                  onChangeText={(value) => setRecurringInDays(value)}
+                />
+                <ValueCarousel
+                  onChangeText={(value) => setEnergyRequired(value)}
+                />
               </View>
             </View>
 
             <View style={styles.marginTop}>
               <Button
-                onPress={() => {
-                  setComplete(!complete);
-                }}
-                buttonTitle="Färdig"
-                btnType="check"
+                onPress={addNewTask}
+                buttonTitle="Spara"
+                btnType="window-close"
               />
               <View style={styles.marginTop}>
                 <Button
-                  onPress={() => setModalVisible(!modalVisible)}
+                  onPress={() => setModalVisible(false)}
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />

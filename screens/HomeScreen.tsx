@@ -35,8 +35,7 @@ function HomeScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
-  const [joinHouseModalVisible, setJoinHouseModalVisible] =
-    React.useState(false);
+  const [joinHouseModalVisible, setJoinHouseModalVisible] = React.useState(false);
   const [newUserModalVisible, setNewUserModalVisible] = React.useState(false);
   const [houseHoldName, setHouseHoldName] = React.useState<string>();
   const [houseHoldCode, setHouseHoldCode] = React.useState<string>();
@@ -94,6 +93,7 @@ function HomeScreen({ navigation }: Props) {
     setAvatarsAvailable(avatars);
     setHouseHold(house);
     setNewUserModalVisible(true);
+    setJoinHouseModalVisible(false);
     setErrorMsg("");
   };
 

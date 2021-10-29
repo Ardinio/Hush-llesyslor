@@ -1,8 +1,9 @@
-import { Account } from "../entities/Account";
 
-export const mockedAccount: Account =
+import { ActiveAccount } from "../entities/ActiveAccount";
+
+export const mockedAccount: ActiveAccount =
   {
-    Id: "1",
-    Email: "test@test.com",
-    Password: "Test",
+    Id: "",
+    Email: "",
+    isLoggedIn: false,
   }

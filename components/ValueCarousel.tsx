@@ -6,10 +6,10 @@ import { FC, useState } from "react";
 import { Badge } from "react-native-paper";
 
 interface Props {
-  onChangeText: (text: string) => void;
+  onChangeText: (text: number) => void;
 }
 
-const ValueCarousel: FC<Props> = () => {
+const ValueCarousel: FC<Props> = (props) => {
   const [content, setContent] = useState(false);
   const [energyRequired, setEnergyRequired] = useState<any>();
 

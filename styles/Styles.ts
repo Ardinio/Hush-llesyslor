@@ -247,4 +247,9 @@ export const styles = StyleSheet.create({
   carouselText: {
     fontWeight: "bold",
   },
+  innerTextPressed: {
+    color: "black",
+    fontWeight: "bold",
+    backgroundColor: "red",
+  },
 });

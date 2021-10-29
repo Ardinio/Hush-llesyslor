@@ -6,12 +6,28 @@ import TaskCard from "../components/TaskCard";
 import { mockedTasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { selectActiveTask } from "../store/task/taskSelectors";
+import taskReducer from "../store/task/taskReducer";
+import { DeleteTask } from "../store/task/taskActions";
+import AntDesign from "@expo/vector-icons/build/AntDesign";
 
 function TaskScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [complete, setComplete] = React.useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
   const [selectedTitle, setSelectedTitle] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const activTask = useAppSelector(selectActiveTask);
+
+  // const onDelete = () => {
+  //   dispatch(
+  //     DeleteTask({
+  //      Id: '',
+
+  //     })
+  //   )
+  // }
 
   return (
     <View style={styles.container}>
@@ -76,6 +92,11 @@ function TaskScreen() {
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />
+                {/* <Button
+                  onPress={onDelete}
+                  buttonTitle="Radera"
+                  btnType="delete"
+                /> */}
               </View>
             </View>
           </View>

@@ -5,12 +5,14 @@ import { Card } from "react-native-paper";
 import { FC } from "react";
 import BadgeComponent from "./BadgeComponent";
 import { Task } from "../entities/Task";
+import { useAppDispatch } from "../store/store";
 
 interface Props {
   task: Task;
 }
 
 const TaskCard = ({ task }: Props) => {
+ 
   return (
     <Card style={styles.Card}>
       <View style={styles.CardContainer}>

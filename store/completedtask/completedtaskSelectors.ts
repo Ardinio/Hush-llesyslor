@@ -1,14 +1,26 @@
 import { PieChartInputData } from '../../components/ChartPie';
 import { RootState } from '../store';
 import { singleAvatarById } from '../../data/avatars';
+import { CompletedTask } from '../../entities/CompletedTask';
 
 export const selectAllCompletedTasks = (state: RootState) => state.completedtask.completedTasks;
 
 export const selectCompletedTasksTotal = (startdate: Date, enddate: Date) => (state: RootState) => {
-  const byDate = state.completedtask.completedTasks.filter((x) => { return x.CompleteDate.getTime() > startdate.getTime() && x.CompleteDate.getTime() < enddate.getTime() });
+  const usersBasedOnHousehold = state.user.users.filter((x) => x.HouseholdId === state.household.activeHouseholdId).map((x) => x.Id);
+  const completedtaskContainer: CompletedTask[] = [];
+
+  state.completedtask.completedTasks.forEach((x) => {
+    usersBasedOnHousehold.forEach((y) => {
+      if (x.UserId === y) {
+        completedtaskContainer.push(x);
+      }
+    })
+  })
+  const byDate = completedtaskContainer.filter((x) => { return x.CompleteDate.getTime() > startdate.getTime() && x.CompleteDate.getTime() < enddate.getTime() });
   const pieChartData: PieChartInputData[] = [];
+
   byDate.forEach((value) => {
-    const user = state.user.users.find((x) => x.Id === value.UserId) ?? { Id: '', AccountId: -1, HouseholdId: -1, Name: '', AvatarId: '', IsOwner: false };
+    const user = state.user.users.find((x) => x.Id === value.UserId) ?? { Id: '', AccountId: '', HouseholdId: '', Name: '', AvatarId: '', IsOwner: false };
     const task = state.task.task.find((x) => x.Id === value.TasksId) ?? { Id: '', HouseholdId: '', Title: '', Description: '', LastCheckDate: new Date(-1), DaysToComplete: -1, EnergyRequired: -1 };
     const avatar = singleAvatarById(user.AvatarId);
     const indexFromPieChartData: number = pieChartData.findIndex((x) => x.avatarId === user.AvatarId);
@@ -29,8 +41,19 @@ export type tasksContainer = {
 }
 
 export const selectCompletedTasksByTasks = (startdate: Date, enddate: Date) => (state: RootState) => {
+  const usersBasedOnHousehold = state.user.users.filter((x) => x.HouseholdId === state.household.activeHouseholdId).map((x) => x.Id);
+  const completedtaskContainer: CompletedTask[] = [];
+
+  state.completedtask.completedTasks.forEach((x) => {
+    usersBasedOnHousehold.forEach((y) => {
+      if (x.UserId === y) {
+        completedtaskContainer.push(x);
+      }
+    })
+  })
+  const byDate = completedtaskContainer.filter((x) => { return x.CompleteDate.getTime() > startdate.getTime() && x.CompleteDate.getTime() < enddate.getTime() });
   const tasksPieChartsContainer: tasksContainer[] = [];
-  const byDate = state.completedtask.completedTasks.filter((x) => { return x.CompleteDate.getTime() > startdate.getTime() && x.CompleteDate.getTime() < enddate.getTime() });
+
   byDate.forEach((value) => {
     const indexFromContainer: number = tasksPieChartsContainer.findIndex((x) => x.taskId === value.TasksId);
     if (indexFromContainer >= 0) {

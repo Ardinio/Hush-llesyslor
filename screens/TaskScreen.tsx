@@ -6,6 +6,7 @@ import TaskCard from "../components/TaskCard";
 import { mockedTasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
 import { useState } from "react";
+import AddChoreModul from "../components/AddChoreModul";
 
 function TaskScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,7 +33,7 @@ function TaskScreen() {
 
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
-          <View style={styles.modalView}>
+          <View style={styles.modalView2}>
             <View>
               <View>
                 <Text style={styles.itemText}>Titel:</Text>
@@ -81,6 +82,7 @@ function TaskScreen() {
           </View>
         </View>
       </Modal>
+      <AddChoreModul />
     </View>
   );
 }

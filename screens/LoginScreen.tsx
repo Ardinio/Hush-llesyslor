@@ -6,9 +6,8 @@ import {
   TouchableHighlight,
   Modal,
   Image,
-  Alert,
 } from "react-native";
-import { AddAccount } from "../store/account/accountActions";
+import { SetActiveAccount } from "../store/account/accountActions";
 import { styles } from "../styles/Styles";
 import nextId from "react-id-generator";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -17,6 +16,8 @@ import { Button } from "../components";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { selectAccount } from "../store/account/accountSelectors";
+import { selectAllAccountsFromDatabase } from "../store/database/databaseSelectors";
+import { AddAccountToDatabase } from "../store/database/databaseActions";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
@@ -27,41 +28,51 @@ type Props = {
   navigation: ProfileScreenNavigationProp;
 };
 
-// TODO
-// Add Formik
-// Add validation for e-mail, add encryption on password, add snackbar on new account
-
 function LoginScreen({ navigation }: Props) {
-  const accounts = useAppSelector(selectAccount);
+  const activeAccount = useAppSelector(selectAccount);
+  const allAccounts = useAppSelector(selectAllAccountsFromDatabase);
   const dispatch = useAppDispatch();
 
   const [email, setEmail] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
   const [newEmail, setNewEmail] = React.useState<string>();
   const [newPassword, setNewPassword] = React.useState<string>();
-  const [accountId, setAccountId] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logIn = () => {
-    // if (!email || !password) return setErrorMsg("E-mail eller Password Saknas!")
-    // if (accounts.Email !== email.toLowerCase().trim())
-    //   return setErrorMsg("Email eller Password är felaktigt");
-    // const account = accounts((a) => a.Email === email.toLowerCase().trim());
-    // if (account?.Password !== password.trim())
-    //   return setErrorMsg("Email eller Password är felaktigt");
-    // setAccountId(account?.Id);
-    setIsLoggedIn(!isLoggedIn);
+    if (!email || !password)
+      return setErrorMsg("E-mail eller Password Saknas!");
+    const account = allAccounts.find(
+      (a) => a.Email === email.toLowerCase().trim()
+    );
+    if (!account)
+      return setErrorMsg("Finns inget konto registrerat på den E-postAdressen");
+    if (account.Email !== email.toLowerCase().trim())
+      return setErrorMsg("Email eller Password är felaktigt");
+    if (account.Password !== password.trim())
+      return setErrorMsg("Email eller Password är felaktigt");
+    dispatch(
+      SetActiveAccount({
+        Id: account.Id,
+        Email: account.Email,
+        isLoggedIn: true,
+      })
+    );
     setEmail("");
     setPassword("");
-    navigation.navigate("HomeScreen", {id: accountId!}); // send accountID !!
+    navigation.navigate("HomeScreen");
   };
 
   const logOut = () => {
     setErrorMsg("");
-    setAccountId("");
-    setIsLoggedIn(!isLoggedIn);
+    dispatch(
+      SetActiveAccount({
+        Id: "",
+        Email: "",
+        isLoggedIn: false,
+      })
+    );
   };
 
   const handleModal = () => {
@@ -74,27 +85,24 @@ function LoginScreen({ navigation }: Props) {
   };
 
   const registerNewAccount = () => {
-    // console.log(newEmail); // remove line when finished!!!
-    // if (!newEmail || !newPassword)
-    //   return setErrorMsg("E-mail eller Password Saknas!");
-    // if (accounts.find((a) => a.Email === newEmail.toLowerCase().trim()))
-    //   return setErrorMsg("E-postadressen finns redan");
-    // dispatch(
-    //   AddAccount({
-    //     Id: nextId(),
-    //     Email: newEmail.toLowerCase().trim(),
-    //     Password: newPassword.trim(),
-    //   })
-    // );
-    // Alert.alert("New user registered"); // replace Alert with SnackBar !!
-    // console.log(accounts); // remove line when finished!!!
-    // setNewEmail("");
-    // setNewPassword("");
-    // setErrorMsg("");
-    // setModalVisible(!modalVisible);
+    if (!newEmail || !newPassword)
+      return setErrorMsg("E-mail eller Password Saknas!");
+    if (allAccounts.find((a) => a.Email === newEmail.toLowerCase().trim()))
+      return setErrorMsg("E-postadressen finns redan");
+    dispatch(
+      AddAccountToDatabase({
+        Id: nextId(),
+        Email: newEmail.toLowerCase().trim(),
+        Password: newPassword.trim(),
+      })
+    );
+    setNewEmail("");
+    setNewPassword("");
+    setErrorMsg("");
+    setModalVisible(!modalVisible);
   };
 
-  if (isLoggedIn) {
+  if (activeAccount.isLoggedIn) {
     return (
       <View style={styles.root}>
         <Image
@@ -112,6 +120,7 @@ function LoginScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
+      {/* Modal för registrering av nytt konto */}
       <Modal
         animationType="slide"
         transparent={true}

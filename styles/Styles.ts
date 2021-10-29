@@ -72,7 +72,8 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   textInputBox: {
-    width: 200,
+    width: "70%",
+    minWidth: 200,
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 5,
@@ -196,22 +197,55 @@ export const styles = StyleSheet.create({
   pieShartTaskContainerText: {
     textAlign: "center",
   },
-   statisticsScreenContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
+  statisticsScreenContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  marginTop: {
+    marginTop: 20,
+  },
+  innerContainer: {
+    backgroundColor: "#ffff",
+    borderRadius: 10,
+    height: 50,
+    width: 280,
+  },
+  innerContainerText: {
+    marginTop: 10,
+    marginLeft: 8,
+  },
+  textBox: {
+    marginTop: 8,
+    marginLeft: 8,
+  },
+  modalView2: {
+    width: "90%",
+    minHeight: 220,
+    margin: 20,
+    backgroundColor: "#EEEDE7",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    marginTop: {
-      marginTop: 20,
-    },
-    innerContainer: {
-      backgroundColor: "#EEEDE7",
-      borderRadius: 10,
-      height: 50,
-      width: 150,
-    },
-    innerContainerText: {
-      marginTop: 10,
-      marginLeft: 8,
-    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  carouselContainer: {
+    backgroundColor: "#ffff",
+    borderRadius: 10,
+    height: 50,
+    width: 280,
+  },
+  badge: {
+    backgroundColor: "#EEEDE7",
+  },
+  carouselText: {
+    fontWeight: "bold",
+  },
 });

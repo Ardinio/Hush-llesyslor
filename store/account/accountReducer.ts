@@ -2,9 +2,9 @@ import { AccountActions } from './accountActions';
 import { AccountState, initialState } from './accountState';
 
 function accountReducer(state: AccountState = initialState, action: AccountActions): AccountState {
-  if (action.type === 'account/addAccount') {
+  if (action.type === 'account/SetActiveAccount') {
     return {
-      ...state,
+      // ...state,
       account: action.payload
     }
   }

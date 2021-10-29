@@ -28,7 +28,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
-function HomeScreen({ navigation }: Props) {
+function SelectHouseholdScreen({ navigation }: Props) {
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
   const dispatch = useAppDispatch();
@@ -105,15 +105,16 @@ function HomeScreen({ navigation }: Props) {
         renderItem={({ item }) => (
           <>
             <TouchableOpacity
-              onPress={() => navigation.navigate("TaskScreen")}
-            />
-            <HouseholdCard
-              household={{
-                Id: item.Id,
-                Name: item.Name,
-                GeneratedCode: item.GeneratedCode,
-              }}
-            />
+              onPress={() => navigation.navigate("HomeScreen", { householdId: '1' })}
+            >
+              <HouseholdCard
+                household={{
+                  Id: item.Id,
+                  Name: item.Name,
+                  GeneratedCode: item.GeneratedCode,
+                }}
+              />
+            </TouchableOpacity>
           </>
         )}
       />
@@ -220,4 +221,4 @@ function HomeScreen({ navigation }: Props) {
   );
 }
 
-export default HomeScreen;
+export default SelectHouseholdScreen;

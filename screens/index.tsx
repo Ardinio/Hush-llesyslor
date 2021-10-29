@@ -1,7 +1,7 @@
-import HomeScreen from './HomeScreen';
+import SelectHouseholdScreen from './SelectHouseholdScreen';
 import LoginScreen from './LoginScreen';
 import ProfileScreen from './ProfileScreen';
 import StatisticsScreen  from './StatisticsScreen';
 import TaskScreen from './TaskScreen';
 
-export { HomeScreen, LoginScreen, ProfileScreen, StatisticsScreen, TaskScreen};
+export { SelectHouseholdScreen, LoginScreen, ProfileScreen, StatisticsScreen, TaskScreen};

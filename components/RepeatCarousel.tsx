@@ -11,9 +11,11 @@ interface Props {
 
 const RepeatCarousel: FC<Props> = (props) => {
   const [content, setContent] = useState(false);
-  const [reccurringInDays, setReccurringInDays] = useState<any>();
+  const [reccurringInDays, setReccurringInDays] = useState<number>();
 
-  const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  const number = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+  ];
 
   return (
     <View style={[styles.carouselContainer, styles.marginTop]}>
@@ -22,7 +24,10 @@ const RepeatCarousel: FC<Props> = (props) => {
           <ScrollView horizontal={true} showsVerticalScrollIndicator={false}>
             {number.map((n) => (
               <Badge
-                onPress={() => setReccurringInDays(n)}
+                onPress={() => {
+                  setReccurringInDays(n);
+                  props.onChangeText(n);
+                }}
                 key={n}
                 size={26}
                 style={[

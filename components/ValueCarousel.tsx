@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, ScrollView, ColorPropType } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { styles } from "../styles/Styles";
 import { FC, useState } from "react";
@@ -23,7 +23,10 @@ const ValueCarousel: FC<Props> = (props) => {
             <ScrollView horizontal={true} showsVerticalScrollIndicator={false}>
               {number.map((n) => (
                 <Badge
-                  onPress={() => setEnergyRequired(n)}
+                  onPress={() => {
+                    setEnergyRequired(n);
+                    props.onChangeText(n);
+                  }}
                   key={n}
                   size={26}
                   style={[

@@ -1,15 +1,13 @@
 import * as React from "react";
-import { View, Text, Modal, TextInput, Alert } from "react-native";
+import { View, Text, Modal, TextInput } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { useState } from "react";
 import RepeatCarousel from "./RepeatCarousel";
 import ValueCarousel from "./ValueCarousel";
 import nextId from "react-id-generator";
-import { Task } from "../entities/Task";
-import { useAppDispatch, useAppSelector } from "../store/store";
+import { useAppDispatch } from "../store/store";
 import { AddTask } from "../store/task/taskActions";
-import { selectAllTasks } from "../store/task/taskSelectors";
 
 function AddChoreModul() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -18,9 +16,7 @@ function AddChoreModul() {
   const [recurringInDays, setRecurringInDays] = useState<number>();
   const [energyRequired, setEnergyRequired] = useState<number>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
-  const [task, setTask] = useState<Task>();
   const dispatch = useAppDispatch();
-  const allTask = useAppSelector(selectAllTasks);
 
   const closeModal = () => {
     setErrorMsg("");
@@ -30,7 +26,7 @@ function AddChoreModul() {
   };
 
   const addNewTask = () => {
-    if (!title || !description)
+    if (!title || !description || !recurringInDays || !energyRequired)
       return setErrorMsg("Du måste fylla i alla fält");
 
     dispatch(
@@ -39,12 +35,10 @@ function AddChoreModul() {
         HouseholdId: "100",
         Title: title,
         Description: description,
-        recurringInDays: recurringInDays,
-        EnergyRequired: energyRequired,
+        recurringInDays: recurringInDays!,
+        EnergyRequired: energyRequired!,
       })
     );
-
-    console.log(title);
     closeModal();
   };
 
@@ -54,7 +48,6 @@ function AddChoreModul() {
         <View style={styles.container}>
           <View style={styles.modalView2}>
             <Text>Skapa en ny syssla</Text>
-
             <View>
               <View>
                 <View style={[styles.innerContainer, styles.marginTop]}>

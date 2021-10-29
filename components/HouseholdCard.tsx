@@ -39,7 +39,7 @@ const HouseholdCard = ({}) => {
   return (
     //TODO: Check CSS to reuse several classes
     <View style={styles.container2}>
-      {households.map(({ Id, Name, users, GeneratedCode }, i) => (
+      {households.map(({ Id, Name, users, GeneratedCode, isowner }, i) => (
         <Card key={i} style={styles.Card}>
           <View style={styles.textAlign}>
             <Text style={styles.title}>{Name}</Text>
@@ -51,7 +51,7 @@ const HouseholdCard = ({}) => {
                 }
               }
             >
-              <MaterialCommunityIcons name="pencil" size={20} />
+              {isowner && <MaterialCommunityIcons name="pencil" size={20} />}
             </TouchableOpacity>
           </View>
           {users.map(({ Name, avatar, IsOwner }, i) => (

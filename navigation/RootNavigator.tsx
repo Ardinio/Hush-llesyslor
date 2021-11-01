@@ -5,16 +5,18 @@ import {
   StackScreenProps,
 } from "@react-navigation/stack";
 import React, { FC, useEffect, useState } from "react";
-import { LoginScreen, TaskScreen } from "../screens/index";
+import {
+  LoginScreen,
+  TaskScreen,
+  SelectHouseholdScreen,
+} from "../screens/index";
 import BottomTabsNavigator from "./BottomTabsNavigator";
 
 export type AppStackParamList = {
-  HomeScreen: undefined;
+  SelectHousehold: undefined;
+  HomeScreen: { householdId: string };
   LoginScreen: undefined;
-  ProfileScreen: { id: number };
   SplashScreen: undefined;
-  StatisticsScreen: undefined;
-  TaskScreen: undefined;
 };
 
 export type GenericNavigationProps = StackNavigationProp<AppStackParamList>;
@@ -36,24 +38,14 @@ const RootNavigator: FC = () => {
           options={{ title: "Login" }}
         />
         <Screen
+          name="SelectHousehold"
+          component={SelectHouseholdScreen}
+          options={{ title: "SelectHousehold" }}
+        />
+        <Screen
           name="HomeScreen"
           component={BottomTabsNavigator}
           options={{ title: "Home" }}
-        />
-        <Screen
-          name="ProfileScreen"
-          component={BottomTabsNavigator}
-          options={{ title: "Profil" }}
-        />
-        <Screen
-          name="StatisticsScreen"
-          component={BottomTabsNavigator}
-          options={{ title: "Statistics" }}
-        />
-        <Screen
-          name="TaskScreen"
-          component={TaskScreen}
-          options={{ title: "Task" }}
         />
       </Navigator>
     </NavigationContainer>

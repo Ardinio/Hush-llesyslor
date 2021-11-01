@@ -240,7 +240,7 @@ function HomeScreen({ navigation }: Props) {
           <View style={styles.container}>
             <View style={styles.modalView}>
               <Text style={styles.buttonText}>Skapa Din Profil För</Text>
-              <Text style={styles.buttonText}>
+              <Text style={styles.nameText}>
                 {newHouseHold?.Name || houseHold?.Name}
               </Text>
               <TextInput

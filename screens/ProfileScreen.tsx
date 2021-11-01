@@ -5,7 +5,11 @@ import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { EditUser } from "../store/user/userActions";
-import { AllAvatars, singleAvatarById, singleAvatarPath } from "../data/avatars";
+import {
+  AllAvatars,
+  singleAvatarById,
+  singleAvatarPath,
+} from "../data/avatars";
 import { Button } from "../components";
 import { styles } from "../styles/Styles";
 import { GenericScreenProps } from "../navigation/RootNavigator";
@@ -21,8 +25,10 @@ function ProfileScreen() {
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
   const activeHouse = allHouseholds.find((h) => h.Id === "2"); // måste ändras !!!
-  const currentUser = allUsers.find((u) => u.AccountId === activeAccount.Id && u.HouseholdId === activeHouse?.Id);
-  const currentAvatar = singleAvatarById(currentUser?.AvatarId!)
+  const currentUser = allUsers.find(
+    (u) => u.AccountId === activeAccount.Id && u.HouseholdId === activeHouse?.Id
+  );
+  const currentAvatar = singleAvatarById(currentUser?.AvatarId!);
   const dispatch = useAppDispatch();
 
   const [editUserModalVisible, setEditUserModalVisible] = React.useState(false);
@@ -66,21 +72,24 @@ function ProfileScreen() {
     // add logic to remove currentUser from activeHouseHold
   };
 
-  const backgroundColor = StyleSheet.create({
+  const localStyles = StyleSheet.create({
     backgroundColor: {
-      backgroundColor: currentAvatar.Color!
-    }
-  })
+      backgroundColor: currentAvatar.Color!,
+    },
+    bigFont: {
+      fontSize: 30,
+    },
+  });
 
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <View style={[styles.profileAvatar, backgroundColor.backgroundColor]}>
-        <Image
-          source={singleAvatarPath(currentUser?.AvatarId!)}
-        />
+        <View style={[styles.profileAvatar, localStyles.backgroundColor]}>
+          <Image source={singleAvatarPath(currentUser?.AvatarId!)} />
         </View>
-        <Text style={styles.buttonText}>{currentUser?.Name}</Text>
+        <Text style={[styles.buttonText, localStyles.bigFont]}>
+          {currentUser?.Name}
+        </Text>
         {/* Modal to Edit User Name & Avatar */}
         <Modal
           animationType="slide"
@@ -143,6 +152,11 @@ function ProfileScreen() {
             btnType="sign-out-alt"
             onPress={deleteUserFromHouse}
           />
+          <Button
+            buttonTitle="Edit Profile"
+            btnType="edit"
+            onPress={deleteUserFromHouse}
+          />
         </View>
       </View>
     </SafeAreaProvider>
@@ -150,4 +164,3 @@ function ProfileScreen() {
 }
 
 export default ProfileScreen;
-

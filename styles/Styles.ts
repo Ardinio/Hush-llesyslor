@@ -15,8 +15,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 15,
-    marginBottom: 15,
+    marginTop: 5,
+    marginBottom: 5,
   },
   item: {
     backgroundColor: "#FFF",
@@ -37,12 +37,18 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 4,
   },
+  nameText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "blue",
+    fontFamily: "Roboto_400Regular",
+  },
   buttonsContainer: {
-    bottom: 10,
+    bottom: 0,
     justifyContent: "space-around",
     flexDirection: "row",
     backgroundColor: "transparent",
-    position: "absolute",
+    marginTop: 5,
     width: "100%",
   },
   errorText: {
@@ -61,8 +67,9 @@ export const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    paddingTop: 20,
     alignItems: "center",
+    justifyContent: "space-around",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -80,9 +87,8 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     margin: 5,
-    fontSize: 18,
+    fontSize: 15,
     color: "#000000",
-    fontFamily: "Roboto_400Regular",
   },
   loginLogo: {
     marginTop: 20,
@@ -178,6 +184,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    // marginBottom: 50,
+    // paddingBottom: 50
   },
   pieChartStyle: {
     height: 150,

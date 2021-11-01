@@ -28,7 +28,7 @@ interface Login {
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  "HomeScreen"
+  "SelectHousehold"
 >;
 
 type Props = {
@@ -67,7 +67,7 @@ function LoginScreen({ navigation }: Props) {
         isLoggedIn: true,
       })
     );
-    navigation.navigate("HomeScreen");
+    navigation.navigate("SelectHousehold");
   };
 
   const logOut = () => {

@@ -8,6 +8,17 @@ function householdReducer(state: HouseholdState = initialState, action: Househol
       households: [ ...state.households, action.payload ]
     }
   }
+
+  else if (action.type === 'household/editHousehold') {
+    const indexget = state.households.findIndex((x) => x.Id === action.payload.Id ) ?? { Id: '', Name: '', GeneratedCode: '' }
+    return {
+      ...state,
+      households: state.households.map(
+        (content, i) => i === indexget ? {...content, Name: action.payload.Name} : content
+      )
+    }
+  }
+
   else
     return state;
 }

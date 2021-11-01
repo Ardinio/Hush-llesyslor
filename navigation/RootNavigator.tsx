@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
   StackNavigationProp,
-  StackScreenProps
+  StackScreenProps,
 } from "@react-navigation/stack";
 import React, { FC, useEffect, useState } from "react";
 import {

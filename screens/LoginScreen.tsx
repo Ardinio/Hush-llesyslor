@@ -21,7 +21,7 @@ import { AddAccountToDatabase } from "../store/database/databaseActions";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  "HomeScreen"
+  "SelectHousehold"
 >;
 
 type Props = {
@@ -61,7 +61,7 @@ function LoginScreen({ navigation }: Props) {
     );
     setEmail("");
     setPassword("");
-    navigation.navigate("HomeScreen");
+    navigation.navigate("SelectHousehold");
   };
 
   const logOut = () => {

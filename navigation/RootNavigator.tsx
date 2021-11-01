@@ -8,7 +8,7 @@ import React, { FC, useEffect, useState } from "react";
 import {
   LoginScreen,
   TaskScreen,
-  SelectHouseholdScreen
+  SelectHouseholdScreen,
 } from "../screens/index";
 import BottomTabsNavigator from "./BottomTabsNavigator";
 
@@ -33,6 +33,11 @@ const RootNavigator: FC = () => {
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
         <Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{ title: "Login" }}
+        />
+        <Screen
           name="SelectHousehold"
           component={SelectHouseholdScreen}
           options={{ title: "SelectHousehold" }}
@@ -41,11 +46,6 @@ const RootNavigator: FC = () => {
           name="HomeScreen"
           component={BottomTabsNavigator}
           options={{ title: "Home" }}
-        />
-        <Screen
-          name="LoginScreen"
-          component={LoginScreen}
-          options={{ title: "Login" }}
         />
       </Navigator>
     </NavigationContainer>

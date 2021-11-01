@@ -2,12 +2,21 @@ import * as React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { styles } from "../styles/Styles";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Badge } from "react-native-paper";
 
-function RepeatCarousel() {
+interface Props {
+  onChangeText: (text: number) => void;
+}
+
+const RepeatCarousel: FC<Props> = (props) => {
   const [content, setContent] = useState(false);
-  const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  const [reccurringInDays, setReccurringInDays] = useState<number>();
+
+  const number = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+  ];
+
   return (
     <View style={[styles.carouselContainer, styles.marginTop]}>
       <TouchableOpacity onPress={() => setContent(!content)}>
@@ -15,8 +24,20 @@ function RepeatCarousel() {
           <ScrollView horizontal={true} showsVerticalScrollIndicator={false}>
             {number.map((n) => (
               <Badge
+                onPress={() => {
+                  setReccurringInDays(n);
+                  props.onChangeText(n);
+                }}
+                key={n}
                 size={26}
-                style={[styles.itemText, styles.container, styles.badge]}
+                style={[
+                  styles.itemText,
+                  styles.container,
+                  styles.badge,
+                  reccurringInDays === n
+                    ? styles.innerTextPressed
+                    : styles.badge,
+                ]}
               >
                 {n}
               </Badge>
@@ -33,6 +54,6 @@ function RepeatCarousel() {
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 export default RepeatCarousel;

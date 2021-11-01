@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
+import { black } from "react-native-paper/lib/typescript/styles/colors";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -79,6 +80,9 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     margin: 5,
+    fontSize: 18,
+    color: "#000000",
+    fontFamily: "Roboto_400Regular",
   },
   loginLogo: {
     marginTop: 20,

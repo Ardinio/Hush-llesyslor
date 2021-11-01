@@ -26,8 +26,6 @@ interface Login {
   password: string;
 }
 
-const defaultLogin: Login = { email: "", password: "" };
-
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   "HomeScreen"
@@ -49,8 +47,6 @@ function LoginScreen({ navigation }: Props) {
   const allAccounts = useAppSelector(selectAllAccountsFromDatabase);
   const dispatch = useAppDispatch();
 
-  const [newEmail, setNewEmail] = React.useState<string>();
-  const [newPassword, setNewPassword] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -87,25 +83,19 @@ function LoginScreen({ navigation }: Props) {
 
   const handleModal = () => {
     setModalVisible(!modalVisible);
-    setNewEmail("");
-    setNewPassword("");
     setErrorMsg("");
   };
 
-  const registerNewAccount = () => {
-    if (!newEmail || !newPassword)
-      return setErrorMsg("E-mail eller Password Saknas!");
-    if (allAccounts.find((a) => a.Email === newEmail.toLowerCase().trim()))
+  const registerNewAccount = (login: Login) => {
+    if (allAccounts.find((a) => a.Email === login.email.toLowerCase().trim()))
       return setErrorMsg("E-postadressen finns redan");
     dispatch(
       AddAccountToDatabase({
         Id: nextId(),
-        Email: newEmail.toLowerCase().trim(),
-        Password: newPassword.trim(),
+        Email: login.email.toLowerCase().trim(),
+        Password: login.password.trim(),
       })
     );
-    setNewEmail("");
-    setNewPassword("");
     setErrorMsg("");
     setModalVisible(!modalVisible);
   };
@@ -139,48 +129,64 @@ function LoginScreen({ navigation }: Props) {
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="E-mail"
-              value={newEmail}
-              onChangeText={(value) => setNewEmail(value)}
-            />
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="Password"
-              value={newPassword}
-              onChangeText={(value) => setNewPassword(value)}
-            />
-            <Text style={styles.errorText}>{errorMsg}</Text>
-            <View style={styles.buttonsContainer}>
-              <View style={styles.iconWrapper}>
-                <FontAwesome5
-                  name="check"
-                  style={styles.icon}
-                  size={25}
-                  onPress={registerNewAccount}
-                />
-              </View>
-              <View style={styles.iconWrapper}>
-                <FontAwesome5
-                  name="arrow-circle-down"
-                  style={styles.icon}
-                  size={25}
-                  onPress={handleModal}
-                />
-              </View>
-            </View>
+            <Formik
+              initialValues={{ email: "", password: "" }}
+              onSubmit={registerNewAccount}
+              validationSchema={LoginSchema}
+            >
+              {({ handleChange, handleSubmit, values, errors }) => (
+                <>
+                  <Text style={styles.errorText}>{errorMsg}</Text>
+                  <TextInput
+                    style={styles.textInputBox}
+                    placeholder="E-mail"
+                    value={values.email}
+                    onChangeText={handleChange<keyof Login>("email")}
+                    keyboardType="email-address"
+                  />
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                  <TextInput
+                    style={styles.textInputBox}
+                    placeholder="Password"
+                    value={values.password}
+                    onChangeText={handleChange<keyof Login>("password")}
+                    secureTextEntry
+                  />
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                  <View style={styles.buttonsContainer}>
+                    <View style={styles.iconWrapper}>
+                      <FontAwesome5
+                        name="check"
+                        style={styles.icon}
+                        size={25}
+                        onPress={handleSubmit as any}
+                      />
+                    </View>
+                    <View style={styles.iconWrapper}>
+                      <FontAwesome5
+                        name="arrow-circle-down"
+                        style={styles.icon}
+                        size={25}
+                        onPress={handleModal}
+                      />
+                    </View>
+                  </View>
+                </>
+              )}
+            </Formik>
           </View>
         </View>
       </Modal>
       <Image style={styles.loginLogo} source={require("../assets/logo.png")} />
+      {/* Input form for Login */}
       <Formik
-        initialValues={defaultLogin}
+        initialValues={{ email: "", password: "" }}
         onSubmit={logIn}
         validationSchema={LoginSchema}
       >
-        {({ handleChange, handleSubmit, values, errors}) => (
+        {({ handleChange, handleSubmit, values, errors }) => (
           <>
+            <Text style={styles.errorText}>{errorMsg}</Text>
             <TextInput
               style={styles.textInputBox}
               placeholder="E-mail"
@@ -197,7 +203,6 @@ function LoginScreen({ navigation }: Props) {
               secureTextEntry
             />
             <Text style={styles.errorText}>{errors.password}</Text>
-            <Text style={styles.errorText}>{errorMsg}</Text>
             <Button
               buttonTitle="Logga in"
               btnType="sign-in-alt"

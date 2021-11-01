@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import {
   View,
   Text,
@@ -19,6 +21,13 @@ import { selectAccount } from "../store/account/accountSelectors";
 import { selectAllAccountsFromDatabase } from "../store/database/databaseSelectors";
 import { AddAccountToDatabase } from "../store/database/databaseActions";
 
+interface Login {
+  email: string;
+  password: string;
+}
+
+const defaultLogin: Login = { email: "", password: "" };
+
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   "HomeScreen"
@@ -27,6 +36,13 @@ type ProfileScreenNavigationProp = StackNavigationProp<
 type Props = {
   navigation: ProfileScreenNavigationProp;
 };
+
+type LoginSchemaType = Record<keyof Login, Yup.AnySchema>;
+
+const LoginSchema = Yup.object().shape<LoginSchemaType>({
+  email: Yup.string().required().email(),
+  password: Yup.string().required().min(4),
+});
 
 function LoginScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
@@ -40,17 +56,18 @@ function LoginScreen({ navigation }: Props) {
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [modalVisible, setModalVisible] = React.useState(false);
 
-  const logIn = () => {
-    if (!email || !password)
+  const logIn = (login: Login) => {
+    console.log(login);
+    if (!login.email || !login.password)
       return setErrorMsg("E-mail eller Password Saknas!");
     const account = allAccounts.find(
-      (a) => a.Email === email.toLowerCase().trim()
+      (a) => a.Email === login.email.toLowerCase().trim()
     );
     if (!account)
       return setErrorMsg("Finns inget konto registrerat på den E-postAdressen");
-    if (account.Email !== email.toLowerCase().trim())
+    if (account.Email !== login.email.toLowerCase().trim())
       return setErrorMsg("Email eller Password är felaktigt");
-    if (account.Password !== password.trim())
+    if (account.Password !== login.password.trim())
       return setErrorMsg("Email eller Password är felaktigt");
     dispatch(
       SetActiveAccount({
@@ -59,8 +76,8 @@ function LoginScreen({ navigation }: Props) {
         isLoggedIn: true,
       })
     );
-    setEmail("");
-    setPassword("");
+    // setEmail("");
+    // setPassword("");
     navigation.navigate("HomeScreen");
   };
 
@@ -166,23 +183,41 @@ function LoginScreen({ navigation }: Props) {
         </View>
       </Modal>
       <Image style={styles.loginLogo} source={require("../assets/logo.png")} />
-      <TextInput
-        style={styles.textInputBox}
-        placeholder="E-mail"
-        value={email}
-        onChangeText={(value) => setEmail(value)}
-      />
-      <TextInput
-        style={styles.textInputBox}
-        placeholder="Password"
-        value={password}
-        onChangeText={(value) => setPassword(value)}
-      />
+      <Formik
+        initialValues={defaultLogin}
+        onSubmit={logIn}
+        validationSchema={LoginSchema}
+      >
+        {({ handleChange, handleSubmit, values, errors}) => (
+          <>
+            <TextInput
+              style={styles.textInputBox}
+              placeholder="E-mail"
+              value={values.email}
+              onChangeText={handleChange<keyof Login>("email")}
+              keyboardType="email-address"
+            />
+            <Text style={styles.errorText}>{errors.email}</Text>
+            <TextInput
+              style={styles.textInputBox}
+              placeholder="Password"
+              value={values.password}
+              onChangeText={handleChange<keyof Login>("password")}
+              secureTextEntry
+            />
+            <Text style={styles.errorText}>{errors.password}</Text>
+            <Button
+              buttonTitle="Logga in"
+              btnType="sign-in-alt"
+              onPress={handleSubmit as any}
+            />
+          </>
+        )}
+      </Formik>
       <TouchableHighlight onPress={handleModal}>
         <Text style={styles.clickableText}>Registrera Konto</Text>
       </TouchableHighlight>
       <Text style={styles.errorText}>{errorMsg}</Text>
-      <Button buttonTitle="Logga in" btnType="sign-in-alt" onPress={logIn} />
     </View>
   );
 }

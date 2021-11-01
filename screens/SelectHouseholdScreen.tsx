@@ -36,8 +36,7 @@ function SelectHouseholdScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
-  const [joinHouseModalVisible, setJoinHouseModalVisible] =
-    React.useState(false);
+  const [joinHouseModalVisible, setJoinHouseModalVisible] = React.useState(false);
   const [newUserModalVisible, setNewUserModalVisible] = React.useState(false);
   const [houseHoldName, setHouseHoldName] = React.useState<string>();
   const [houseHoldCode, setHouseHoldCode] = React.useState<string>();
@@ -95,6 +94,7 @@ function SelectHouseholdScreen({ navigation }: Props) {
     setAvatarsAvailable(avatars);
     setHouseHold(house);
     setNewUserModalVisible(true);
+    setJoinHouseModalVisible(false);
     setErrorMsg("");
   };
 
@@ -242,7 +242,7 @@ function SelectHouseholdScreen({ navigation }: Props) {
           <View style={styles.container}>
             <View style={styles.modalView}>
               <Text style={styles.buttonText}>Skapa Din Profil För</Text>
-              <Text style={styles.buttonText}>
+              <Text style={styles.nameText}>
                 {newHouseHold?.Name || houseHold?.Name}
               </Text>
               <TextInput

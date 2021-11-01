@@ -49,17 +49,12 @@ function LoginScreen({ navigation }: Props) {
   const allAccounts = useAppSelector(selectAllAccountsFromDatabase);
   const dispatch = useAppDispatch();
 
-  const [email, setEmail] = React.useState<string>();
-  const [password, setPassword] = React.useState<string>();
   const [newEmail, setNewEmail] = React.useState<string>();
   const [newPassword, setNewPassword] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const logIn = (login: Login) => {
-    console.log(login);
-    if (!login.email || !login.password)
-      return setErrorMsg("E-mail eller Password Saknas!");
     const account = allAccounts.find(
       (a) => a.Email === login.email.toLowerCase().trim()
     );
@@ -76,8 +71,6 @@ function LoginScreen({ navigation }: Props) {
         isLoggedIn: true,
       })
     );
-    // setEmail("");
-    // setPassword("");
     navigation.navigate("HomeScreen");
   };
 
@@ -94,8 +87,6 @@ function LoginScreen({ navigation }: Props) {
 
   const handleModal = () => {
     setModalVisible(!modalVisible);
-    setEmail("");
-    setPassword("");
     setNewEmail("");
     setNewPassword("");
     setErrorMsg("");
@@ -206,6 +197,7 @@ function LoginScreen({ navigation }: Props) {
               secureTextEntry
             />
             <Text style={styles.errorText}>{errors.password}</Text>
+            <Text style={styles.errorText}>{errorMsg}</Text>
             <Button
               buttonTitle="Logga in"
               btnType="sign-in-alt"
@@ -217,7 +209,6 @@ function LoginScreen({ navigation }: Props) {
       <TouchableHighlight onPress={handleModal}>
         <Text style={styles.clickableText}>Registrera Konto</Text>
       </TouchableHighlight>
-      <Text style={styles.errorText}>{errorMsg}</Text>
     </View>
   );
 }

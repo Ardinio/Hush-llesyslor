@@ -1,22 +1,28 @@
 import React from "react";
-import { View, Text, Modal, Image } from "react-native";
+import { View, Text, Modal, Image, StyleSheet } from "react-native";
 import { List, Switch } from "react-native-paper";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { selectAllUsers, selectUserById } from "../store/user/userSelectors";
 import { EditUser } from "../store/user/userActions";
-import { AllAvatars, singleAvatarPath } from "../data/avatars";
+import { AllAvatars, singleAvatarById, singleAvatarPath } from "../data/avatars";
 import { Button } from "../components";
 import { styles } from "../styles/Styles";
 import { GenericScreenProps } from "../navigation/RootNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { selectAllUsers, selectUserById } from "../store/user/userSelectors";
+import { selectAccount } from "../store/account/accountSelectors";
+import { selectAllHouseholds } from "../store/household/householdSelectors";
 
 // type Props = GenericScreenProps<"ProfileScreen">;
 
 function ProfileScreen() {
+  const activeAccount = useAppSelector(selectAccount);
+  const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
-  const currentUser = useAppSelector(selectUserById("6"));
+  const activeHouse = allHouseholds.find((h) => h.Id === "2"); // måste ändras !!!
+  const currentUser = allUsers.find((u) => u.AccountId === activeAccount.Id && u.HouseholdId === activeHouse?.Id);
+  const currentAvatar = singleAvatarById(currentUser?.AvatarId!)
   const dispatch = useAppDispatch();
 
   const [editUserModalVisible, setEditUserModalVisible] = React.useState(false);
@@ -56,15 +62,24 @@ function ProfileScreen() {
     setEditUserModalVisible(!editUserModalVisible);
   };
 
-  const deleteUserFromHouse = () => {};
+  const deleteUserFromHouse = () => {
+    // add logic to remove currentUser from activeHouseHold
+  };
+
+  const backgroundColor = StyleSheet.create({
+    backgroundColor: {
+      backgroundColor: currentAvatar.Color!
+    }
+  })
 
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        <View style={[styles.profileAvatar, backgroundColor.backgroundColor]}>
         <Image
-          style={styles.profileAvatar}
           source={singleAvatarPath(currentUser?.AvatarId!)}
         />
+        </View>
         <Text style={styles.buttonText}>{currentUser?.Name}</Text>
         {/* Modal to Edit User Name & Avatar */}
         <Modal
@@ -135,3 +150,4 @@ function ProfileScreen() {
 }
 
 export default ProfileScreen;
+

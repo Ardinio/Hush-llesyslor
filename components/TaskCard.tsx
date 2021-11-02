@@ -3,13 +3,14 @@ import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { styles } from "../styles/Styles";
 import { Badge, Card } from "react-native-paper";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
+import { selectActiveTask, selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
 import { useState } from "react";
 import Button from "./Button";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import { DeleteTask } from "../store/task/taskActions";
 import { Household } from "../entities/Household";
 import { Task } from "../entities/Task";
+import { DefaultRootState, useSelector } from "react-redux";
 
 const TaskCard = ({ }) => {
   const tasks = useAppSelector(selectTasksOnActiveHousehold);
@@ -20,21 +21,25 @@ const TaskCard = ({ }) => {
   const [taskId, setTaskId] = useState<string>('');
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [isOwner, setIsOwner] = useState<boolean>();
+  const activeTaskId = useSelector(selectActiveTask);
+  const filteredTask = useState<string>('');
   
 
   const dispatch = useAppDispatch();
 
   const onDelete = () => {
-    console.log("Jupp")
+
+    console.log("Nope")
     if (!isOwner)
       return setErrorMsg("Du måste vara ägare för att utföra denna handling");
     else {
       // const removeTask: Task = tasks.map((x) => { 
       //   return { Id: x.Id, HouseholdId: x.HouseholdId, Title: x.Title, Description: x.Description, recurringInDays: x.recurringInDays, EnergyRequired: x.EnergyRequired }})
-      //   .find((y) => y.Id === TaskId ) ?? { Id: '', Title: '', HouseholdId: '', Description: '', recurringInDays: '', EnergyRequired: '' };
-      // const deletedTask: Task = { ...removeTask, Name: houseHoldName ?? "" };
-      // const onDelete = () => {
-        console.log("Funkar")
+      //   .find((t) => t.Id === taskId ) ?? { Id: '', Title: '', HouseholdId: '', Description: '', recurringInDays: 0, EnergyRequired: 0 };
+      // const deletedTask: Task = { ...removeTask };
+      
+        console.log("Funkar");
+        // dispatch(DeleteTask(removeTask) );
       dispatch(
         DeleteTask({
           Id: '1',
@@ -47,6 +52,7 @@ const TaskCard = ({ }) => {
         })
       )
     }
+    console.log("Kommer hit");
   }
  
 
@@ -114,16 +120,16 @@ const TaskCard = ({ }) => {
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />
-                 <Button
+                 {/* <Button
                   onPress={onDelete}
                   buttonTitle="Radera"
                   btnType="window-close"
-                />
+                /> */}
               </View>
               <View style={styles.marginTop}>
-                {/* <TouchableOpacity>
+                <TouchableOpacity>
                   <MaterialCommunityIcons name="delete" size={24} color="black" onPress={onDelete} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
               </View>
             </View>
           </View>

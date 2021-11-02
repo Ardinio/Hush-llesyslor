@@ -9,12 +9,12 @@ function taskReducer(state: TaskState = initialState, action: TaskActions): Task
     }
   }
   else if (action.type === 'task/deleteTask') {
-    const getIndex = state.task.findIndex((t) => t.Id === action.payload.Id) ?? { Id: ''}
+    const filteredTask = state.task.filter((task) => {
+      return task.Id !== action.payload.Id
+    });
     return {
       ...state,
-      task: state.task.map(
-        (content, i) => i === getIndex ? {...content, id: action.payload.Id} : content
-      )
+      task: filteredTask
     }
   }
   else

@@ -1,6 +1,5 @@
 import * as React from "react";
-import { View, Text, ScrollView } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { styles } from "../styles/Styles";
 import { FC, useState } from "react";
 import { Badge } from "react-native-paper";

@@ -55,8 +55,8 @@ function ProfileScreen({ navigation }: Props) {
   const [editUserModalVisible, setEditUserModalVisible] = React.useState(false);
   const [leaveHouseModalVisible, setLeaveHouseModalVisible] =
     React.useState(false);
-  const [userName, setUserName] = React.useState<string>();
-  const [avatarId, setAvatarId] = React.useState<string>();
+  const [userName, setUserName] = React.useState<string>(currentUser?.Name!);
+  const [avatarId, setAvatarId] = React.useState<string>(currentUser?.AvatarId!);
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [avatarsAvailable, setAvatarsAvailable] = React.useState(AllAvatars);
 
@@ -185,11 +185,11 @@ function ProfileScreen({ navigation }: Props) {
               <TextInput
                 style={styles.textInputBox}
                 placeholder="Ange Ditt Namn"
-                value={currentUser?.Name}
+                value={userName}
                 onChangeText={(value) => setUserName(value)}
               />
               <Picker
-                selectedValue={currentUser?.AvatarId}
+                selectedValue={avatarId}
                 onValueChange={(value, index) => setAvatarId(value)}
                 mode="dropdown" // Android only
                 style={styles.picker}

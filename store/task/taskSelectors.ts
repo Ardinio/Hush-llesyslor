@@ -34,14 +34,25 @@ export const selectActiveTask = (state: RootState) =>
   );
 
 export const selectTasksOnActiveHousehold = (state: RootState) => {
-  return state.task.task.map((task) => {
-    const users = state.user.users.filter(
-      (u) => u.HouseholdId == task.HouseholdId
-    );
-    const currentHousehold = users.map((user) => {
-      const household = mockedHousehold.find((h) => h.Id === user.HouseholdId);
-      return { ...user, household };
-    });
-    return { ...task, users: currentHousehold };
-  });
+  return state.task.task.filter(t =>
+    t.HouseholdId == state.household.activeHouseholdId);
 };
+
+export const selectHouseholdTasksWithInfo = (state: RootState) => {
+  const tasks = selectTasksOnActiveHousehold(state);
+  
+  return tasks.map(t => {
+    // 1. Hämta alla completed task för t.id och se när den gjordes senast
+    // 2. Sortera på datum
+    // 3. Hämta ut första completed tasken
+    // 4. OM det är idag
+    // 4a. Hämta lastCompeletedBy
+    // 5. sätt numberOFDaytsSinceComplted
+    // 6. Returnera
+    return {
+      ...t,
+      numberOfDaysSinceCompleted: 1,
+      lastCompletedBy: ['avatar1', 'avatar2']
+    }
+  })
+}

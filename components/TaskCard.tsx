@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, TouchableOpacity, Modal, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { styles } from "../styles/Styles";
 import { Badge, Card } from "react-native-paper";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -8,22 +8,21 @@ import { useState } from "react";
 import Button from "./Button";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import { DeleteTask } from "../store/task/taskActions";
-import { Household } from "../entities/Household";
-import { Task } from "../entities/Task";
-import { DefaultRootState, useSelector } from "react-redux";
-import { AddHousehold } from "../store/household/householdActions";
+import { selectIsAdmin } from "../store/user/userSelectors";
 
 const TaskCard = ({ }) => {
   const tasks = useAppSelector(selectTasksOnActiveHousehold);
+  const isAdmin = useAppSelector(selectIsAdmin);
   const [modalVisible, setModalVisible] = useState(false);
   const [complete, setComplete] = React.useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
   const [selectedTitle, setSelectedTitle] = useState<string>("");
   const [taskId, setTaskId] = useState<string>("");
-  
+
   const dispatch = useAppDispatch();
 
   const onDelete = (taskId: string) => {
+    
       dispatch(
         DeleteTask({
           Id: taskId,
@@ -32,11 +31,11 @@ const TaskCard = ({ }) => {
           Description: '',
           recurringInDays: 0,
           EnergyRequired: 0 }))
-    }
+  }
 
   return (
     <View style={styles.Card}>
-      {tasks.map(({ Title, recurringInDays, Description, Id}, i) => (
+      {tasks.map(({ Title, recurringInDays, Description, Id }, i) => (
         <TouchableOpacity
           onPress={() => {
             setModalVisible(true), 
@@ -45,6 +44,15 @@ const TaskCard = ({ }) => {
             setTaskId(Id);
           }}
         >
+          {isAdmin && (
+            <MaterialCommunityIcons
+              name="delete"
+              size={24}
+              color="black"
+              onPress={() => onDelete(taskId)}
+            />
+          )}
+
           <Card key={i}>
             <View style={styles.CardContainer}>
               <Text style={styles.itemText}>{Title}</Text>
@@ -108,7 +116,6 @@ const TaskCard = ({ }) => {
               </View>
               <View style={styles.marginTop}>
                 <TouchableOpacity>
-                  <MaterialCommunityIcons name="delete" size={24} color="black" onPress={() => onDelete(taskId)} />
                 </TouchableOpacity>
               </View>
             </View>

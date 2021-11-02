@@ -17,20 +17,6 @@ function taskReducer(state: TaskState = initialState, action: TaskActions): Task
       task: state.task.filter(i => i.Id !== action.payload.Id)
     }
   }
-
-  // const currentUser = allUsers.find(
-  //   (u) => u.AccountId === activeAccount.Id && u.HouseholdId === activeHouse?.Id
-  // );
-
-  // else if (action.type === 'task/deleteTask') {
-  //   const filteredTask = state.task.filter((task) => {
-  //     return task.Id !== action.payload.Id
-  //   });
-  //   return {
-  //     ...state,
-  //     task: filteredTask
-  //   }
-  // }
   else
     return state;
 }

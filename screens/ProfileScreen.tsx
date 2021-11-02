@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, Modal, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Modal,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { List, Switch } from "react-native-paper";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
@@ -12,15 +19,27 @@ import {
 } from "../data/avatars";
 import { Button } from "../components";
 import { styles } from "../styles/Styles";
-import { GenericScreenProps } from "../navigation/RootNavigator";
+import {
+  AppStackParamList,
+  GenericScreenProps,
+} from "../navigation/RootNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { selectAllUsers, selectUserById } from "../store/user/userSelectors";
 import { selectAccount } from "../store/account/accountSelectors";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 // type Props = GenericScreenProps<"ProfileScreen">;
+type ProfileScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  "SelectHousehold"
+>;
 
-function ProfileScreen() {
+type Props = {
+  navigation: ProfileScreenNavigationProp;
+};
+
+function ProfileScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
@@ -70,6 +89,11 @@ function ProfileScreen() {
 
   const deleteUserFromHouse = () => {
     // add logic to remove currentUser from activeHouseHold
+    navigation.navigate("SelectHousehold");
+  };
+
+  const switchHouse = () => {
+    navigation.navigate("SelectHousehold");
   };
 
   const localStyles = StyleSheet.create({
@@ -87,9 +111,14 @@ function ProfileScreen() {
         <View style={[styles.profileAvatar, localStyles.backgroundColor]}>
           <Image source={singleAvatarPath(currentUser?.AvatarId!)} />
         </View>
-        <Text style={[styles.buttonText, localStyles.bigFont]}>
-          {currentUser?.Name}
-        </Text>
+        <View style={styles.itemLeft}>
+          <Text style={[styles.buttonText, localStyles.bigFont]}>
+            {currentUser?.Name}{" "}  
+          </Text>
+          <TouchableOpacity onPress={handleEdit}>
+            <MaterialCommunityIcons name="pencil" size={20} />
+          </TouchableOpacity>
+        </View>
         {/* Modal to Edit User Name & Avatar */}
         <Modal
           animationType="slide"
@@ -148,13 +177,13 @@ function ProfileScreen() {
         </Modal>
         <View style={styles.buttonsContainer}>
           <Button
-            buttonTitle="Leave House"
-            btnType="sign-out-alt"
-            onPress={deleteUserFromHouse}
+            buttonTitle="Switch House"
+            btnType="sign-in-alt"
+            onPress={switchHouse}
           />
           <Button
-            buttonTitle="Edit Profile"
-            btnType="edit"
+            buttonTitle="Leave House"
+            btnType="sign-out-alt"
             onPress={deleteUserFromHouse}
           />
         </View>

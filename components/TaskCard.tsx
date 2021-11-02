@@ -1,9 +1,9 @@
 import * as React from "react";
-import { View, Text, TouchableOpacity, Modal } from "react-native";
+import { View, Text, TouchableOpacity, Modal, Alert } from "react-native";
 import { styles } from "../styles/Styles";
 import { Badge, Card } from "react-native-paper";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { selectActiveTask, selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
+import { selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
 import { useState } from "react";
 import Button from "./Button";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
@@ -11,59 +11,38 @@ import { DeleteTask } from "../store/task/taskActions";
 import { Household } from "../entities/Household";
 import { Task } from "../entities/Task";
 import { DefaultRootState, useSelector } from "react-redux";
+import { AddHousehold } from "../store/household/householdActions";
 
-
-  
-  const TaskCard = ({}) => {
+const TaskCard = ({ }) => {
   const tasks = useAppSelector(selectTasksOnActiveHousehold);
   const [modalVisible, setModalVisible] = useState(false);
   const [complete, setComplete] = React.useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
   const [selectedTitle, setSelectedTitle] = useState<string>("");
-  const [taskId, setTaskId] = useState<string>('');
-  const [errorMsg, setErrorMsg] = React.useState<string>();
-  const [isOwner, setIsOwner] = useState<boolean>();
-  const activeTaskId = useSelector(selectActiveTask);
-  const filteredTask = useState<string>('');
+  const [taskId, setTaskId] = useState<string>("");
   
-
   const dispatch = useAppDispatch();
 
-  const onDelete = () => {
-
-    console.log("Nope")
-    if (!isOwner)
-      return setErrorMsg("Du måste vara ägare för att utföra denna handling");
-    else {
-      // const removeTask: Task = tasks.map((x) => { 
-      //   return { Id: x.Id, HouseholdId: x.HouseholdId, Title: x.Title, Description: x.Description, recurringInDays: x.recurringInDays, EnergyRequired: x.EnergyRequired }})
-      //   .find((t) => t.Id === taskId ) ?? { Id: '', Title: '', HouseholdId: '', Description: '', recurringInDays: 0, EnergyRequired: 0 };
-      // const deletedTask: Task = { ...removeTask };
-      
-        console.log("Funkar");
-        // dispatch(DeleteTask(removeTask) );
+  const onDelete = (taskId: string) => {
       dispatch(
         DeleteTask({
-          Id: '1',
+          Id: taskId,
           HouseholdId: '',
           Title: '',
           Description: '',
           recurringInDays: 0,
-          EnergyRequired: 0,
-
-        })
-      )
+          EnergyRequired: 0 }))
     }
-    console.log("Kommer hit");
-  }
 
   return (
     <View style={styles.Card}>
-      {tasks.map(({ Title, recurringInDays, Description }, i) => (
+      {tasks.map(({ Title, recurringInDays, Description, Id}, i) => (
         <TouchableOpacity
           onPress={() => {
-            setModalVisible(true), setSelectedTitle(Title);
-            setSelectedDescription(Description);
+            setModalVisible(true), 
+            setSelectedTitle(Title);
+            setSelectedDescription(Description)
+            setTaskId(Id);
           }}
         >
           <Card key={i}>
@@ -121,7 +100,7 @@ import { DefaultRootState, useSelector } from "react-redux";
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />
-                 {/* <Button
+                {/* <Button
                   onPress={onDelete}
                   buttonTitle="Radera"
                   btnType="window-close"
@@ -129,7 +108,7 @@ import { DefaultRootState, useSelector } from "react-redux";
               </View>
               <View style={styles.marginTop}>
                 <TouchableOpacity>
-                  <MaterialCommunityIcons name="delete" size={24} color="black" onPress={onDelete} />
+                  <MaterialCommunityIcons name="delete" size={24} color="black" onPress={() => onDelete(taskId)} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -144,7 +123,7 @@ import { DefaultRootState, useSelector } from "react-redux";
     //   </View>
     // </Card>
   );
-              
+
 };
 
 export default TaskCard;

@@ -28,6 +28,7 @@ import { selectAllUsers, selectUserById } from "../store/user/userSelectors";
 import { selectAccount } from "../store/account/accountSelectors";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { DeleteUser } from "../store/user/userActions";
 
 // type Props = GenericScreenProps<"ProfileScreen">;
 type ProfileScreenNavigationProp = StackNavigationProp<
@@ -43,7 +44,7 @@ function ProfileScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
-  const activeHouse = allHouseholds.find((h) => h.Id === "2"); // måste ändras !!!
+  const activeHouse = allHouseholds.find((h) => h.Id === "1"); // måste ändras !!!
   const currentUser = allUsers.find(
     (u) => u.AccountId === activeAccount.Id && u.HouseholdId === activeHouse?.Id
   );
@@ -88,7 +89,7 @@ function ProfileScreen({ navigation }: Props) {
   };
 
   const deleteUserFromHouse = () => {
-    // add logic to remove currentUser from activeHouseHold
+    dispatch(DeleteUser(currentUser!));
     navigation.navigate("SelectHousehold");
   };
 

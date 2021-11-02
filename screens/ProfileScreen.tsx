@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import { List, Switch } from "react-native-paper";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -25,9 +24,9 @@ import {
   GenericScreenProps,
 } from "../navigation/RootNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { selectAllUsers, selectUserById } from "../store/user/userSelectors";
+import { selectAllUsers, selectCurrentUser, selectUserById } from "../store/user/userSelectors";
 import { selectAccount } from "../store/account/accountSelectors";
-import { selectAllHouseholds } from "../store/household/householdSelectors";
+import { selectActiveHousehold, selectAllHouseholds } from "../store/household/householdSelectors";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { DeleteUser } from "../store/user/userActions";
 
@@ -43,12 +42,9 @@ type Props = {
 
 function ProfileScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
-  const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
-  const activeHouse = allHouseholds.find((h) => h.Id === "1"); // måste ändras !!!
-  const currentUser = allUsers.find(
-    (u) => u.AccountId === activeAccount.Id && u.HouseholdId === activeHouse?.Id
-  );
+  const activeHouse = useAppSelector(selectActiveHousehold)
+  const currentUser = useAppSelector(selectCurrentUser(activeAccount.Id, activeHouse?.Id!))
   const currentAvatar = singleAvatarById(currentUser?.AvatarId!);
   const dispatch = useAppDispatch();
 
@@ -62,8 +58,6 @@ function ProfileScreen({ navigation }: Props) {
 
   const closeModal = () => {
     setErrorMsg("");
-    setUserName("");
-    setAvatarId("");
     setEditUserModalVisible(false);
     setLeaveHouseModalVisible(false);
   };

@@ -4,3 +4,6 @@ export const selectAllUsers = (state: RootState) => state.user.users;
 
 export const selectUserById = (Id?: string) => (state: RootState) =>
     state.user.users.find(u => u.Id === Id);
+
+export const selectCurrentUser = (AccountID: string, HouseID: string) => (state: RootState) =>
+    state.user.users.find((u) => u.AccountId === AccountID && u.HouseholdId === HouseID)

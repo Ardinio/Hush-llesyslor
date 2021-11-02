@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import { List, Switch } from "react-native-paper";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -20,18 +19,14 @@ import {
 } from "../data/avatars";
 import { Button } from "../components";
 import { styles } from "../styles/Styles";
-import {
-  AppStackParamList,
-  GenericScreenProps,
-} from "../navigation/RootNavigator";
+import { AppStackParamList } from "../navigation/RootNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { selectAllUsers, selectUserById } from "../store/user/userSelectors";
+import { selectAllUsers, selectCurrentUser } from "../store/user/userSelectors";
 import { selectAccount } from "../store/account/accountSelectors";
-import { selectAllHouseholds } from "../store/household/householdSelectors";
+import { selectActiveHousehold } from "../store/household/householdSelectors";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { DeleteUser } from "../store/user/userActions";
 
-// type Props = GenericScreenProps<"ProfileScreen">;
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   "SelectHousehold"
@@ -43,11 +38,10 @@ type Props = {
 
 function ProfileScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
-  const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
-  const activeHouse = allHouseholds.find((h) => h.Id === "1"); // måste ändras !!!
-  const currentUser = allUsers.find(
-    (u) => u.AccountId === activeAccount.Id && u.HouseholdId === activeHouse?.Id
+  const activeHouse = useAppSelector(selectActiveHousehold);
+  const currentUser = useAppSelector(
+    selectCurrentUser(activeAccount.Id, activeHouse?.Id!)
   );
   const currentAvatar = singleAvatarById(currentUser?.AvatarId!);
   const dispatch = useAppDispatch();
@@ -55,15 +49,15 @@ function ProfileScreen({ navigation }: Props) {
   const [editUserModalVisible, setEditUserModalVisible] = React.useState(false);
   const [leaveHouseModalVisible, setLeaveHouseModalVisible] =
     React.useState(false);
-  const [userName, setUserName] = React.useState<string>();
-  const [avatarId, setAvatarId] = React.useState<string>();
+  const [userName, setUserName] = React.useState<string>(currentUser?.Name!);
+  const [avatarId, setAvatarId] = React.useState<string>(
+    currentUser?.AvatarId!
+  );
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [avatarsAvailable, setAvatarsAvailable] = React.useState(AllAvatars);
 
   const closeModal = () => {
     setErrorMsg("");
-    setUserName("");
-    setAvatarId("");
     setEditUserModalVisible(false);
     setLeaveHouseModalVisible(false);
   };
@@ -75,16 +69,17 @@ function ProfileScreen({ navigation }: Props) {
   const editUser = () => {
     if (!userName || !avatarId || avatarId === "0")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
-    // dispatch(
-    //   EditUser({
-    //     Id: "1",
-    //     AccountId: "1",
-    //     HouseholdId: "1",
-    //     Name: "Kristina",
-    //     AvatarId: "8",
-    //     IsOwner: true,
-    //   })
-    // );
+    if (!currentUser) return setErrorMsg("Something went wrong");
+    dispatch(
+      EditUser({
+        Id: currentUser.Id,
+        AccountId: currentUser.AccountId,
+        HouseholdId: currentUser.HouseholdId,
+        Name: userName,
+        AvatarId: avatarId,
+        IsOwner: currentUser.IsOwner,
+      })
+    );
     closeModal();
   };
 
@@ -112,7 +107,6 @@ function ProfileScreen({ navigation }: Props) {
     backgroundColor: {
       backgroundColor: currentAvatar.Color!,
     },
-    
   });
 
   return (
@@ -185,11 +179,11 @@ function ProfileScreen({ navigation }: Props) {
               <TextInput
                 style={styles.textInputBox}
                 placeholder="Ange Ditt Namn"
-                value={currentUser?.Name}
+                value={userName}
                 onChangeText={(value) => setUserName(value)}
               />
               <Picker
-                selectedValue={currentUser?.AvatarId}
+                selectedValue={avatarId}
                 onValueChange={(value, index) => setAvatarId(value)}
                 mode="dropdown" // Android only
                 style={styles.picker}

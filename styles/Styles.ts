@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     flexDirection: "row",
     backgroundColor: "transparent",
-    position: "absolute",
+    // position: "absolute",
     marginTop: 5,
     width: "100%",
   },

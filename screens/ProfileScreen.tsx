@@ -52,6 +52,8 @@ function ProfileScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
 
   const [editUserModalVisible, setEditUserModalVisible] = React.useState(false);
+  const [leaveHouseModalVisible, setLeaveHouseModalVisible] =
+    React.useState(false);
   const [userName, setUserName] = React.useState<string>();
   const [avatarId, setAvatarId] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
@@ -61,6 +63,11 @@ function ProfileScreen({ navigation }: Props) {
     setUserName("");
     setAvatarId("");
     setEditUserModalVisible(false);
+    setLeaveHouseModalVisible(false);
+  };
+
+  const handleDelete = () => {
+    setLeaveHouseModalVisible(!leaveHouseModalVisible);
   };
 
   const editUser = () => {
@@ -104,6 +111,9 @@ function ProfileScreen({ navigation }: Props) {
     bigFont: {
       fontSize: 30,
     },
+    buttonPosition: {
+      position: "absolute",
+    }
   });
 
   return (
@@ -114,12 +124,48 @@ function ProfileScreen({ navigation }: Props) {
         </View>
         <View style={styles.itemLeft}>
           <Text style={[styles.buttonText, localStyles.bigFont]}>
-            {currentUser?.Name}{" "}  
+            {currentUser?.Name}{" "}
           </Text>
           <TouchableOpacity onPress={handleEdit}>
             <MaterialCommunityIcons name="pencil" size={20} />
           </TouchableOpacity>
         </View>
+        {/* Modal for confirmation before leaving house */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={leaveHouseModalVisible}
+          onRequestClose={() => {
+            setLeaveHouseModalVisible(!leaveHouseModalVisible);
+          }}
+        >
+          <View style={styles.container}>
+            <View style={styles.modalView}>
+              <View style={styles.root}>
+                <Text style={styles.buttonText}>Vill Du Verkligen Lämna:</Text>
+                <Text style={[styles.nameText, localStyles.bigFont]}>{activeHouse?.Name}</Text>
+              </View>
+              <View style={styles.buttonsContainer}>
+                <View style={styles.iconWrapper}>
+                  <FontAwesome5
+                    name="check"
+                    style={styles.icon}
+                    size={25}
+                    onPress={deleteUserFromHouse}
+                  />
+                </View>
+                <View style={styles.iconWrapper}>
+                  <FontAwesome5
+                    name="arrow-circle-down"
+                    style={styles.icon}
+                    size={25}
+                    onPress={closeModal}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
         {/* Modal to Edit User Name & Avatar */}
         <Modal
           animationType="slide"
@@ -176,7 +222,7 @@ function ProfileScreen({ navigation }: Props) {
             </View>
           </View> */}
         </Modal>
-        <View style={styles.buttonsContainer}>
+        <View style={[styles.buttonsContainer, localStyles.buttonPosition]}>
           <Button
             buttonTitle="Switch House"
             btnType="sign-in-alt"
@@ -185,7 +231,7 @@ function ProfileScreen({ navigation }: Props) {
           <Button
             buttonTitle="Leave House"
             btnType="sign-out-alt"
-            onPress={deleteUserFromHouse}
+            onPress={handleDelete}
           />
         </View>
       </View>

@@ -19,18 +19,14 @@ import {
 } from "../data/avatars";
 import { Button } from "../components";
 import { styles } from "../styles/Styles";
-import {
-  AppStackParamList,
-  GenericScreenProps,
-} from "../navigation/RootNavigator";
+import { AppStackParamList } from "../navigation/RootNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { selectAllUsers, selectCurrentUser, selectUserById } from "../store/user/userSelectors";
+import { selectAllUsers, selectCurrentUser } from "../store/user/userSelectors";
 import { selectAccount } from "../store/account/accountSelectors";
-import { selectActiveHousehold, selectAllHouseholds } from "../store/household/householdSelectors";
+import { selectActiveHousehold } from "../store/household/householdSelectors";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { DeleteUser } from "../store/user/userActions";
 
-// type Props = GenericScreenProps<"ProfileScreen">;
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   "SelectHousehold"
@@ -43,8 +39,10 @@ type Props = {
 function ProfileScreen({ navigation }: Props) {
   const activeAccount = useAppSelector(selectAccount);
   const allUsers = useAppSelector(selectAllUsers);
-  const activeHouse = useAppSelector(selectActiveHousehold)
-  const currentUser = useAppSelector(selectCurrentUser(activeAccount.Id, activeHouse?.Id!))
+  const activeHouse = useAppSelector(selectActiveHousehold);
+  const currentUser = useAppSelector(
+    selectCurrentUser(activeAccount.Id, activeHouse?.Id!)
+  );
   const currentAvatar = singleAvatarById(currentUser?.AvatarId!);
   const dispatch = useAppDispatch();
 
@@ -52,7 +50,9 @@ function ProfileScreen({ navigation }: Props) {
   const [leaveHouseModalVisible, setLeaveHouseModalVisible] =
     React.useState(false);
   const [userName, setUserName] = React.useState<string>(currentUser?.Name!);
-  const [avatarId, setAvatarId] = React.useState<string>(currentUser?.AvatarId!);
+  const [avatarId, setAvatarId] = React.useState<string>(
+    currentUser?.AvatarId!
+  );
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const [avatarsAvailable, setAvatarsAvailable] = React.useState(AllAvatars);
 
@@ -69,7 +69,7 @@ function ProfileScreen({ navigation }: Props) {
   const editUser = () => {
     if (!userName || !avatarId || avatarId === "0")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
-    if (!currentUser) return setErrorMsg("Something went wrong")
+    if (!currentUser) return setErrorMsg("Something went wrong");
     dispatch(
       EditUser({
         Id: currentUser.Id,
@@ -107,7 +107,6 @@ function ProfileScreen({ navigation }: Props) {
     backgroundColor: {
       backgroundColor: currentAvatar.Color!,
     },
-    
   });
 
   return (

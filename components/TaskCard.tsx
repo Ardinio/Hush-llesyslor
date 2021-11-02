@@ -1,26 +1,58 @@
 import * as React from "react";
-import { View, Text, TouchableOpacity, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  Button as Buttons,
+} from "react-native";
 import { styles } from "../styles/Styles";
 import { Badge, Card } from "react-native-paper";
-import { useAppSelector } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
 import { useState } from "react";
 import Button from "./Button";
+import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
+import nextId from "react-id-generator";
+import { selectAllCompletedTasks } from "../store/completedtask/completedtaskSelectors";
+import { selectCurrentUser } from "../store/user/userSelectors";
 
 const TaskCard = ({}) => {
   const tasks = useAppSelector(selectTasksOnActiveHousehold);
+  const currentUser = useAppSelector(selectCurrentUser)
   const [modalVisible, setModalVisible] = useState(false);
   const [complete, setComplete] = React.useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
   const [selectedTitle, setSelectedTitle] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const [selectedTaskId, setSelectedTaskId] = useState<string>("");
+  const [userId, setUserId] = useState<any>();
+  const completed = useAppSelector(selectAllCompletedTasks);
+
+  const handlePrint = () => {
+    console.log("allHouseholds: ", completed);
+  };
+
+  const setCompletedTask = () => {
+    dispatch(
+      AddCompletedTask({
+        Id: nextId(),
+        TasksId: selectedTaskId,
+        UserId: userId,
+        CompleteDate: new Date(),
+      })
+    );
+  };
 
   return (
     <View style={styles.Card}>
-      {tasks.map(({ Title, recurringInDays, Description }, i) => (
+      {tasks.map(({ Title, recurringInDays, Description, Id }, i) => (
         <TouchableOpacity
           onPress={() => {
-            setModalVisible(true), setSelectedTitle(Title);
+            setModalVisible(true), 
+            setSelectedTitle(Title);
             setSelectedDescription(Description);
+            setSelectedTaskId(Id);
           }}
         >
           <Card key={i}>
@@ -67,7 +99,7 @@ const TaskCard = ({}) => {
             <View style={styles.marginTop}>
               <Button
                 onPress={() => {
-                  setComplete(!complete);
+                  setCompletedTask(), setSelectedTaskId, setUserId(currentUser?.AccountId);
                 }}
                 buttonTitle="Färdig"
                 btnType="check"
@@ -78,6 +110,10 @@ const TaskCard = ({}) => {
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />
+                <Buttons
+                  title="Household print"
+                  onPress={handlePrint}
+                ></Buttons>
               </View>
             </View>
           </View>

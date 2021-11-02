@@ -12,7 +12,9 @@ import { Household } from "../entities/Household";
 import { Task } from "../entities/Task";
 import { DefaultRootState, useSelector } from "react-redux";
 
-const TaskCard = ({ }) => {
+
+  
+  const TaskCard = ({}) => {
   const tasks = useAppSelector(selectTasksOnActiveHousehold);
   const [modalVisible, setModalVisible] = useState(false);
   const [complete, setComplete] = React.useState(false);
@@ -54,14 +56,13 @@ const TaskCard = ({ }) => {
     }
     console.log("Kommer hit");
   }
- 
 
   return (
     <View style={styles.Card}>
-      {tasks.map(({ Title, recurringInDays, Description, Id, isowner }, i) => (
+      {tasks.map(({ Title, recurringInDays, Description }, i) => (
         <TouchableOpacity
           onPress={() => {
-            setModalVisible(true), setSelectedTitle(Title), setTaskId(Id), setIsOwner(isowner);
+            setModalVisible(true), setSelectedTitle(Title);
             setSelectedDescription(Description);
           }}
         >
@@ -143,6 +144,7 @@ const TaskCard = ({ }) => {
     //   </View>
     // </Card>
   );
+              
 };
 
 export default TaskCard;

@@ -6,6 +6,7 @@ import TaskCard from "../components/TaskCard";
 import { mockedTasks } from "../data/taskData";
 import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-handler";
 import { useState } from "react";
+import AddChoreModul from "../components/AddChoreModul";
 
 
 function TaskScreen() {
@@ -31,6 +32,8 @@ function TaskScreen() {
         )}
       /> */}
       <TaskCard />
+
+      <AddChoreModul />
     </View>
   );
 }

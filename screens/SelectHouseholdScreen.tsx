@@ -2,16 +2,17 @@ import * as React from "react";
 import {
   View,
   Text,
-  Alert,
   Modal,
   TextInput,
   TouchableOpacity,
+  ScrollView,
+  FlatList
 } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/RootNavigator";
 import { useAppSelector, useAppDispatch } from "../store/store";
-import { selectAllHouseholds } from "../store/household/householdSelectors";
+import { selectAllHouseholds, selectHouseholdsWithUsers } from "../store/household/householdSelectors";
 import { AddHousehold } from "../store/household/householdActions";
 import { FontAwesome5 } from "@expo/vector-icons";
 import nextId from "react-id-generator";
@@ -28,15 +29,14 @@ import { TouchableRipple } from "react-native-paper";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
-function HomeScreen({ navigation }: Props) {
+function SelectHouseholdScreen({ navigation }: Props) {
   const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
   const dispatch = useAppDispatch();
   const activeAccount = useAppSelector(selectAccount);
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
-  const [joinHouseModalVisible, setJoinHouseModalVisible] =
-    React.useState(false);
+  const [joinHouseModalVisible, setJoinHouseModalVisible] = React.useState(false);
   const [newUserModalVisible, setNewUserModalVisible] = React.useState(false);
   const [houseHoldName, setHouseHoldName] = React.useState<string>();
   const [houseHoldCode, setHouseHoldCode] = React.useState<string>();
@@ -87,13 +87,14 @@ function HomeScreen({ navigation }: Props) {
     const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
     if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!");
     const user = usersInHouse?.find((u) => u.AccountId === activeAccount.Id);
-    // if (user) return setErrorMsg("Du är redan med i det här hushållet!")
+    if (user) return setErrorMsg("Du är redan med i det här hushållet!")
     const avatars = AllAvatars.filter(
       (a) => !usersInHouse.map((u) => u.AvatarId).includes(a.Id)
     );
     setAvatarsAvailable(avatars);
     setHouseHold(house);
     setNewUserModalVisible(true);
+    setJoinHouseModalVisible(false);
     setErrorMsg("");
   };
 
@@ -101,7 +102,6 @@ function HomeScreen({ navigation }: Props) {
     if (!userName || !avatarId || avatarId === "0")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
     if (newHouseHold) {
-      console.log("nytt hushåll"); // Ta Bort
       dispatch(AddHousehold(newHouseHold!));
       dispatch(
         AddUser({
@@ -114,7 +114,6 @@ function HomeScreen({ navigation }: Props) {
         })
       );
     } else if (houseHold) {
-      console.log("gå med i hushåll"); // Ta Bort
       dispatch(
         AddUser({
           Id: nextId(),
@@ -137,24 +136,20 @@ function HomeScreen({ navigation }: Props) {
     setJoinHouseModalVisible(!joinHouseModalVisible);
   };
 
-  const handlePrint = () => {
-    Alert.alert("Print (see console)");
-    console.log("allHouseholds: ", allHouseholds);
-    console.log("allUsers: ", allUsers);
-  };
 
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        {/* Ta bort de 2 Text nedan när klart */}
+        <Text>ID:{activeAccount.Id}</Text>
+        <Text>E-post:{activeAccount.Email}</Text>
+        <ScrollView>
         <View style={styles.container2}>
-          <TouchableOpacity onPress={() => navigation.navigate("TaskScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("HomeScreen", { householdId: '1' })}>
             <HouseholdCard />
           </TouchableOpacity>
         </View>
-
-        {/* Ta Bort Print-Knapp När Sidan Är Klar!!! */}
-        <Button buttonTitle="Print" btnType="print" onPress={handlePrint} />
-
+        </ScrollView>
         {/* Modal to create new HouseHold */}
         <Modal
           animationType="slide"
@@ -247,7 +242,7 @@ function HomeScreen({ navigation }: Props) {
           <View style={styles.container}>
             <View style={styles.modalView}>
               <Text style={styles.buttonText}>Skapa Din Profil För</Text>
-              <Text style={styles.buttonText}>
+              <Text style={styles.nameText}>
                 {newHouseHold?.Name || houseHold?.Name}
               </Text>
               <TextInput
@@ -294,7 +289,6 @@ function HomeScreen({ navigation }: Props) {
             </View>
           </View>
         </Modal>
-
         <View style={styles.buttonsContainer}>
           <Button
             buttonTitle="New House"
@@ -312,4 +306,4 @@ function HomeScreen({ navigation }: Props) {
   );
 }
 
-export default HomeScreen;
+export default SelectHouseholdScreen;

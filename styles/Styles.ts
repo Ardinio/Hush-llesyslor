@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
+import { black } from "react-native-paper/lib/typescript/styles/colors";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -14,8 +15,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 15,
-    marginBottom: 15,
+    marginTop: 5,
+    marginBottom: 5,
   },
   item: {
     backgroundColor: "#FFF",
@@ -36,12 +37,18 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 4,
   },
+  nameText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "blue",
+    fontFamily: "Roboto_400Regular",
+  },
   buttonsContainer: {
-    bottom: 10,
+    bottom: 0,
     justifyContent: "space-around",
     flexDirection: "row",
     backgroundColor: "transparent",
-    position: "absolute",
+    marginTop: 5,
     width: "100%",
   },
   errorText: {
@@ -60,8 +67,9 @@ export const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    paddingTop: 20,
     alignItems: "center",
+    justifyContent: "space-around",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -72,12 +80,15 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   textInputBox: {
-    width: 200,
+    width: "70%",
+    minWidth: 200,
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 5,
     padding: 5,
     margin: 5,
+    fontSize: 15,
+    color: "#000000",
   },
   loginLogo: {
     marginTop: 20,
@@ -173,6 +184,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    // marginBottom: 50,
+    // paddingBottom: 50
   },
   pieChartStyle: {
     height: 150,
@@ -196,39 +209,62 @@ export const styles = StyleSheet.create({
   pieShartTaskContainerText: {
     textAlign: "center",
   },
-   statisticsScreenContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
+  statisticsScreenContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  marginTop: {
+    marginTop: 20,
+  },
+  innerContainer: {
+    backgroundColor: "#ffff",
+    borderRadius: 10,
+    height: 50,
+    width: 280,
+  },
+  innerContainerText: {
+    marginTop: 10,
+    marginLeft: 8,
+  },
+  textBox: {
+    marginTop: 8,
+    marginLeft: 8,
+  },
+  modalView2: {
+    width: "90%",
+    minHeight: 220,
+    margin: 20,
+    backgroundColor: "#EEEDE7",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    marginTop: {
-      marginTop: 20,
-    },
-    innerContainer: {
-      backgroundColor: "#EEEDE7",
-      borderRadius: 10,
-      height: 50,
-      width: 150,
-    },
-    innerContainerText: {
-      marginTop: 10,
-      marginLeft: 8,
-    },
-    modalView2: {
-      width: "90%",
-      margin: 20,
-      backgroundColor: "#EEEDE7",
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
+    
       shadowOpacity: 0.25,
       shadowRadius: 4,
       elevation: 5,
     },
-  
+
+  carouselContainer: {
+    backgroundColor: "#ffff",
+    borderRadius: 10,
+    height: 50,
+    width: 280,
+  },
+  badge: {
+    backgroundColor: "#EEEDE7",
+  },
+  carouselText: {
+    fontWeight: "bold",
+  },
+  innerTextPressed: {
+    color: "black",
+    fontWeight: "bold",
+    backgroundColor: "red",
+  },
 });

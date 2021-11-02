@@ -69,16 +69,17 @@ function ProfileScreen({ navigation }: Props) {
   const editUser = () => {
     if (!userName || !avatarId || avatarId === "0")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
-    // dispatch(
-    //   EditUser({
-    //     Id: "1",
-    //     AccountId: "1",
-    //     HouseholdId: "1",
-    //     Name: "Kristina",
-    //     AvatarId: "8",
-    //     IsOwner: true,
-    //   })
-    // );
+    if (!currentUser) return setErrorMsg("Something went wrong")
+    dispatch(
+      EditUser({
+        Id: currentUser.Id,
+        AccountId: currentUser.AccountId,
+        HouseholdId: currentUser.HouseholdId,
+        Name: userName,
+        AvatarId: avatarId,
+        IsOwner: currentUser.IsOwner,
+      })
+    );
     closeModal();
   };
 

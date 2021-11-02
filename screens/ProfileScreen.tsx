@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { List, Switch } from "react-native-paper";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -57,6 +58,7 @@ function ProfileScreen({ navigation }: Props) {
   const [userName, setUserName] = React.useState<string>();
   const [avatarId, setAvatarId] = React.useState<string>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
+  const [avatarsAvailable, setAvatarsAvailable] = React.useState(AllAvatars);
 
   const closeModal = () => {
     setErrorMsg("");
@@ -71,13 +73,8 @@ function ProfileScreen({ navigation }: Props) {
   };
 
   const editUser = () => {
-    if (!userName || !avatarId)
+    if (!userName || !avatarId || avatarId === "0")
       return setErrorMsg("Du måste fylla i ett NAMN och välja en AVATAR");
-    if (avatarId === "")
-      //if (!userName || !avatarId || avatarId === 0)
-
-      return setErrorMsg("Du måste välja en AVATAR");
-
     // dispatch(
     //   EditUser({
     //     Id: "1",
@@ -92,6 +89,13 @@ function ProfileScreen({ navigation }: Props) {
   };
 
   const handleEdit = () => {
+    const usersInHouse = allUsers.filter(
+      (h) => h.HouseholdId === activeHouse!.Id
+    );
+    const avatars = AllAvatars.filter(
+      (a) => !usersInHouse.map((u) => u.AvatarId).includes(a.Id)
+    );
+    setAvatarsAvailable(avatars);
     setEditUserModalVisible(!editUserModalVisible);
   };
 
@@ -108,12 +112,7 @@ function ProfileScreen({ navigation }: Props) {
     backgroundColor: {
       backgroundColor: currentAvatar.Color!,
     },
-    bigFont: {
-      fontSize: 30,
-    },
-    buttonPosition: {
-      position: "absolute",
-    }
+    
   });
 
   return (
@@ -123,7 +122,7 @@ function ProfileScreen({ navigation }: Props) {
           <Image source={singleAvatarPath(currentUser?.AvatarId!)} />
         </View>
         <View style={styles.itemLeft}>
-          <Text style={[styles.buttonText, localStyles.bigFont]}>
+          <Text style={[styles.buttonText, styles.bigFont]}>
             {currentUser?.Name}{" "}
           </Text>
           <TouchableOpacity onPress={handleEdit}>
@@ -143,7 +142,9 @@ function ProfileScreen({ navigation }: Props) {
             <View style={styles.modalView}>
               <View style={styles.root}>
                 <Text style={styles.buttonText}>Vill Du Verkligen Lämna:</Text>
-                <Text style={[styles.nameText, localStyles.bigFont]}>{activeHouse?.Name}</Text>
+                <Text style={[styles.nameText, styles.bigFont]}>
+                  {activeHouse?.Name}
+                </Text>
               </View>
               <View style={styles.buttonsContainer}>
                 <View style={styles.iconWrapper}>
@@ -175,22 +176,25 @@ function ProfileScreen({ navigation }: Props) {
             setEditUserModalVisible(!editUserModalVisible);
           }}
         >
-          {/* <View style={styles.container}>
+          <View style={styles.container}>
             <View style={styles.modalView}>
-              <Text style={styles.buttonText}>Redigera Profil</Text>
+              <Text style={styles.buttonText}>Ändra Din Profil För</Text>
+              <Text style={[styles.nameText, styles.bigFont]}>
+                {activeHouse?.Name}
+              </Text>
               <TextInput
                 style={styles.textInputBox}
-                placeholder="Nytt Namn"
-                value={userName}
+                placeholder="Ange Ditt Namn"
+                value={currentUser?.Name}
                 onChangeText={(value) => setUserName(value)}
               />
               <Picker
-                selectedValue={avatarId}
-                onValueChange={(value) => setAvatarId(value)}
+                selectedValue={currentUser?.AvatarId}
+                onValueChange={(value, index) => setAvatarId(value)}
                 mode="dropdown" // Android only
                 style={styles.picker}
               >
-                {AllAvatars.map((item, index) => {
+                {avatarsAvailable.map((item, index) => {
                   return (
                     <Picker.Item
                       label={item.Emoji}
@@ -211,18 +215,18 @@ function ProfileScreen({ navigation }: Props) {
                   />
                 </View>
                 <View style={styles.iconWrapper}>
-                  <MaterialCommunityIcons
-                    name="close-circle"
+                  <FontAwesome5
+                    name="arrow-circle-down"
                     style={styles.icon}
-                    size={27}
+                    size={25}
                     onPress={closeModal}
                   />
                 </View>
               </View>
             </View>
-          </View> */}
+          </View>
         </Modal>
-        <View style={[styles.buttonsContainer, localStyles.buttonPosition]}>
+        <View style={[styles.buttonsContainer, styles.buttonPositionAbsolute]}>
           <Button
             buttonTitle="Switch House"
             btnType="sign-in-alt"

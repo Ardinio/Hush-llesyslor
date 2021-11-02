@@ -267,12 +267,18 @@ export const styles = StyleSheet.create({
   profileAvatar: {
     borderColor: "black",
     borderWidth: 1,
-    borderRadius: 100,
-    width: 200,
-    height: 200,
+    borderRadius: 110,
+    width: 220,
+    height: 220,
     // marginTop: 50,
     marginBottom: 20,
     justifyContent: "center",
     alignItems: "center",
+  },
+  bigFont: {
+    fontSize: 30,
+  },
+  buttonPositionAbsolute: {
+    position: "absolute",
   },
 });

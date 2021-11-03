@@ -6,12 +6,16 @@ import { useAppDispatch, useAppSelector } from "../store/store";
 import { selectTasksOnActiveHouseholdById } from "../store/task/taskSelectors";
 import { useState } from "react";
 import Button from "./Button";
+import { DeleteTask } from "../store/task/taskActions";
+import { selectIsAdmin } from "../store/user/userSelectors";
 import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
 import nextId from "react-id-generator";
 import { selectCurrentUser } from "../store/user/userSelectors";
 
-const TaskCard = ({}) => {
+const TaskCard = ({ }) => {
+  const isAdmin = useAppSelector(selectIsAdmin);
   const tasks2 = useAppSelector(selectTasksOnActiveHouseholdById);
+
   const currentUser = useAppSelector(selectCurrentUser);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
@@ -31,6 +35,19 @@ const TaskCard = ({}) => {
     );
   };
 
+  const onDelete = (selectedTaskId: string) => {
+
+    dispatch(
+      DeleteTask({
+        Id: selectedTaskId,
+        HouseholdId: '',
+        Title: '',
+        Description: '',
+        recurringInDays: 0,
+        EnergyRequired: 0
+      }))
+  }
+
   return (
     <View style={styles.Card}>
       {tasks2.map(({ taskId, taskTitle, taskDescription, daysLeft, avatars }, i) => (
@@ -38,9 +55,11 @@ const TaskCard = ({}) => {
           key={i}
           onPress={() => {
             setModalVisible(true),
+
             setSelectedTitle(taskTitle);
             setSelectedDescription(taskDescription);
             setSelectedTaskId(taskId);
+
           }}
         >
           <Card>
@@ -95,6 +114,19 @@ const TaskCard = ({}) => {
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />
+                <View style={styles.marginTop}>
+                  {isAdmin && (
+                    <Button
+                      onPress={() => onDelete(selectedTaskId)}
+                      buttonTitle="Radera"
+                      btnType="trash-alt"
+                    />
+                  )}
+                </View>
+              </View>
+              <View style={styles.marginTop}>
+                <TouchableOpacity>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -102,6 +134,7 @@ const TaskCard = ({}) => {
       </Modal>
     </View>
   );
+
 };
 
 export default TaskCard;

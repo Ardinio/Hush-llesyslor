@@ -1,27 +1,28 @@
 import { CompletedTask } from "../entities/CompletedTask";
 
-const date1: Date = new Date("2021-10-24");
-const date2: Date = new Date("2021-10-25");
-const date3: Date = new Date("2021-10-26");
+const date1: Date = new Date("2021-10-30");
+const date2: Date = new Date("2021-11-01");
+const date3: Date = new Date("2021-10-20");
+const date4: Date = new Date();
 
 export const mockedCompletedTask: CompletedTask[] = [
   {
     Id: "1",
     TasksId: "1",
     UserId: "1",
-    CompleteDate: date1,
+    CompleteDate: date4,
   },
   {
     Id: "2",
-    TasksId: "2",
+    TasksId: "1",
     UserId: "2",
-    CompleteDate: date2,
+    CompleteDate: date4,
   },
   {
     Id: "3",
-    TasksId: "1",
+    TasksId: "2",
     UserId: "3",
-    CompleteDate: date3,
+    CompleteDate: date2,
   },
   {
     Id: "4",

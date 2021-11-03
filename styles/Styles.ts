@@ -147,6 +147,9 @@ export const styles = StyleSheet.create({
     margin: 15,
     justifyContent: "space-between",
   },
+  CardItem: {
+    flexDirection: "row"
+  },
   title: {
     fontWeight: "bold",
     fontSize: 18,
@@ -256,4 +259,10 @@ export const styles = StyleSheet.create({
   buttonPositionAbsolute: {
     position: "absolute",
   },
+  textOk: {
+    color: "#00ff00"
+  },
+  textBad: {
+    color: "#ff0000"
+  }
 });

@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "../store/store";
 import { selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
 import { useState } from "react";
 import Button from "./Button";
-import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import { DeleteTask } from "../store/task/taskActions";
 import { selectIsAdmin } from "../store/user/userSelectors";
 import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
@@ -36,7 +35,7 @@ const TaskCard = ({ }) => {
   };
 
   const onDelete = (selectedTaskId: string) => {
-    
+
     dispatch(
       DeleteTask({
         Id: selectedTaskId,
@@ -44,29 +43,21 @@ const TaskCard = ({ }) => {
         Title: '',
         Description: '',
         recurringInDays: 0,
-        EnergyRequired: 0 }))
-}
+        EnergyRequired: 0
+      }))
+  }
 
   return (
     <View style={styles.Card}>
       {tasks.map(({ Title, recurringInDays, Description, Id }, i) => (
         <TouchableOpacity
           onPress={() => {
-            setModalVisible(true), 
-            setSelectedTitle(Title);
+            setModalVisible(true),
+              setSelectedTitle(Title);
             setSelectedDescription(Description);
             setSelectedTaskId(Id);
           }}
         >
-          {isAdmin && (
-            <MaterialCommunityIcons
-              name="delete"
-              size={24}
-              color="black"
-              onPress={() => onDelete(selectedTaskId)}
-            />
-          )}
-
           <Card key={i}>
             <View style={styles.CardContainer}>
               <Text style={styles.itemText}>{Title}</Text>
@@ -123,11 +114,15 @@ const TaskCard = ({ }) => {
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />
-                {/* <Button
-                  onPress={onDelete}
-                  buttonTitle="Radera"
-                  btnType="window-close"
-                /> */}
+                <View style={styles.marginTop}>
+                  {isAdmin && (
+                    <Button
+                      onPress={() => onDelete(selectedTaskId)}
+                      buttonTitle="Radera"
+                      btnType="trash-alt"
+                    />
+                  )}
+                </View>
               </View>
               <View style={styles.marginTop}>
                 <TouchableOpacity>

@@ -12,7 +12,7 @@ import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
 import nextId from "react-id-generator";
 import { selectCurrentUser } from "../store/user/userSelectors";
 
-const TaskCard = ({ }) => {
+const TaskCard = ({}) => {
   const isAdmin = useAppSelector(selectIsAdmin);
   const tasks2 = useAppSelector(selectTasksOnActiveHouseholdById);
 
@@ -36,47 +36,47 @@ const TaskCard = ({ }) => {
   };
 
   const onDelete = (selectedTaskId: string) => {
-
     dispatch(
       DeleteTask({
         Id: selectedTaskId,
-        HouseholdId: '',
-        Title: '',
-        Description: '',
+        HouseholdId: "",
+        Title: "",
+        Description: "",
         recurringInDays: 0,
-        EnergyRequired: 0
-      }))
-  }
+        EnergyRequired: 0,
+      })
+    );
+  };
 
   return (
     <View style={styles.Card}>
-      {tasks2.map(({ taskId, taskTitle, taskDescription, daysLeft, avatars }, i) => (
-        <TouchableOpacity
-          key={i}
-          onPress={() => {
-            setModalVisible(true),
-
-            setSelectedTitle(taskTitle);
-            setSelectedDescription(taskDescription);
-            setSelectedTaskId(taskId);
-
-          }}
-        >
-          <Card>
-            <View style={styles.CardContainer}>
-              <Text style={styles.itemText}>{taskTitle}</Text>
-              <View style={styles.CardItem}>
-              {avatars ? avatars.map((avatar, i) => (
-                <Text key={i}>{avatar}</Text>))
-                : (daysLeft !== undefined && daysLeft < 0) ?
-                  <Text style={styles.textBad}>{daysLeft}</Text> :
+      {tasks2.map(
+        ({ taskId, taskTitle, taskDescription, daysLeft, avatars }, i) => (
+          <TouchableOpacity
+            key={i}
+            onPress={() => {
+              setModalVisible(true), setSelectedTitle(taskTitle);
+              setSelectedDescription(taskDescription);
+              setSelectedTaskId(taskId);
+            }}
+          >
+            <Card>
+              <View style={styles.CardContainer}>
+                <Text style={styles.itemText}>{taskTitle}</Text>
+                <View style={styles.CardItem}>
+                  {avatars ? (
+                    avatars.map((avatar, i) => <Text key={i}>{avatar}</Text>)
+                  ) : daysLeft !== undefined && daysLeft < 0 ? (
+                    <Text style={styles.textBad}>{daysLeft}</Text>
+                  ) : (
                     <Text style={styles.textOk}>{daysLeft}</Text>
-              }
-            </View>
-            </View>
-          </Card>
-        </TouchableOpacity>
-      ))}
+                  )}
+                </View>
+              </View>
+            </Card>
+          </TouchableOpacity>
+        )
+      )}
 
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
@@ -117,7 +117,10 @@ const TaskCard = ({ }) => {
                 <View style={styles.marginTop}>
                   {isAdmin && (
                     <Button
-                      onPress={() => onDelete(selectedTaskId)}
+                      onPress={() => {
+                        onDelete(selectedTaskId);
+                        setModalVisible(!modalVisible);
+                      }}
                       buttonTitle="Radera"
                       btnType="trash-alt"
                     />
@@ -125,8 +128,7 @@ const TaskCard = ({ }) => {
                 </View>
               </View>
               <View style={styles.marginTop}>
-                <TouchableOpacity>
-                </TouchableOpacity>
+                <TouchableOpacity></TouchableOpacity>
               </View>
             </View>
           </View>
@@ -134,7 +136,6 @@ const TaskCard = ({ }) => {
       </Modal>
     </View>
   );
-
 };
 
 export default TaskCard;

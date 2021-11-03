@@ -6,8 +6,10 @@ import { useState } from "react";
 import RepeatCarousel from "./RepeatCarousel";
 import ValueCarousel from "./ValueCarousel";
 import nextId from "react-id-generator";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { AddTask } from "../store/task/taskActions";
+import { selectActiveHousehold } from "../store/household/householdSelectors";
+import { selectIsAdmin } from "../store/user/userSelectors";
 
 function AddChoreModul() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,6 +19,8 @@ function AddChoreModul() {
   const [energyRequired, setEnergyRequired] = useState<number>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const dispatch = useAppDispatch();
+  const activeHousehold = useAppSelector(selectActiveHousehold);
+  const isAdmin = useAppSelector(selectIsAdmin);
 
   const closeModal = () => {
     setErrorMsg("");
@@ -32,7 +36,7 @@ function AddChoreModul() {
     dispatch(
       AddTask({
         Id: nextId(),
-        HouseholdId: "100",
+        HouseholdId: activeHousehold?.Id!,
         Title: title,
         Description: description,
         recurringInDays: recurringInDays!,
@@ -46,13 +50,13 @@ function AddChoreModul() {
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
-          <View style={styles.modalView2}>
+          <View style={styles.modalView}>
             <Text>Skapa en ny syssla</Text>
             <View>
               <View>
                 <View style={[styles.innerContainer, styles.marginTop]}>
                   <TextInput
-                    style={styles.textBox}
+                    style={styles.textInputBox}
                     placeholder="Titel"
                     placeholderTextColor="grey"
                     value={title}
@@ -67,7 +71,7 @@ function AddChoreModul() {
               <View style={styles.marginTop}>
                 <View style={styles.innerContainer}>
                   <TextInput
-                    style={styles.textBox}
+                    style={styles.textInputBox}
                     placeholder="Beskrivning"
                     placeholderTextColor="grey"
                     value={description}
@@ -84,28 +88,27 @@ function AddChoreModul() {
               </View>
             </View>
 
-            <View style={styles.marginTop}>
+            <View style={[styles.buttonsContainer, styles.marginTop]}>
+              <Button onPress={addNewTask} buttonTitle="Spara" btnType="plus" />
+
               <Button
-                onPress={addNewTask}
-                buttonTitle="Spara"
+                onPress={() => setModalVisible(false)}
+                buttonTitle="Stäng"
                 btnType="window-close"
               />
-              <View style={styles.marginTop}>
-                <Button
-                  onPress={() => setModalVisible(false)}
-                  buttonTitle="Stäng"
-                  btnType="window-close"
-                />
-              </View>
             </View>
           </View>
         </View>
       </Modal>
-      <Button
-        onPress={() => setModalVisible(!modalVisible)}
-        buttonTitle="Lägg till uppgift"
-        btnType="plus"
-      />
+      <View style={styles.marginTop}>
+        {isAdmin && (
+          <Button
+            onPress={() => setModalVisible(!modalVisible)}
+            buttonTitle="Lägg till"
+            btnType="plus"
+          />
+        )}
+      </View>
     </View>
   );
 }

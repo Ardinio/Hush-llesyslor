@@ -8,6 +8,15 @@ function taskReducer(state: TaskState = initialState, action: TaskActions): Task
       task: [ ...state.task, action.payload ]
     }
   }
+
+  else if (action.type === 'task/deleteTask') {
+    const taskIndex = state.task.findIndex((u) => u.Id === action.payload.Id)
+    console.log("task deleted at index: " + taskIndex + " Id: " + action.payload.Id)
+    return {
+      ...state,
+      task: state.task.filter(i => i.Id !== action.payload.Id)
+    }
+  }
   else
     return state;
 }

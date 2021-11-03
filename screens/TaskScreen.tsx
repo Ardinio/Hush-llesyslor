@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, Alert, FlatList, Modal } from "react-native";
+import { View, Text, Alert, FlatList, Modal, ScrollView } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import TaskCard from "../components/TaskCard";
@@ -10,6 +10,7 @@ import AddChoreModul from "../components/AddChoreModul";
 import EditChoreModul from "../components/EditChoreModul";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+
 function TaskScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [complete, setComplete] = React.useState(false);
@@ -17,30 +18,29 @@ function TaskScreen() {
   const [selectedTitle, setSelectedTitle] = useState<string>("");
 
   return (
-    <SafeAreaProvider>
-
-      <View style={styles.container}>
-        {/* <FlatList
-          data={mockedTasks}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(true), setSelectedTitle(item.Title);
-                setSelectedDescription(item.Description);
-              }}
-              underlayColor="none"
-            >
-              <TaskCard task={item} />
-            </TouchableOpacity>
-          )}
-        /> */}
-        <TaskCard />
-        <View style={styles.buttonsContainer}>
+    <View style={styles.container}>
+      {/* <FlatList
+        data={mockedTasks}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(true), setSelectedTitle(item.Title);
+              setSelectedDescription(item.Description);
+            }}
+            underlayColor="none"
+          >
+            <TaskCard task={item} />
+          </TouchableOpacity>
+        )}
+      /> */}
+      <ScrollView>
+      <TaskCard />
+      </ScrollView>
+      <View style={styles.buttonsContainer}>
           <AddChoreModul />
           <EditChoreModul />
-        </View>
       </View>
-    </SafeAreaProvider>
+    </View>
   );
 }
 

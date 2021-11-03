@@ -5,6 +5,15 @@ import { RootState } from "../store";
 
 export const selectAllTasks = (state: RootState) => state.task.task;
 
+export const selectTaskById = (Id?: string) => (state: RootState) => 
+  state.task.task.find(t => t.Id === Id)
+
+export const selectTaskByTitle = (state: RootState) => {
+  const selectedTask = state.task.task.find(t => 
+    t.Title);
+  return selectedTask;
+}
+
 export const selectTasksOnActiveHousehold = (state: RootState) => {
   return state.task.task.map((task) => {
     const users = state.user.users.filter(

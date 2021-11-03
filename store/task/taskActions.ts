@@ -12,3 +12,4 @@ export const AddTask = (task: Task): AppThunk =>
   async (dispatch, getState) => {
     dispatch({ type: 'task/addTask', payload: task })
   }
+

@@ -8,6 +8,7 @@ import { TouchableHighlight as TouchableOpacity } from "react-native-gesture-han
 import { useState } from "react";
 import AddChoreModul from "../components/AddChoreModul";
 
+
 function TaskScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [complete, setComplete] = React.useState(false);

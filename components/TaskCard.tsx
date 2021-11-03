@@ -33,9 +33,6 @@ const TaskCard = ({}) => {
     );
   };
 
-      // {tasks.map(({ Title, recurringInDays, Description, Id }, i) => (
-        // <Text style={styles.itemText}>{Title}</Text>
-        // <Badge>{recurringInDays}</Badge>
   return (
     <View style={styles.Card}>
       {tasks2.map(({ taskId, taskTitle, taskDescription, daysLeft, avatars }, i) => (
@@ -51,12 +48,14 @@ const TaskCard = ({}) => {
           <Card key={i}>
             <View style={styles.CardContainer}>
               <Text style={styles.itemText}>{taskTitle}</Text>
-              {avatars ? avatars.map((id) => (
-                <Text>{id}</Text>))
+              <View style={styles.CardItem}>
+              {avatars ? avatars.map((avatar) => (
+                <Text>{avatar}</Text>))
                 : (daysLeft !== undefined && daysLeft < 0) ?
                   <Text style={styles.textBad}>{daysLeft}</Text> :
                     <Text style={styles.textOk}>{daysLeft}</Text>
               }
+            </View>
             </View>
           </Card>
         </TouchableOpacity>

@@ -160,6 +160,9 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     margin: 15,
   },
+  CardItem: {
+    flexDirection: "row"
+  },
   title: {
     fontWeight: "bold",
     fontSize: 18,

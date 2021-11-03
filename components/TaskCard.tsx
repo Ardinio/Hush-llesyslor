@@ -52,7 +52,7 @@ const TaskCard = ({}) => {
 
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
-          <View style={styles.modalView2}>
+          <View style={styles.modalView}>
             <View>
               <View>
                 <Text style={styles.itemText}>Titel:</Text>
@@ -68,20 +68,9 @@ const TaskCard = ({}) => {
                   </Text>
                 </View>
               </View>
-              {/* TODO: Bestämma med gruppen om det ska vara en checkbox eller knapp 
-              kommenterat bort checkbox.*/}
-              {/*
-            <Text style={styles.marginTop}>Färdig:</Text>
-              <Checkbox.Android
-                color={"green"}
-                status={complete ? "checked" : "unchecked"}
-                onPress={() => {
-                  setComplete(!complete);
-                }}
-              ></Checkbox.Android> */}
             </View>
 
-            <View style={styles.marginTop}>
+            <View style={[styles.buttonsContainer, styles.marginTop]}>
               <Button
                 onPress={() => {
                   setCompletedTask(),
@@ -91,7 +80,7 @@ const TaskCard = ({}) => {
                 buttonTitle="Färdig"
                 btnType="check"
               />
-              <View style={styles.marginTop}>
+              <View>
                 <Button
                   onPress={() => setModalVisible(!modalVisible)}
                   buttonTitle="Stäng"

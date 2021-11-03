@@ -6,16 +6,12 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  FlatList,
 } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/RootNavigator";
 import { useAppSelector, useAppDispatch } from "../store/store";
-import {
-  selectAllHouseholds,
-  selectHouseholdsWithUsers,
-} from "../store/household/householdSelectors";
+import { selectAllHouseholds } from "../store/household/householdSelectors";
 import { AddHousehold } from "../store/household/householdActions";
 import { FontAwesome5 } from "@expo/vector-icons";
 import nextId from "react-id-generator";
@@ -28,7 +24,6 @@ import { selectAllUsers } from "../store/user/userSelectors";
 import HouseholdCard from "../components/HouseholdCard";
 import { selectAccount } from "../store/account/accountSelectors";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { TouchableRipple } from "react-native-paper";
 
 type Props = GenericScreenProps<"HomeScreen">;
 
@@ -166,13 +161,15 @@ function SelectHouseholdScreen({ navigation }: Props) {
           <View style={styles.container}>
             <View style={styles.modalView}>
               <Text style={styles.buttonText}>Skapa nytt hushåll</Text>
-              <TextInput
-                style={styles.textInputBox}
-                placeholder="Ange ett namn på hushållet"
-                placeholderTextColor="grey"
-                value={houseHoldName}
-                onChangeText={(value) => setHouseHoldName(value)}
-              />
+              <View style={[styles.innerContainer, styles.marginTop]}>
+                <TextInput
+                  style={styles.textInputBox}
+                  placeholder="Ange ett namn på hushållet"
+                  placeholderTextColor="grey"
+                  value={houseHoldName}
+                  onChangeText={(value) => setHouseHoldName(value)}
+                />
+              </View>
               <Text style={styles.errorText}>{errorMsg}</Text>
               <View style={styles.buttonsContainer}>
                 <View style={styles.iconWrapper}>
@@ -207,13 +204,15 @@ function SelectHouseholdScreen({ navigation }: Props) {
           <View style={styles.container}>
             <View style={styles.modalView}>
               <Text style={styles.buttonText}>Gå med i hushåll</Text>
-              <TextInput
-                style={styles.textInputBox}
-                placeholder="Ange koden för hushållet"
-                placeholderTextColor="grey"
-                value={houseHoldCode}
-                onChangeText={(value) => setHouseHoldCode(value)}
-              />
+              <View style={[styles.innerContainer, styles.marginTop]}>
+                <TextInput
+                  style={styles.textInputBox}
+                  placeholder="Ange koden för hushållet"
+                  placeholderTextColor="grey"
+                  value={houseHoldCode}
+                  onChangeText={(value) => setHouseHoldCode(value)}
+                />
+              </View>
               <Text style={styles.errorText}>{errorMsg}</Text>
               <View style={styles.buttonsContainer}>
                 <View style={styles.iconWrapper}>
@@ -251,12 +250,15 @@ function SelectHouseholdScreen({ navigation }: Props) {
               <Text style={styles.nameText}>
                 {newHouseHold?.Name || houseHold?.Name}
               </Text>
-              <TextInput
-                style={styles.textInputBox}
-                placeholder="Ange Ditt Namn"
-                value={userName}
-                onChangeText={(value) => setUserName(value)}
-              />
+              <View style={[styles.innerContainer, styles.marginTop]}>
+                <TextInput
+                  style={styles.textInputBox}
+                  placeholder="Ange Ditt Namn"
+                  placeholderTextColor="grey"
+                  value={userName}
+                  onChangeText={(value) => setUserName(value)}
+                />
+              </View>
               <Picker
                 selectedValue={avatarId}
                 onValueChange={(value, index) => setAvatarId(value)}

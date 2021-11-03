@@ -172,6 +172,8 @@ function ProfileScreen({ navigation }: Props) {
               <Text style={[styles.nameText, styles.bigFont]}>
                 {activeHouse?.Name}
               </Text>
+              <View style={[styles.innerContainer, styles.marginTop]}>
+
               <TextInput
                 style={styles.textInputBox}
                 placeholder="Ange ditt namn"
@@ -179,6 +181,7 @@ function ProfileScreen({ navigation }: Props) {
                 value={userName}
                 onChangeText={(value) => setUserName(value)}
               />
+              </View>
               <Picker
                 selectedValue={avatarId}
                 onValueChange={(value, index) => setAvatarId(value)}

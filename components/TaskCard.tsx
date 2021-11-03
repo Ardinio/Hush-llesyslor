@@ -52,7 +52,7 @@ const TaskCard = ({}) => {
 
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
-          <View style={styles.modalView2}>
+          <View style={styles.modalView}>
             <View>
               <View>
                 <Text style={styles.itemText}>Titel:</Text>

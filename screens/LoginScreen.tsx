@@ -38,8 +38,10 @@ type Props = {
 type LoginSchemaType = Record<keyof Login, Yup.AnySchema>;
 
 const LoginSchema = Yup.object().shape<LoginSchemaType>({
-  email: Yup.string().required().email(),
-  password: Yup.string().required().min(4),
+  email: Yup.string().required("Fyll i din Email").email("Ange giltig mail"),
+  password: Yup.string()
+    .required("Fyll i ditt lösenord")
+    .min(4, "Lösenordet måste vara längre än 4 karakäter"),
 });
 
 function LoginScreen({ navigation }: Props) {
@@ -134,29 +136,31 @@ function LoginScreen({ navigation }: Props) {
               onSubmit={registerNewAccount}
               validationSchema={LoginSchema}
             >
-              {({ handleChange, handleSubmit, values }) => (
+              {({ handleChange, handleSubmit, values, errors }) => (
                 <>
                   <Text style={styles.errorText}>{errorMsg}</Text>
-                  <TextInput
-                    style={styles.textInputBox}
-                    placeholder="E-mail"
-                    placeholderTextColor="grey"
-                    value={values.email}
-                    onChangeText={handleChange<keyof Login>("email")}
-                    keyboardType="email-address"
-                  />
-                  <Text style={styles.errorText}>Ange giltig mail</Text>
-                  <TextInput
-                    style={styles.textInputBox}
-                    placeholder="Lösenord"
-                    placeholderTextColor="grey"
-                    value={values.password}
-                    onChangeText={handleChange<keyof Login>("password")}
-                    secureTextEntry
-                  />
-                  <Text style={styles.errorText}>
-                    Lösenordet måste vara längre än 4 tecken
-                  </Text>
+                  <View style={[styles.innerContainer, styles.marginTop]}>
+                    <TextInput
+                      style={styles.textInputBox}
+                      placeholder="E-mail"
+                      placeholderTextColor="grey"
+                      value={values.email}
+                      onChangeText={handleChange<keyof Login>("email")}
+                      keyboardType="email-address"
+                    />
+                  </View>
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                  <View style={[styles.innerContainer, styles.marginTop]}>
+                    <TextInput
+                      style={styles.textInputBox}
+                      placeholder="Lösenord"
+                      placeholderTextColor="grey"
+                      value={values.password}
+                      onChangeText={handleChange<keyof Login>("password")}
+                      secureTextEntry
+                    />
+                  </View>
+                  <Text style={styles.errorText}>{errors.password}</Text>
                   <View style={styles.buttonsContainer}>
                     <View style={styles.iconWrapper}>
                       <FontAwesome5
@@ -188,29 +192,31 @@ function LoginScreen({ navigation }: Props) {
         onSubmit={logIn}
         validationSchema={LoginSchema}
       >
-        {({ handleChange, handleSubmit, values }) => (
+        {({ handleChange, handleSubmit, values, errors }) => (
           <>
             <Text style={styles.errorText}>{errorMsg}</Text>
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="E-mail"
-              placeholderTextColor="grey"
-              value={values.email}
-              onChangeText={handleChange<keyof Login>("email")}
-              keyboardType="email-address"
-            />
-            <Text style={styles.errorText}>Ange giltig mail</Text>
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="Lösenord"
-              placeholderTextColor="grey"
-              value={values.password}
-              onChangeText={handleChange<keyof Login>("password")}
-              secureTextEntry
-            />
-            <Text style={styles.errorText}>
-              Lösenordet måste vara längre än 4 tecken
-            </Text>
+            <View style={[styles.innerContainer, styles.marginTop]}>
+              <TextInput
+                style={styles.textInputBox}
+                placeholder="E-mail"
+                placeholderTextColor="grey"
+                value={values.email}
+                onChangeText={handleChange<keyof Login>("email")}
+                keyboardType="email-address"
+              />
+            </View>
+            <Text style={styles.errorText}>{errors.email}</Text>
+            <View style={[styles.innerContainer, styles.marginTop]}>
+              <TextInput
+                style={styles.textInputBox}
+                placeholder="Lösenord"
+                placeholderTextColor="grey"
+                value={values.password}
+                onChangeText={handleChange<keyof Login>("password")}
+                secureTextEntry
+              />
+            </View>
+            <Text style={styles.errorText}>{errors.password} </Text>
             <Button
               buttonTitle="Logga in"
               btnType="sign-in-alt"

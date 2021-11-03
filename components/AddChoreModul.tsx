@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../store/store";
 import { AddTask } from "../store/task/taskActions";
 import { selectActiveHousehold, selectAllHouseholds } from "../store/household/householdSelectors";
 import { selectAllTasks } from "../store/task/taskSelectors";
+import { selectIsAdmin } from "../store/user/userSelectors";
 
 function AddChoreModul() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,6 +23,7 @@ function AddChoreModul() {
   const households = useAppSelector(selectAllHouseholds);
   const [householdId, setHouseholdId] = useState<any>();
   const activeHousehold = useAppSelector(selectActiveHousehold);
+  const isAdmin = useAppSelector(selectIsAdmin);
 
   const alltasks = useAppSelector(selectAllTasks);
 
@@ -107,6 +109,9 @@ function AddChoreModul() {
           </View>
         </View>
       </Modal>
+      <View style={styles.marginTop}>
+      {isAdmin && (
+
       <Button
         onPress={() => {
           setModalVisible(!modalVisible);
@@ -115,6 +120,8 @@ function AddChoreModul() {
         buttonTitle="Lägg till"
         btnType="plus"
       />
+      )}
+      </View>
     </View>
   );
 }

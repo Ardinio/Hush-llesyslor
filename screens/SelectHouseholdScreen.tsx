@@ -12,7 +12,8 @@ import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/RootNavigator";
 import { useAppSelector, useAppDispatch } from "../store/store";
 import { selectAllHouseholds } from "../store/household/householdSelectors";
-import { AddHousehold } from "../store/household/householdActions";
+import { selectHouseholdsWithUsers } from "../store/household/householdSelectors";
+import { AddHousehold, SetActiveHousehold} from "../store/household/householdActions";
 import { FontAwesome5 } from "@expo/vector-icons";
 import nextId from "react-id-generator";
 import { v4 as uuidv4 } from "uuid";
@@ -28,10 +29,11 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 type Props = GenericScreenProps<"HomeScreen">;
 
 function SelectHouseholdScreen({ navigation }: Props) {
-  const allHouseholds = useAppSelector(selectAllHouseholds);
+  // const allHouseholds = useAppSelector(selectAllHouseholds);
   const allUsers = useAppSelector(selectAllUsers);
   const dispatch = useAppDispatch();
   const activeAccount = useAppSelector(selectAccount);
+  const households = useAppSelector(selectHouseholdsWithUsers);
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
   const [joinHouseModalVisible, setJoinHouseModalVisible] =
@@ -64,7 +66,7 @@ function SelectHouseholdScreen({ navigation }: Props) {
   const createNewHouse = () => {
     if (!houseHoldName) return setErrorMsg("Hushållet måste ha ett namn!");
     if (
-      allHouseholds.find(
+      households.find(
         (h) => h.Name.toLowerCase() === houseHoldName.toLowerCase()
       )
     )
@@ -81,7 +83,7 @@ function SelectHouseholdScreen({ navigation }: Props) {
 
   const joinHouse = () => {
     if (!houseHoldCode) return setErrorMsg("Du måste ange en kod!");
-    const house = allHouseholds.find((h) => h.GeneratedCode === houseHoldCode);
+    const house = households.find((h) => h.GeneratedCode === houseHoldCode);
     if (!house) return setErrorMsg("Hittar inget hushåll med den koden!");
     const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
     if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!");
@@ -139,15 +141,18 @@ function SelectHouseholdScreen({ navigation }: Props) {
     <SafeAreaProvider>
       <View style={styles.container}>
         <ScrollView>
-          <View style={styles.container2}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("HomeScreen", { householdId: "1" })
-              }
-            >
-              <HouseholdCard />
-            </TouchableOpacity>
-          </View>
+
+        <View style={styles.container2}>
+        {households.map(({ users, isowner, ...household }) => (
+          <TouchableOpacity key={household.Id} onPress={() => {
+            {/*Flytta opacity till householdcard + OnPress-prop. Ta bort householdId från navigation. */}
+            navigation.navigate("HomeScreen", { householdId: '1' });
+            dispatch(SetActiveHousehold(household.Id));
+          }}>
+            <HouseholdCard household={household} users={users} isowner={isowner} />
+          </TouchableOpacity>
+        ))}
+        </View>
         </ScrollView>
         {/* Modal to create new HouseHold */}
         <Modal

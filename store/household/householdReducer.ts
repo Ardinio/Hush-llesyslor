@@ -19,6 +19,10 @@ function householdReducer(state: HouseholdState = initialState, action: Househol
     }
   }
 
+  else if (action.type === 'household/setActiveHousehold') {
+    return { ...state, activeHouseholdId: action.payload }
+  }
+
   else
     return state;
 }

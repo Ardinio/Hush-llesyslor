@@ -6,8 +6,10 @@ import { useState } from "react";
 import RepeatCarousel from "./RepeatCarousel";
 import ValueCarousel from "./ValueCarousel";
 import nextId from "react-id-generator";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { AddTask } from "../store/task/taskActions";
+import { selectActiveHousehold, selectAllHouseholds } from "../store/household/householdSelectors";
+import { selectAllTasks } from "../store/task/taskSelectors";
 
 function AddChoreModul() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,6 +19,15 @@ function AddChoreModul() {
   const [energyRequired, setEnergyRequired] = useState<number>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const dispatch = useAppDispatch();
+  const households = useAppSelector(selectAllHouseholds);
+  const [householdId, setHouseholdId] = useState<any>();
+  const activeHousehold = useAppSelector(selectActiveHousehold);
+
+  const alltasks = useAppSelector(selectAllTasks);
+
+  console.log(alltasks);
+
+  console.log(households);
 
   const closeModal = () => {
     setErrorMsg("");
@@ -32,7 +43,7 @@ function AddChoreModul() {
     dispatch(
       AddTask({
         Id: nextId(),
-        HouseholdId: "100",
+        HouseholdId: activeHousehold?.Id!,
         Title: title,
         Description: description,
         recurringInDays: recurringInDays!,
@@ -97,7 +108,10 @@ function AddChoreModul() {
         </View>
       </Modal>
       <Button
-        onPress={() => setModalVisible(!modalVisible)}
+        onPress={() => {
+          setModalVisible(!modalVisible);
+          setHouseholdId;
+        }}
         buttonTitle="Lägg till"
         btnType="plus"
       />

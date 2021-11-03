@@ -168,13 +168,14 @@ function ProfileScreen({ navigation }: Props) {
         >
           <View style={styles.container}>
             <View style={styles.modalView}>
-              <Text style={styles.buttonText}>Ändra Din Profil För</Text>
+              <Text style={styles.buttonText}>Ändra din profil för</Text>
               <Text style={[styles.nameText, styles.bigFont]}>
                 {activeHouse?.Name}
               </Text>
               <TextInput
                 style={styles.textInputBox}
-                placeholder="Ange Ditt Namn"
+                placeholder="Ange ditt namn"
+                placeholderTextColor="grey"
                 value={userName}
                 onChangeText={(value) => setUserName(value)}
               />
@@ -218,12 +219,12 @@ function ProfileScreen({ navigation }: Props) {
         </Modal>
         <View style={[styles.buttonsContainer, styles.buttonPositionAbsolute]}>
           <Button
-            buttonTitle="Switch House"
+            buttonTitle="Byt hushåll"
             btnType="sign-in-alt"
             onPress={switchHouse}
           />
           <Button
-            buttonTitle="Leave House"
+            buttonTitle="Lämna hushåll"
             btnType="sign-out-alt"
             onPress={handleDelete}
           />

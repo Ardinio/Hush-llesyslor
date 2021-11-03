@@ -84,26 +84,22 @@ function AddChoreModul() {
               </View>
             </View>
 
-            <View style={styles.marginTop}>
-              <Button
-                onPress={addNewTask}
-                buttonTitle="Spara"
-                btnType="window-close"
-              />
-              <View style={styles.marginTop}>
+            <View style={[styles.buttonsContainer, styles.marginTop]}>
+              <Button onPress={addNewTask} buttonTitle="Spara" btnType="plus" />
+              
                 <Button
                   onPress={() => setModalVisible(false)}
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />
-              </View>
+             
             </View>
           </View>
         </View>
       </Modal>
       <Button
         onPress={() => setModalVisible(!modalVisible)}
-        buttonTitle="Lägg till uppgift"
+        buttonTitle="Lägg till"
         btnType="plus"
       />
     </View>

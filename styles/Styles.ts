@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 30,
   },
   item: {
     backgroundColor: "#FFF",
@@ -115,7 +115,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Roboto_400Regular",
   },
   buttonContainer: {
-    width: 150,
+    width: 130,
     height: height / 15,
     padding: 10,
     flexDirection: "row",
@@ -144,7 +144,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
     color: "black",
     fontFamily: "Roboto_400Regular",
@@ -157,8 +157,8 @@ export const styles = StyleSheet.create({
   },
   CardContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     margin: 15,
+    justifyContent: "space-between",
   },
   title: {
     fontWeight: "bold",
@@ -214,7 +214,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   marginTop: {
-    marginTop: 20,
+    marginTop: 10,
   },
   innerContainer: {
     backgroundColor: "#ffff",
@@ -255,6 +255,7 @@ export const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: "#EEEDE7",
+    justifyContent: "center",
   },
   carouselText: {
     fontWeight: "bold",
@@ -265,15 +266,19 @@ export const styles = StyleSheet.create({
     backgroundColor: "red",
   },
   profileAvatar: {
-    borderColor: "black",
-    borderWidth: 1,
     borderRadius: 110,
     width: 220,
     height: 220,
-    // marginTop: 50,
     marginBottom: 20,
     justifyContent: "center",
     alignItems: "center",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 5,
   },
   bigFont: {
     fontSize: 30,

@@ -30,9 +30,9 @@ const RepeatCarousel: FC<Props> = (props) => {
                 key={n}
                 size={26}
                 style={[
-                  styles.itemText,
-                  styles.container,
+                  styles.marginTop,
                   styles.badge,
+                  styles.itemText,
                   reccurringInDays === n
                     ? styles.innerTextPressed
                     : styles.badge,
@@ -45,9 +45,9 @@ const RepeatCarousel: FC<Props> = (props) => {
         ) : (
           <View style={styles.CardContainer}>
             <Text style={styles.carouselText}>Återkommer:</Text>
-            <Text>var</Text>
-            <Badge style={styles.itemText}>7</Badge>
-            <Text>dag</Text>
+            <Text> var</Text>
+            <Badge style={styles.itemText}>{reccurringInDays}</Badge>
+            <Text> dag</Text>
           </View>
         )}
       </TouchableOpacity>

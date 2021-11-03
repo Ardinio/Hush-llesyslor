@@ -27,10 +27,9 @@ const ValueCarousel: FC<Props> = (props) => {
                     props.onChangeText(n);
                   }}
                   key={n}
-                  size={26}
+                  size={50}
                   style={[
                     styles.itemText,
-                    styles.container,
                     styles.badge,
                     energyRequired === n
                       ? styles.innerTextPressed
@@ -45,7 +44,9 @@ const ValueCarousel: FC<Props> = (props) => {
         ) : (
           <View style={styles.CardContainer}>
             <Text style={styles.carouselText}>Värde:</Text>
-            <Badge style={[styles.itemText, styles.badge]}>7</Badge>
+            <Badge style={[styles.itemText, styles.badge]}>
+              {energyRequired}
+            </Badge>
             <View></View>
           </View>
         )}

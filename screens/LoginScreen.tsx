@@ -57,9 +57,9 @@ function LoginScreen({ navigation }: Props) {
     if (!account)
       return setErrorMsg("Finns inget konto registrerat på den E-postAdressen");
     if (account.Email !== login.email.toLowerCase().trim())
-      return setErrorMsg("Email eller Password är felaktigt");
+      return setErrorMsg("Email eller lösenordet är felaktigt");
     if (account.Password !== login.password.trim())
-      return setErrorMsg("Email eller Password är felaktigt");
+      return setErrorMsg("Email eller lösenordet är felaktigt");
     dispatch(
       SetActiveAccount({
         Id: account.Id,
@@ -134,25 +134,29 @@ function LoginScreen({ navigation }: Props) {
               onSubmit={registerNewAccount}
               validationSchema={LoginSchema}
             >
-              {({ handleChange, handleSubmit, values, errors }) => (
+              {({ handleChange, handleSubmit, values }) => (
                 <>
                   <Text style={styles.errorText}>{errorMsg}</Text>
                   <TextInput
                     style={styles.textInputBox}
                     placeholder="E-mail"
+                    placeholderTextColor="grey"
                     value={values.email}
                     onChangeText={handleChange<keyof Login>("email")}
                     keyboardType="email-address"
                   />
-                  <Text style={styles.errorText}>{errors.email}</Text>
+                  <Text style={styles.errorText}>Ange giltig mail</Text>
                   <TextInput
                     style={styles.textInputBox}
-                    placeholder="Password"
+                    placeholder="Lösenord"
+                    placeholderTextColor="grey"
                     value={values.password}
                     onChangeText={handleChange<keyof Login>("password")}
                     secureTextEntry
                   />
-                  <Text style={styles.errorText}>{errors.password}</Text>
+                  <Text style={styles.errorText}>
+                    Lösenordet måste vara längre än 4 tecken
+                  </Text>
                   <View style={styles.buttonsContainer}>
                     <View style={styles.iconWrapper}>
                       <FontAwesome5
@@ -184,25 +188,29 @@ function LoginScreen({ navigation }: Props) {
         onSubmit={logIn}
         validationSchema={LoginSchema}
       >
-        {({ handleChange, handleSubmit, values, errors }) => (
+        {({ handleChange, handleSubmit, values }) => (
           <>
             <Text style={styles.errorText}>{errorMsg}</Text>
             <TextInput
               style={styles.textInputBox}
               placeholder="E-mail"
+              placeholderTextColor="grey"
               value={values.email}
               onChangeText={handleChange<keyof Login>("email")}
               keyboardType="email-address"
             />
-            <Text style={styles.errorText}>{errors.email}</Text>
+            <Text style={styles.errorText}>Ange giltig mail</Text>
             <TextInput
               style={styles.textInputBox}
-              placeholder="Password"
+              placeholder="Lösenord"
+              placeholderTextColor="grey"
               value={values.password}
               onChangeText={handleChange<keyof Login>("password")}
               secureTextEntry
             />
-            <Text style={styles.errorText}>{errors.password}</Text>
+            <Text style={styles.errorText}>
+              Lösenordet måste vara längre än 4 tecken
+            </Text>
             <Button
               buttonTitle="Logga in"
               btnType="sign-in-alt"

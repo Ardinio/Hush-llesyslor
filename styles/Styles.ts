@@ -48,6 +48,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     flexDirection: "row",
     backgroundColor: "transparent",
+    // position: "absolute",
     marginTop: 5,
     width: "100%",
   },
@@ -184,8 +185,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    // marginBottom: 50,
-    // paddingBottom: 50
   },
   pieChartStyle: {
     height: 150,
@@ -266,5 +265,22 @@ export const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
     backgroundColor: "red",
+  },
+  profileAvatar: {
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 110,
+    width: 220,
+    height: 220,
+    // marginTop: 50,
+    marginBottom: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bigFont: {
+    fontSize: 30,
+  },
+  buttonPositionAbsolute: {
+    position: "absolute",
   },
 });

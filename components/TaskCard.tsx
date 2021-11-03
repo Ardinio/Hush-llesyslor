@@ -9,29 +9,43 @@ import Button from "./Button";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import { DeleteTask } from "../store/task/taskActions";
 import { selectIsAdmin } from "../store/user/userSelectors";
+import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
+import nextId from "react-id-generator";
+import { selectCurrentUser } from "../store/user/userSelectors";
 
 const TaskCard = ({ }) => {
   const tasks = useAppSelector(selectTasksOnActiveHousehold);
   const isAdmin = useAppSelector(selectIsAdmin);
+  const currentUser = useAppSelector(selectCurrentUser);
   const [modalVisible, setModalVisible] = useState(false);
-  const [complete, setComplete] = React.useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
   const [selectedTitle, setSelectedTitle] = useState<string>("");
-  const [taskId, setTaskId] = useState<string>("");
-
   const dispatch = useAppDispatch();
+  const [selectedTaskId, setSelectedTaskId] = useState<string>("");
+  const [userId, setUserId] = useState<any>();
 
-  const onDelete = (taskId: string) => {
+  const setCompletedTask = () => {
+    dispatch(
+      AddCompletedTask({
+        Id: nextId(),
+        TasksId: selectedTaskId,
+        UserId: userId,
+        CompleteDate: new Date(),
+      })
+    );
+  };
+
+  const onDelete = (selectedTaskId: string) => {
     
-      dispatch(
-        DeleteTask({
-          Id: taskId,
-          HouseholdId: '',
-          Title: '',
-          Description: '',
-          recurringInDays: 0,
-          EnergyRequired: 0 }))
-  }
+    dispatch(
+      DeleteTask({
+        Id: selectedTaskId,
+        HouseholdId: '',
+        Title: '',
+        Description: '',
+        recurringInDays: 0,
+        EnergyRequired: 0 }))
+}
 
   return (
     <View style={styles.Card}>
@@ -40,8 +54,8 @@ const TaskCard = ({ }) => {
           onPress={() => {
             setModalVisible(true), 
             setSelectedTitle(Title);
-            setSelectedDescription(Description)
-            setTaskId(Id);
+            setSelectedDescription(Description);
+            setSelectedTaskId(Id);
           }}
         >
           {isAdmin && (
@@ -49,7 +63,7 @@ const TaskCard = ({ }) => {
               name="delete"
               size={24}
               color="black"
-              onPress={() => onDelete(taskId)}
+              onPress={() => onDelete(selectedTaskId)}
             />
           )}
 
@@ -72,7 +86,6 @@ const TaskCard = ({ }) => {
                   <Text style={styles.innerContainerText}>{selectedTitle}</Text>
                 </View>
               </View>
-
               <View style={styles.marginTop}>
                 <Text style={styles.itemText}>Beskrivning:</Text>
                 <View style={styles.innerContainer}>
@@ -97,7 +110,9 @@ const TaskCard = ({ }) => {
             <View style={styles.marginTop}>
               <Button
                 onPress={() => {
-                  setComplete(!complete);
+                  setCompletedTask(),
+                    setSelectedTaskId,
+                    setUserId(currentUser?.AccountId);
                 }}
                 buttonTitle="Färdig"
                 btnType="check"
@@ -123,12 +138,6 @@ const TaskCard = ({ }) => {
         </View>
       </Modal>
     </View>
-    // <Card style={styles.Card}>
-    //   <View style={styles.CardContainer}>
-    //     <Text style={styles.itemText}>{task.Title}</Text>
-    //     <BadgeComponent task={task} />
-    //   </View>
-    // </Card>
   );
 
 };

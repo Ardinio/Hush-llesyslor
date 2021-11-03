@@ -281,4 +281,10 @@ export const styles = StyleSheet.create({
   buttonPositionAbsolute: {
     position: "absolute",
   },
+  textOk: {
+    color: "#00ff00"
+  },
+  textBad: {
+    color: "#ff0000"
+  }
 });

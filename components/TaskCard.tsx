@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { styles } from "../styles/Styles";
 import { Badge, Card } from "react-native-paper";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
+// import { selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
+import { selectTasksOnActiveHousehold, selectTasksOnActiveHouseholdById } from "../store/task/taskSelectors";
 import { useState } from "react";
 import Button from "./Button";
 import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
@@ -11,7 +12,8 @@ import nextId from "react-id-generator";
 import { selectCurrentUser } from "../store/user/userSelectors";
 
 const TaskCard = ({}) => {
-  const tasks = useAppSelector(selectTasksOnActiveHousehold);
+  // const tasks = useAppSelector(selectTasksOnActiveHousehold);
+  const tasks2 = useAppSelector(selectTasksOnActiveHouseholdById('1'));
   const currentUser = useAppSelector(selectCurrentUser);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
@@ -31,20 +33,30 @@ const TaskCard = ({}) => {
     );
   };
 
+      // {tasks.map(({ Title, recurringInDays, Description, Id }, i) => (
+        // <Text style={styles.itemText}>{Title}</Text>
+        // <Badge>{recurringInDays}</Badge>
   return (
     <View style={styles.Card}>
-      {tasks.map(({ Title, recurringInDays, Description, Id }, i) => (
+      {tasks2.map(({ taskId, taskTitle, taskDescription, daysLeft, avatars }, i) => (
         <TouchableOpacity
+          key={i}
           onPress={() => {
-            setModalVisible(true), setSelectedTitle(Title);
-            setSelectedDescription(Description);
-            setSelectedTaskId(Id);
+            setModalVisible(true),
+            setSelectedTitle(taskTitle);
+            setSelectedDescription(taskDescription);
+            setSelectedTaskId(taskId);
           }}
         >
           <Card key={i}>
             <View style={styles.CardContainer}>
-              <Text style={styles.itemText}>{Title}</Text>
-              <Badge>{recurringInDays}</Badge>
+              <Text style={styles.itemText}>{taskTitle}</Text>
+              {avatars ? avatars.map((id) => (
+                <Text>{id}</Text>))
+                : (daysLeft !== undefined && daysLeft < 0) ?
+                  <Text style={styles.textBad}>{daysLeft}</Text> :
+                    <Text style={styles.textOk}>{daysLeft}</Text>
+              }
             </View>
           </Card>
         </TouchableOpacity>

@@ -38,8 +38,10 @@ type Props = {
 type LoginSchemaType = Record<keyof Login, Yup.AnySchema>;
 
 const LoginSchema = Yup.object().shape<LoginSchemaType>({
-  email: Yup.string().required().email(),
-  password: Yup.string().required().min(4),
+  email: Yup.string().required("Fyll i din Email").email("Ange giltig mail"),
+  password: Yup.string()
+    .required("Fyll i ditt lösenord")
+    .min(4, "Lösenordet måste vara minst 4 tecken"),
 });
 
 function LoginScreen({ navigation }: Props) {
@@ -57,9 +59,9 @@ function LoginScreen({ navigation }: Props) {
     if (!account)
       return setErrorMsg("Finns inget konto registrerat på den E-postAdressen");
     if (account.Email !== login.email.toLowerCase().trim())
-      return setErrorMsg("Email eller Password är felaktigt");
+      return setErrorMsg("Email eller lösenordet är felaktigt");
     if (account.Password !== login.password.trim())
-      return setErrorMsg("Email eller Password är felaktigt");
+      return setErrorMsg("Email eller lösenordet är felaktigt");
     dispatch(
       SetActiveAccount({
         Id: account.Id,
@@ -137,21 +139,27 @@ function LoginScreen({ navigation }: Props) {
               {({ handleChange, handleSubmit, values, errors }) => (
                 <>
                   <Text style={styles.errorText}>{errorMsg}</Text>
-                  <TextInput
-                    style={styles.textInputBox}
-                    placeholder="E-mail"
-                    value={values.email}
-                    onChangeText={handleChange<keyof Login>("email")}
-                    keyboardType="email-address"
-                  />
+                  <View style={[styles.innerContainer, styles.marginTop]}>
+                    <TextInput
+                      style={styles.textInputBox}
+                      placeholder="E-mail"
+                      placeholderTextColor="grey"
+                      value={values.email}
+                      onChangeText={handleChange<keyof Login>("email")}
+                      keyboardType="email-address"
+                    />
+                  </View>
                   <Text style={styles.errorText}>{errors.email}</Text>
-                  <TextInput
-                    style={styles.textInputBox}
-                    placeholder="Password"
-                    value={values.password}
-                    onChangeText={handleChange<keyof Login>("password")}
-                    secureTextEntry
-                  />
+                  <View style={[styles.innerContainer, styles.marginTop]}>
+                    <TextInput
+                      style={styles.textInputBox}
+                      placeholder="Lösenord"
+                      placeholderTextColor="grey"
+                      value={values.password}
+                      onChangeText={handleChange<keyof Login>("password")}
+                      secureTextEntry
+                    />
+                  </View>
                   <Text style={styles.errorText}>{errors.password}</Text>
                   <View style={styles.buttonsContainer}>
                     <View style={styles.iconWrapper}>
@@ -187,22 +195,28 @@ function LoginScreen({ navigation }: Props) {
         {({ handleChange, handleSubmit, values, errors }) => (
           <>
             <Text style={styles.errorText}>{errorMsg}</Text>
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="E-mail"
-              value={values.email}
-              onChangeText={handleChange<keyof Login>("email")}
-              keyboardType="email-address"
-            />
+            <View style={[styles.innerContainer, styles.marginTop]}>
+              <TextInput
+                style={styles.textInputBox}
+                placeholder="E-mail"
+                placeholderTextColor="grey"
+                value={values.email}
+                onChangeText={handleChange<keyof Login>("email")}
+                keyboardType="email-address"
+              />
+            </View>
             <Text style={styles.errorText}>{errors.email}</Text>
-            <TextInput
-              style={styles.textInputBox}
-              placeholder="Password"
-              value={values.password}
-              onChangeText={handleChange<keyof Login>("password")}
-              secureTextEntry
-            />
-            <Text style={styles.errorText}>{errors.password}</Text>
+            <View style={[styles.innerContainer, styles.marginTop]}>
+              <TextInput
+                style={styles.textInputBox}
+                placeholder="Lösenord"
+                placeholderTextColor="grey"
+                value={values.password}
+                onChangeText={handleChange<keyof Login>("password")}
+                secureTextEntry
+              />
+            </View>
+            <Text style={styles.errorText}>{errors.password} </Text>
             <Button
               buttonTitle="Logga in"
               btnType="sign-in-alt"

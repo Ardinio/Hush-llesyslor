@@ -1,12 +1,10 @@
 import * as React from "react";
-import { Text, TouchableHighlight, TouchableOpacity, View, Modal, TextInput } from "react-native";
+import { Text, TouchableOpacity, View, Modal, TextInput } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Card } from "react-native-paper";
-import { AllAvatars } from "../data/avatars";
-import { useAppSelector, useAppDispatch } from "../store/store";
+import { useAppDispatch } from "../store/store";
 import { styles } from "../styles/Styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { selectHouseholdsWithUsers } from "../store/household/householdSelectors";
 import { EditHousehold } from "../store/household/householdActions";
 import { Household } from '../entities/Household';
 
@@ -31,15 +29,13 @@ const HouseholdCard = ({ household, isowner, users }: Props) => {
   };
 
   const editHouseholdName = () => {
-    // TODO: Måste fixas igen!
-    // if (!houseHoldName)
-    //   return setErrorMsg("Fältet med namn för ett hushåll får inte vara tomt!");
-    // else {
-    //   const householdsClean: Household = households.map((x) => { return { Id: x.Id, Name: x.Name, GeneratedCode: x.GeneratedCode }}).find((y) => y.Id === houseHoldId) ?? { Id: '', Name: '', GeneratedCode: '' };
-    //   const householdWithNewName: Household = { ...householdsClean, Name: houseHoldName ?? "" };
-    //   dispatch(EditHousehold(householdWithNewName));
-    //   closeModal();
-    // }
+    if (!houseHoldName)
+      return setErrorMsg("Fältet med namn för ett hushåll får inte vara tomt!");
+    else {
+      const householdWithNewName: Household = { ...household, Name: houseHoldName ?? "" };
+      dispatch(EditHousehold(householdWithNewName));
+      closeModal();
+    }
   };
   const { Name, GeneratedCode, Id } = household;
   return (

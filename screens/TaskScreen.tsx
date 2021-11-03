@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, Alert, FlatList, Modal } from "react-native";
+import { View, Text, Alert, FlatList, Modal, ScrollView } from "react-native";
 import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import TaskCard from "../components/TaskCard";
@@ -31,8 +31,9 @@ function TaskScreen() {
           </TouchableOpacity>
         )}
       /> */}
+      <ScrollView>
       <TaskCard />
-
+      </ScrollView>
       <AddChoreModul />
     </View>
   );

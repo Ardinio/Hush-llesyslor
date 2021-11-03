@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 30,
   },
   item: {
     backgroundColor: "#FFF",
@@ -48,7 +48,6 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     flexDirection: "row",
     backgroundColor: "transparent",
-    // position: "absolute",
     marginTop: 5,
     width: "100%",
   },
@@ -63,14 +62,13 @@ export const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   modalView: {
-    width: "70%",
+    width: "90%",
     minHeight: 220,
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "#EEEDE7",
     borderRadius: 20,
-    paddingTop: 20,
+    padding: 35,
     alignItems: "center",
-    justifyContent: "space-around",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -79,17 +77,6 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
-  textInputBox: {
-    width: "70%",
-    minWidth: 200,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 5,
-    padding: 5,
-    margin: 5,
-    fontSize: 15,
-    color: "#000000",
   },
   loginLogo: {
     marginTop: 20,
@@ -115,7 +102,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Roboto_400Regular",
   },
   buttonContainer: {
-    width: 150,
+    width: 130,
     height: height / 15,
     padding: 10,
     flexDirection: "row",
@@ -144,7 +131,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
     color: "black",
     fontFamily: "Roboto_400Regular",
@@ -157,8 +144,11 @@ export const styles = StyleSheet.create({
   },
   CardContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     margin: 15,
+    justifyContent: "space-between",
+  },
+  CardItem: {
+    flexDirection: "row"
   },
   title: {
     fontWeight: "bold",
@@ -214,7 +204,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   marginTop: {
-    marginTop: 20,
+    marginTop: 10,
   },
   innerContainer: {
     backgroundColor: "#ffff",
@@ -226,29 +216,10 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 8,
   },
-  textBox: {
+  textInputBox: {
     marginTop: 8,
     marginLeft: 8,
   },
-  modalView2: {
-    width: "90%",
-    minHeight: 220,
-    margin: 20,
-    backgroundColor: "#EEEDE7",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-    },
-
   carouselContainer: {
     backgroundColor: "#ffff",
     borderRadius: 10,
@@ -257,6 +228,7 @@ export const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: "#EEEDE7",
+    justifyContent: "center",
   },
   carouselText: {
     fontWeight: "bold",
@@ -267,15 +239,19 @@ export const styles = StyleSheet.create({
     backgroundColor: "red",
   },
   profileAvatar: {
-    borderColor: "black",
-    borderWidth: 1,
     borderRadius: 110,
     width: 220,
     height: 220,
-    // marginTop: 50,
     marginBottom: 20,
     justifyContent: "center",
     alignItems: "center",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 5,
   },
   bigFont: {
     fontSize: 30,
@@ -283,4 +259,10 @@ export const styles = StyleSheet.create({
   buttonPositionAbsolute: {
     position: "absolute",
   },
+  textOk: {
+    color: "#00ff00"
+  },
+  textBad: {
+    color: "#ff0000"
+  }
 });

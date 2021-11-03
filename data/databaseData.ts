@@ -3,8 +3,8 @@ import { Account } from "../entities/Account";
 export const mockedDatabase: Account[] = [
   {
     Id: "1",
-    Email: "emina@test.com",
-    Password: "Test"
+    Email: "a@a.a",
+    Password: "aaaa"
   },
   {
     Id: "2",

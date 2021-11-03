@@ -35,17 +35,17 @@ const RootNavigator: FC = () => {
         <Screen
           name="LoginScreen"
           component={LoginScreen}
-          options={{ title: "Login" }}
+          options={{ title: "Logga ut" }}
         />
         <Screen
           name="SelectHousehold"
           component={SelectHouseholdScreen}
-          options={{ title: "SelectHousehold" }}
+          options={{ title: "Hushåll", headerShown: true }}
         />
         <Screen
           name="HomeScreen"
           component={BottomTabsNavigator}
-          options={{ title: "Home" }}
+          options={{ title: "" }}
         />
       </Navigator>
     </NavigationContainer>

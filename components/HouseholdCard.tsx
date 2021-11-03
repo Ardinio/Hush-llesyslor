@@ -10,8 +10,13 @@ import { selectHouseholdsWithUsers } from "../store/household/householdSelectors
 import { EditHousehold } from "../store/household/householdActions";
 import { Household } from '../entities/Household';
 
-const HouseholdCard = ({}) => {
-  const households = useAppSelector(selectHouseholdsWithUsers);
+interface Props {
+  household: Household,
+  isowner: boolean,
+  users: any[]
+}
+
+const HouseholdCard = ({ household, isowner, users }: Props) => {
   const dispatch = useAppDispatch();
   const [editHouseholdNameModalVisibility, setEditHouseholdNameModalVisibility] = React.useState(false);
   const [houseHoldName, setHouseHoldName] = React.useState<string>();
@@ -26,21 +31,21 @@ const HouseholdCard = ({}) => {
   };
 
   const editHouseholdName = () => {
-    if (!houseHoldName)
-      return setErrorMsg("Fältet med namn för ett hushåll får inte vara tomt!");
-    else {
-      const householdsClean: Household = households.map((x) => { return { Id: x.Id, Name: x.Name, GeneratedCode: x.GeneratedCode }}).find((y) => y.Id === houseHoldId) ?? { Id: '', Name: '', GeneratedCode: '' };
-      const householdWithNewName: Household = { ...householdsClean, Name: houseHoldName ?? "" };
-      dispatch(EditHousehold(householdWithNewName));
-      closeModal();
-    }
+    // TODO: Måste fixas igen!
+    // if (!houseHoldName)
+    //   return setErrorMsg("Fältet med namn för ett hushåll får inte vara tomt!");
+    // else {
+    //   const householdsClean: Household = households.map((x) => { return { Id: x.Id, Name: x.Name, GeneratedCode: x.GeneratedCode }}).find((y) => y.Id === houseHoldId) ?? { Id: '', Name: '', GeneratedCode: '' };
+    //   const householdWithNewName: Household = { ...householdsClean, Name: houseHoldName ?? "" };
+    //   dispatch(EditHousehold(householdWithNewName));
+    //   closeModal();
+    // }
   };
-
+  const { Name, GeneratedCode, Id } = household;
   return (
     //TODO: Check CSS to reuse several classes
-    <View style={styles.container2}>
-      {households.map(({ Id, Name, users, GeneratedCode, isowner }, i) => (
-        <Card key={i} style={styles.Card}>
+      <>
+        <Card style={styles.Card}>
           <View style={styles.textAlign}>
             <Text style={styles.title}>{Name}</Text>
             <TouchableOpacity
@@ -67,7 +72,6 @@ const HouseholdCard = ({}) => {
             Kod för att gå med i hushållet: {GeneratedCode}
           </Text>
         </Card>
-      ))}
 
       <Modal
         animationType="slide"
@@ -108,7 +112,7 @@ const HouseholdCard = ({}) => {
           </View>
         </View>
       </Modal>
-    </View>
+    </>
   );
 };
 

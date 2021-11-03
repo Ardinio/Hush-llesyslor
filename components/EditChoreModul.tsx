@@ -25,7 +25,7 @@ function EditChoreModul() {
     setModalVisible(false);
   };
 
-  const editNewTask = () => {
+  const editTask = () => {
     if (!title || !description || !recurringInDays || !energyRequired)
       return setErrorMsg("Du måste fylla i alla fält");
 
@@ -47,7 +47,7 @@ function EditChoreModul() {
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
           <View style={styles.modalView2}>
-            <Text>Skapa en ny syssla</Text>
+            <Text>Ändra en syssla</Text>
             <View>
               <View>
                 <View style={[styles.innerContainer, styles.marginTop]}>
@@ -86,7 +86,7 @@ function EditChoreModul() {
 
             <View style={styles.marginTop}>
               <Button
-                onPress={editNewTask}
+                onPress={editTask}
                 buttonTitle="Spara"
                 btnType="window-close"
               />
@@ -104,7 +104,7 @@ function EditChoreModul() {
       <Button
         onPress={() => setModalVisible(!modalVisible)}
         buttonTitle="Ändra"
-        btnType="plus"
+        btnType="pen"
       />
     </View>
   );

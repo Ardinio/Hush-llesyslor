@@ -12,7 +12,7 @@ import { styles } from "../styles/Styles";
 import { Button } from "../components";
 import { GenericScreenProps } from "../navigation/RootNavigator";
 import { useAppSelector, useAppDispatch } from "../store/store";
-import { selectHouseholdsWithUsers } from "../store/household/householdSelectors";
+import { selectAvailableHouseholdsWithUsers, selectHouseholdsWithUsers } from "../store/household/householdSelectors";
 import { AddHousehold, SetActiveHousehold} from "../store/household/householdActions";
 import { FontAwesome5 } from "@expo/vector-icons";
 import nextId from "react-id-generator";
@@ -35,6 +35,7 @@ function SelectHouseholdScreen({ navigation }: Props) {
   const dispatch = useAppDispatch();
   const activeAccount = useAppSelector(selectAccount);
   const households = useAppSelector(selectHouseholdsWithUsers);
+  const availableHousholds = useAppSelector(selectAvailableHouseholdsWithUsers)
 
   const [newHouseModalVisible, setNewHouseModalVisible] = React.useState(false);
   const [joinHouseModalVisible, setJoinHouseModalVisible] = React.useState(false);
@@ -82,8 +83,9 @@ function SelectHouseholdScreen({ navigation }: Props) {
   };
 
   const joinHouse = () => {
+    console.log(availableHousholds)
     if (!houseHoldCode) return setErrorMsg("Du måste ange en kod!");
-    const house = households.find((h) => h.GeneratedCode === houseHoldCode);
+    const house = availableHousholds.find((h) => h.GeneratedCode === houseHoldCode);
     if (!house) return setErrorMsg("Hittar inget hushåll med den koden!");
     const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
     if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!");

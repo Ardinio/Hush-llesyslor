@@ -41,7 +41,7 @@ const LoginSchema = Yup.object().shape<LoginSchemaType>({
   email: Yup.string().required("Fyll i din Email").email("Ange giltig mail"),
   password: Yup.string()
     .required("Fyll i ditt lösenord")
-    .min(4, "Lösenordet måste vara längre än 4 karakäter"),
+    .min(4, "Lösenordet måste vara längre än 4 tecken"),
 });
 
 function LoginScreen({ navigation }: Props) {

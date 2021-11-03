@@ -46,13 +46,13 @@ function AddChoreModul() {
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.container}>
-          <View style={styles.modalView2}>
+          <View style={styles.modalView}>
             <Text>Skapa en ny syssla</Text>
             <View>
               <View>
                 <View style={[styles.innerContainer, styles.marginTop]}>
                   <TextInput
-                    style={styles.textBox}
+                    style={styles.textInputBox}
                     placeholder="Titel"
                     placeholderTextColor="grey"
                     value={title}
@@ -67,7 +67,7 @@ function AddChoreModul() {
               <View style={styles.marginTop}>
                 <View style={styles.innerContainer}>
                   <TextInput
-                    style={styles.textBox}
+                    style={styles.textInputBox}
                     placeholder="Beskrivning"
                     placeholderTextColor="grey"
                     value={description}
@@ -84,26 +84,21 @@ function AddChoreModul() {
               </View>
             </View>
 
-            <View style={styles.marginTop}>
+            <View style={[styles.buttonsContainer, styles.marginTop]}>
+              <Button onPress={addNewTask} buttonTitle="Spara" btnType="plus" />
+
               <Button
-                onPress={addNewTask}
-                buttonTitle="Spara"
+                onPress={() => setModalVisible(false)}
+                buttonTitle="Stäng"
                 btnType="window-close"
               />
-              <View style={styles.marginTop}>
-                <Button
-                  onPress={() => setModalVisible(false)}
-                  buttonTitle="Stäng"
-                  btnType="window-close"
-                />
-              </View>
             </View>
           </View>
         </View>
       </Modal>
       <Button
         onPress={() => setModalVisible(!modalVisible)}
-        buttonTitle="Lägg till uppgift"
+        buttonTitle="Lägg till"
         btnType="plus"
       />
     </View>

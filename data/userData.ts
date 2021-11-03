@@ -43,7 +43,7 @@ export const mockedUser: User[] = [
   },
   {
     Id: "6",
-    AccountId: "6",
+    AccountId: "1",
     HouseholdId: "2",
     Name: "Jon",
     AvatarId: "1",

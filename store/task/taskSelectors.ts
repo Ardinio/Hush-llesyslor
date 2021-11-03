@@ -1,6 +1,4 @@
 import { mockedHousehold } from "../../data/householdData";
-import householdReducer from "../household/householdReducer";
-import { selectAllHouseholds } from "../household/householdSelectors";
 import { RootState } from "../store";
 import { singleAvatarById } from '../../data/avatars';
 
@@ -33,8 +31,8 @@ function cleanDate(date: Date): Date {
   return newDate;
 }
 
-export const selectTasksOnActiveHouseholdById = (householdid: string) => (state: RootState) => {
-  const tasksHouseholds = state.task.task.filter((x) => x.HouseholdId === householdid)
+export const selectTasksOnActiveHouseholdById = (state: RootState) => {
+  const tasksHouseholds = state.task.task.filter((x) => x.HouseholdId === state.household.activeHouseholdId)
     .map((y) => ({taskId: y.Id, title: y.Title, description: y.Description, reccuringInDays: y.recurringInDays}));
 
   let currentDate: Date = new Date();
@@ -49,7 +47,7 @@ export const selectTasksOnActiveHouseholdById = (householdid: string) => (state:
         const index = allDate.findIndex((x) => x.taskId === task.taskId);
         const user = state.user.users.find((z) => z.Id === completed.UserId) ?? { Id: "", AccountId: "", HouseholdId: "", Name: "", AvatarId: "", IsOwner: false }
         if (index === -1) {
-          avatars.push(singleAvatarById(user.AvatarId).Emoji);       // TODO: Ändra till avatar-ikon senare. Behöver inte taskId.
+          avatars.push(singleAvatarById(user.AvatarId).Emoji);
           allDate.push({taskId: completed.TasksId, taskTitle: task.title, taskDescription: task.description, avatars: avatars});
         }
         else

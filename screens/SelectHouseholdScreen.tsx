@@ -28,7 +28,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 type Props = GenericScreenProps<"HomeScreen">;
 
 function SelectHouseholdScreen({ navigation }: Props) {
-  const allUsers = useAppSelector(selectAllUsers);
   const dispatch = useAppDispatch();
   const activeAccount = useAppSelector(selectAccount);
   const households = useAppSelector(selectHouseholdsWithUsers);
@@ -81,11 +80,10 @@ function SelectHouseholdScreen({ navigation }: Props) {
   };
 
   const joinHouse = () => {
-    console.log(availableHousholds)
     if (!houseHoldCode) return setErrorMsg("Du måste ange en kod!");
     const house = availableHousholds.find((h) => h.GeneratedCode === houseHoldCode);
     if (!house) return setErrorMsg("Hittar inget hushåll med den koden!");
-    const usersInHouse = allUsers.filter((h) => h.HouseholdId === house.Id);
+    const usersInHouse = house.users
     if (usersInHouse.length === 8) return setErrorMsg("Hushållet är fullt!");
     const user = usersInHouse?.find((u) => u.AccountId === activeAccount.Id);
     if (user) return setErrorMsg("Du är redan med i det här hushållet!");

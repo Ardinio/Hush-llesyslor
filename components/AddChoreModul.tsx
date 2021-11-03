@@ -6,8 +6,10 @@ import { useState } from "react";
 import RepeatCarousel from "./RepeatCarousel";
 import ValueCarousel from "./ValueCarousel";
 import nextId from "react-id-generator";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { AddTask } from "../store/task/taskActions";
+import { selectActiveHousehold } from "../store/household/householdSelectors";
+import { selectIsAdmin } from "../store/user/userSelectors";
 
 function AddChoreModul() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,6 +19,8 @@ function AddChoreModul() {
   const [energyRequired, setEnergyRequired] = useState<number>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
   const dispatch = useAppDispatch();
+  const activeHousehold = useAppSelector(selectActiveHousehold);
+  const isAdmin = useAppSelector(selectIsAdmin);
 
   const closeModal = () => {
     setErrorMsg("");
@@ -32,7 +36,7 @@ function AddChoreModul() {
     dispatch(
       AddTask({
         Id: nextId(),
-        HouseholdId: "100",
+        HouseholdId: activeHousehold?.Id!,
         Title: title,
         Description: description,
         recurringInDays: recurringInDays!,
@@ -96,11 +100,15 @@ function AddChoreModul() {
           </View>
         </View>
       </Modal>
-      <Button
-        onPress={() => setModalVisible(!modalVisible)}
-        buttonTitle="Lägg till"
-        btnType="plus"
-      />
+      <View style={styles.marginTop}>
+        {isAdmin && (
+          <Button
+            onPress={() => setModalVisible(!modalVisible)}
+            buttonTitle="Lägg till"
+            btnType="plus"
+          />
+        )}
+      </View>
     </View>
   );
 }

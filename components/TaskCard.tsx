@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { styles } from "../styles/Styles";
 import { Card } from "react-native-paper";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { selectTasksOnActiveHouseholdById } from "../store/task/taskSelectors";
+import { selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
 import { useState } from "react";
 import Button from "./Button";
 import { DeleteTask } from "../store/task/taskActions";
@@ -14,7 +14,7 @@ import { selectCurrentUser } from "../store/user/userSelectors";
 
 const TaskCard = ({}) => {
   const isAdmin = useAppSelector(selectIsAdmin);
-  const tasks2 = useAppSelector(selectTasksOnActiveHouseholdById);
+  const tasks = useAppSelector(selectTasksOnActiveHousehold);
 
   const currentUser = useAppSelector(selectCurrentUser);
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,7 +22,7 @@ const TaskCard = ({}) => {
   const [selectedTitle, setSelectedTitle] = useState<string>("");
   const dispatch = useAppDispatch();
   const [selectedTaskId, setSelectedTaskId] = useState<string>("");
-  const [userId, setUserId] = useState<any>();
+  const [userId, setUserId] = useState<string>(currentUser?.Id ?? "");
 
   const setCompletedTask = () => {
     dispatch(
@@ -50,7 +50,7 @@ const TaskCard = ({}) => {
 
   return (
     <View style={styles.Card}>
-      {tasks2.map(
+      {tasks.map(
         ({ taskId, taskTitle, taskDescription, daysLeft, avatars }, i) => (
           <TouchableOpacity
             key={i}
@@ -64,7 +64,7 @@ const TaskCard = ({}) => {
               <View style={styles.CardContainer}>
                 <Text style={styles.itemText}>{taskTitle}</Text>
                 <View style={styles.CardItem}>
-                  {avatars ? (
+                  {avatars.length > 0 ? (
                     avatars.map((avatar, i) => <Text key={i}>{avatar}</Text>)
                   ) : daysLeft !== undefined && daysLeft < 0 ? (
                     <Text style={styles.textBad}>{daysLeft}</Text>
@@ -101,9 +101,8 @@ const TaskCard = ({}) => {
             <View style={[styles.buttonsContainer, styles.marginTop]}>
               <Button
                 onPress={() => {
-                  setCompletedTask(),
-                    setSelectedTaskId,
-                    setUserId(currentUser?.AccountId);
+                  setSelectedTaskId;
+                  setCompletedTask();
                 }}
                 buttonTitle="Färdig"
                 btnType="check"

@@ -22,7 +22,6 @@ import { styles } from "../styles/Styles";
 import { AppStackParamList } from "../navigation/RootNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { selectAllUsers, selectCurrentUser } from "../store/user/userSelectors";
-import { selectAccount } from "../store/account/accountSelectors";
 import { selectActiveHousehold } from "../store/household/householdSelectors";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { DeleteUser } from "../store/user/userActions";
@@ -37,12 +36,9 @@ type Props = {
 };
 
 function ProfileScreen({ navigation }: Props) {
-  const activeAccount = useAppSelector(selectAccount);
   const allUsers = useAppSelector(selectAllUsers);
   const activeHouse = useAppSelector(selectActiveHousehold);
-  const currentUser = useAppSelector(
-    selectCurrentUser(activeAccount.Id, activeHouse?.Id!)
-  );
+  const currentUser = useAppSelector(selectCurrentUser);
   const currentAvatar = singleAvatarById(currentUser?.AvatarId!);
   const dispatch = useAppDispatch();
 

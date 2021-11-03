@@ -16,6 +16,16 @@ function userReducer(state: UserState = initialState, action: UserActions): User
     }
   }
 
+  else if (action.type === 'user/editUser') {
+    const indexget = state.users.findIndex((x) => x.Id === action.payload.Id ) ?? { Id: '', AccountId: '', HousholdId: '', Name: '', AvatarId: '', IsOwner: undefined}
+    return {
+      ...state,
+      users: state.users.map(
+        (content, i) => i === indexget ? {...content, Name: action.payload.Name, AvatarId: action.payload.AvatarId} : content
+      )
+    }
+  }
+
   else
     return state;
 }

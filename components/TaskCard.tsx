@@ -15,24 +15,24 @@ import { selectCurrentUser } from "../store/user/userSelectors";
 const TaskCard = ({}) => {
   const isAdmin = useAppSelector(selectIsAdmin);
   const tasks = useAppSelector(selectTasksOnActiveHousehold);
-
   const currentUser = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
+
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
   const [selectedTitle, setSelectedTitle] = useState<string>("");
-  const dispatch = useAppDispatch();
   const [selectedTaskId, setSelectedTaskId] = useState<string>("");
-  const [userId, setUserId] = useState<string>(currentUser?.Id ?? "");
 
   const setCompletedTask = () => {
     dispatch(
       AddCompletedTask({
         Id: nextId(),
         TasksId: selectedTaskId,
-        UserId: userId,
+        UserId: currentUser?.Id!,
         CompleteDate: new Date(),
       })
     );
+    setModalVisible(false);
   };
 
   const onDelete = (selectedTaskId: string) => {
@@ -45,7 +45,7 @@ const TaskCard = ({}) => {
         recurringInDays: 0,
         EnergyRequired: 0,
       })
-    );
+      );
   };
 
   return (

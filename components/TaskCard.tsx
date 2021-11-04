@@ -46,7 +46,7 @@ const TaskCard = ({}) => {
         recurringInDays: 0,
         EnergyRequired: 0,
       })
-      );
+    );
   };
 
   return (
@@ -99,26 +99,30 @@ const TaskCard = ({}) => {
               </View>
             </View>
 
-            <View style={[styles.buttonsContainer, styles.marginTop]}>
-              <Button
-                onPress={() => {
-                  setSelectedTaskId;
-                  setCompletedTask();
-                }}
-                buttonTitle="Färdig"
-                btnType="check"
-              />
-              <View>
+            <View>
+              <View style={[styles.buttonsContainer, styles.marginTop]}>
                 <Button
+                  onPress={() => {
+                    setSelectedTaskId;
+                    setCompletedTask();
+                  }}
+                  buttonTitle="Färdig"
+                  btnType="check"
+                />
+                <View>
+                  <Button
+                    onPress={() => setModalVisible(!modalVisible)}
+                    buttonTitle="Stäng"
+                    btnType="window-close"
+                  />
+                </View>
+              </View>
+              <View style={[styles.buttonsContainer, styles.marginTop]}>
+                <EditChoreModul
                   onPress={() => setModalVisible(!modalVisible)}
-                  buttonTitle="Stäng"
-                  btnType="window-close"
-              />
-                <View style={styles.marginTop}>
-                    <EditChoreModul 
-                      onPress={() => setModalVisible(!modalVisible)}
-                      selectedTaskId={selectedTaskId}
-                      />
+                  selectedTaskId={selectedTaskId}
+                />
+                <View style={[styles.marginTop2]}>
                   {isAdmin && (
                     <Button
                       onPress={() => {
@@ -130,9 +134,6 @@ const TaskCard = ({}) => {
                     />
                   )}
                 </View>
-              </View>
-              <View style={styles.marginTop}>
-                <TouchableOpacity></TouchableOpacity>
               </View>
             </View>
           </View>

@@ -1,181 +1,246 @@
-import * as React from 'react';
+import * as React from "react";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import {
-    View,
-    Text,
-    TextInput,
-    TouchableHighlight,
-    Modal,
-    Image,
-    Alert
-} from 'react-native';
-import { AddAccount } from '../store/account/accountActions';
-import { styles } from '../styles/Styles';
-import nextId from 'react-id-generator';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '../navigation/RootNavigator';
-import { Button } from '../components';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { selectAccount } from '../store/account/accountSelectors';
+  View,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  Modal,
+  Image,
+} from "react-native";
+import { SetActiveAccount } from "../store/account/accountActions";
+import { styles } from "../styles/Styles";
+import nextId from "react-id-generator";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamList } from "../navigation/RootNavigator";
+import { Button } from "../components";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { selectAccount } from "../store/account/accountSelectors";
+import { selectAllAccountsFromDatabase } from "../store/database/databaseSelectors";
+import { AddAccountToDatabase } from "../store/database/databaseActions";
+
+interface Login {
+  email: string;
+  password: string;
+}
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
-  'HomeScreen'
+  "SelectHousehold"
 >;
 
 type Props = {
   navigation: ProfileScreenNavigationProp;
 };
 
-// TODO
-// Add Formik
-// Add validation for e-mail, add encryption on password, add snackbar on new account
+type LoginSchemaType = Record<keyof Login, Yup.AnySchema>;
+
+const LoginSchema = Yup.object().shape<LoginSchemaType>({
+  email: Yup.string().required("Fyll i din Email").email("Ange giltig mail"),
+  password: Yup.string()
+    .required("Fyll i ditt lösenord")
+    .min(4, "Lösenordet måste vara minst 4 tecken"),
+});
 
 function LoginScreen({ navigation }: Props) {
-    const accounts = useAppSelector(selectAccount);
-    const dispatch = useAppDispatch();
+  const activeAccount = useAppSelector(selectAccount);
+  const allAccounts = useAppSelector(selectAllAccountsFromDatabase);
+  const dispatch = useAppDispatch();
 
-    const [email, setEmail] = React.useState<string>();
-    const [password, setPassword] = React.useState<string>();
-    const [newEmail, setNewEmail] = React.useState<string>();
-    const [newPassword, setNewPassword] = React.useState<string>();
-    const [accountId, setAccountId] = React.useState<string>();
-    const [errorMsg, setErrorMsg] = React.useState<string>();
-    const [modalVisible, setModalVisible] = React.useState(false);
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState<string>();
+  const [modalVisible, setModalVisible] = React.useState(false);
 
-    const logIn = () => {
-    // if (!email || !password) return setErrorMsg("E-mail eller Password Saknas!")
-    // if (accounts.Email !== email.toLowerCase().trim())
-    //   return setErrorMsg("Email eller Password är felaktigt");
-    // const account = accounts((a) => a.Email === email.toLowerCase().trim());
-    // if (account?.Password !== password.trim())
-    //   return setErrorMsg("Email eller Password är felaktigt");
-    // setAccountId(account?.Id);
-        setIsLoggedIn(!isLoggedIn);
-        setEmail('');
-        setPassword('');
-        navigation.navigate('HomeScreen', { id: accountId! }); // send accountID !!
-    };
+  const logIn = (login: Login) => {
+    const account = allAccounts.find(
+      (a) => a.Email === login.email.toLowerCase().trim()
+    );
+    if (!account)
+      return setErrorMsg("Finns inget konto registrerat på den E-postAdressen");
+    if (account.Email !== login.email.toLowerCase().trim())
+      return setErrorMsg("Email eller lösenordet är felaktigt");
+    if (account.Password !== login.password.trim())
+      return setErrorMsg("Email eller lösenordet är felaktigt");
+    dispatch(
+      SetActiveAccount({
+        Id: account.Id,
+        Email: account.Email,
+        isLoggedIn: true,
+      })
+    );
+    navigation.navigate("SelectHousehold");
+  };
 
-    const logOut = () => {
-        setErrorMsg('');
-        setAccountId('');
-        setIsLoggedIn(!isLoggedIn);
-    };
+  const logOut = () => {
+    setErrorMsg("");
+    dispatch(
+      SetActiveAccount({
+        Id: "",
+        Email: "",
+        isLoggedIn: false,
+      })
+    );
+  };
 
-    const handleModal = () => {
-        setModalVisible(!modalVisible);
-        setEmail('');
-        setPassword('');
-        setNewEmail('');
-        setNewPassword('');
-        setErrorMsg('');
-    };
+  const handleModal = () => {
+    setModalVisible(!modalVisible);
+    setErrorMsg("");
+  };
 
-    const registerNewAccount = () => {
-    // console.log(newEmail); // remove line when finished!!!
-    // if (!newEmail || !newPassword)
-    //   return setErrorMsg("E-mail eller Password Saknas!");
-    // if (accounts.find((a) => a.Email === newEmail.toLowerCase().trim()))
-    //   return setErrorMsg("E-postadressen finns redan");
-    // dispatch(
-    //   AddAccount({
-    //     Id: nextId(),
-    //     Email: newEmail.toLowerCase().trim(),
-    //     Password: newPassword.trim(),
-    //   })
-    // );
-    // Alert.alert("New user registered"); // replace Alert with SnackBar !!
-    // console.log(accounts); // remove line when finished!!!
-    // setNewEmail("");
-    // setNewPassword("");
-    // setErrorMsg("");
-    // setModalVisible(!modalVisible);
-    };
+  const switchHouse = () => {
+    navigation.navigate("SelectHousehold");
+  };
 
-    if (isLoggedIn) {
-        return (
-            <View style={styles.root}>
-                <Image
-                    style={styles.loginLogo}
-                    source={require('../assets/logo.png')}
-                />
-                <Button
-                    buttonTitle="Logga Ut"
-                    btnType="sign-out-alt"
-                    onPress={logOut}
-                ></Button>
-            </View>
-        );
-    }
+  const registerNewAccount = (login: Login) => {
+    if (allAccounts.find((a) => a.Email === login.email.toLowerCase().trim()))
+      return setErrorMsg("E-postadressen finns redan");
+    dispatch(
+      AddAccountToDatabase({
+        Id: nextId(),
+        Email: login.email.toLowerCase().trim(),
+        Password: login.password.trim(),
+      })
+    );
+    setErrorMsg("");
+    setModalVisible(!modalVisible);
+  };
 
+  if (activeAccount.isLoggedIn) {
     return (
-        <View style={styles.root}>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }}
+      <View style={styles.root}>
+        <Image
+          style={styles.loginLogo}
+          source={require("../assets/logo.png")}
+        />
+        <View style={styles.buttonsContainer}>
+        <Button
+          buttonTitle="Logga Ut"
+          btnType="sign-out-alt"
+          onPress={logOut}
+        ></Button>
+        <Button
+            buttonTitle="Mina hushåll"
+            btnType="sign-in-alt"
+            onPress={switchHouse}
+          />
+          </View>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.root}>
+      {/* Modal för registrering av nytt konto */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.modalView}>
+            <Formik
+              initialValues={{ email: "", password: "" }}
+              onSubmit={registerNewAccount}
+              validationSchema={LoginSchema}
             >
-                <View style={styles.container}>
-                    <View style={styles.modalView}>
-                        <TextInput
-                            style={styles.textInputBox}
-                            placeholder="E-mail"
-                            value={newEmail}
-                            onChangeText={(value) => setNewEmail(value)}
-                        />
-                        <TextInput
-                            style={styles.textInputBox}
-                            placeholder="Password"
-                            value={newPassword}
-                            onChangeText={(value) => setNewPassword(value)}
-                        />
-                        <Text style={styles.errorText}>{errorMsg}</Text>
-                        <View style={styles.buttonsContainer}>
-                            <View style={styles.iconWrapper}>
-                                <FontAwesome5
-                                    name="check"
-                                    style={styles.icon}
-                                    size={25}
-                                    onPress={registerNewAccount}
-                                />
-                            </View>
-                            <View style={styles.iconWrapper}>
-                                <FontAwesome5
-                                    name="arrow-circle-down"
-                                    style={styles.icon}
-                                    size={25}
-                                    onPress={handleModal}
-                                />
-                            </View>
-                        </View>
+              {({ handleChange, handleSubmit, values, errors }) => (
+                <>
+                  <Text style={styles.errorText}>{errorMsg}</Text>
+                  <View style={[styles.innerContainer, styles.marginTop]}>
+                    <TextInput
+                      style={styles.textInputBox}
+                      placeholder="E-mail"
+                      placeholderTextColor="grey"
+                      value={values.email}
+                      onChangeText={handleChange<keyof Login>("email")}
+                      keyboardType="email-address"
+                    />
+                  </View>
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                  <View style={[styles.innerContainer, styles.marginTop]}>
+                    <TextInput
+                      style={styles.textInputBox}
+                      placeholder="Lösenord"
+                      placeholderTextColor="grey"
+                      value={values.password}
+                      onChangeText={handleChange<keyof Login>("password")}
+                      secureTextEntry
+                    />
+                  </View>
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                  <View style={styles.buttonsContainer}>
+                    <View style={styles.iconWrapper}>
+                      <FontAwesome5
+                        name="check"
+                        style={styles.icon}
+                        size={25}
+                        onPress={handleSubmit as any}
+                      />
                     </View>
-                </View>
-            </Modal>
-            <Image style={styles.loginLogo} source={require('../assets/logo.png')} />
-            <TextInput
+                    <View style={styles.iconWrapper}>
+                      <FontAwesome5
+                        name="arrow-circle-down"
+                        style={styles.icon}
+                        size={25}
+                        onPress={handleModal}
+                      />
+                    </View>
+                  </View>
+                </>
+              )}
+            </Formik>
+          </View>
+        </View>
+      </Modal>
+      <Image style={styles.loginLogo} source={require("../assets/logo.png")} />
+      {/* Input form for Login */}
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        onSubmit={logIn}
+        validationSchema={LoginSchema}
+      >
+        {({ handleChange, handleSubmit, values, errors }) => (
+          <>
+            <Text style={styles.errorText}>{errorMsg}</Text>
+            <View style={[styles.innerContainer, styles.marginTop]}>
+              <TextInput
                 style={styles.textInputBox}
                 placeholder="E-mail"
-                value={email}
-                onChangeText={(value) => setEmail(value)}
-            />
-            <TextInput
+                placeholderTextColor="grey"
+                value={values.email}
+                onChangeText={handleChange<keyof Login>("email")}
+                keyboardType="email-address"
+              />
+            </View>
+            <Text style={styles.errorText}>{errors.email}</Text>
+            <View style={[styles.innerContainer, styles.marginTop]}>
+              <TextInput
                 style={styles.textInputBox}
-                placeholder="Password"
-                value={password}
-                onChangeText={(value) => setPassword(value)}
+                placeholder="Lösenord"
+                placeholderTextColor="grey"
+                value={values.password}
+                onChangeText={handleChange<keyof Login>("password")}
+                secureTextEntry
+              />
+            </View>
+            <Text style={styles.errorText}>{errors.password} </Text>
+            <Button
+              buttonTitle="Logga in"
+              btnType="sign-in-alt"
+              onPress={handleSubmit as any}
             />
-            <TouchableHighlight onPress={handleModal}>
-                <Text style={styles.clickableText}>Registrera Konto</Text>
-            </TouchableHighlight>
-            <Text style={styles.errorText}>{errorMsg}</Text>
-            <Button buttonTitle="Logga in" btnType="sign-in-alt" onPress={logIn} />
-        </View>
-    );
+          </>
+        )}
+      </Formik>
+      <TouchableHighlight onPress={handleModal}>
+        <Text style={styles.clickableText}>Registrera Konto</Text>
+      </TouchableHighlight>
+    </View>
+  );
 }
 
 export default LoginScreen;

@@ -12,23 +12,23 @@ function StatisticsScreen() {
     const allCompletedTasksByDateTotal = useAppSelector(selectCompletedTasksTotal(lastWeek, currentDate));
     const allCompletedTasksByDateByTask = useAppSelector(selectCompletedTasksByTasks(lastWeek, currentDate));
 
-    return (
-        <ScrollView>
-            <View style={styles.statisticsScreenContainer}>
-                <Text>Statistics Screen</Text>
-                <Text>Total</Text>
-                <ChartPie data={allCompletedTasksByDateTotal} isBig={true} />
-                <View style={styles.pieChartContainer}>
-                    {allCompletedTasksByDateByTask.map((value) => (
-                        <View key={value.taskId} style={styles.pieShartTaskContainer}>
-                            <Text style={styles.pieShartTaskContainerText}>{value.taskTitle}</Text>
-                            <ChartPie data={value.pieChartData} />
-                        </View>
-                    ))}
-                </View>
-            </View>
-        </ScrollView>
-    );
+  return (
+    <ScrollView>
+      <View style={styles.statisticsScreenContainer}>
+        <Text>Statistik - vecka</Text>
+        <Text>Total</Text>
+        <ChartPie data={allCompletedTasksByDateTotal} isBig={true} />
+          <View style={styles.pieChartContainer}>
+        {allCompletedTasksByDateByTask.map((value) => (
+          <View key={value.taskId} style={styles.pieShartTaskContainer}>
+            <Text style={styles.pieShartTaskContainerText}>{value.taskTitle}</Text>
+            <ChartPie data={value.pieChartData} />
+          </View>
+        ))}
+          </View>
+      </View>
+    </ScrollView>
+  );
 }
 
 export default StatisticsScreen;

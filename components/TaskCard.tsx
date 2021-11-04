@@ -1,24 +1,145 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
-import { styles } from '../styles/Styles';
-import { Card } from 'react-native-paper';
-import { TaskData } from '../data/taskData';
-import { FC } from 'react';
-import BadgeComponent from './BadgeComponent';
+import * as React from "react";
+import { View, Text, TouchableOpacity, Modal } from "react-native";
+import { styles } from "../styles/Styles";
+import { Card } from "react-native-paper";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { selectTasksOnActiveHousehold } from "../store/task/taskSelectors";
+import { useState } from "react";
+import Button from "./Button";
+import { DeleteTask } from "../store/task/taskActions";
+import { selectIsAdmin } from "../store/user/userSelectors";
+import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
+import nextId from "react-id-generator";
+import { selectCurrentUser } from "../store/user/userSelectors";
+import EditChoreModul from "./EditChoreModul";
 
-interface Props {
-  task: TaskData
-}
+const TaskCard = ({}) => {
+  const isAdmin = useAppSelector(selectIsAdmin);
+  const tasks = useAppSelector(selectTasksOnActiveHousehold);
+  const currentUser = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
 
-const TaskCard: FC<Props> = ({ task }) => {
-    return (
-        <Card style={styles.Card}>
-            <View style={styles.CardContainer}>
-                <Text style={styles.itemText}>{task.Title}</Text>
-                <BadgeComponent task={task} />
-            </View>
-        </Card>
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDescription, setSelectedDescription] = useState<string>("");
+  const [selectedTitle, setSelectedTitle] = useState<string>("");
+  const [selectedTaskId, setSelectedTaskId] = useState<string>("");
+
+  const setCompletedTask = () => {
+    dispatch(
+      AddCompletedTask({
+        Id: nextId(),
+        TasksId: selectedTaskId,
+        UserId: currentUser?.Id!,
+        CompleteDate: new Date(),
+      })
     );
+    setModalVisible(false);
+  };
+
+  const onDelete = (selectedTaskId: string) => {
+    dispatch(
+      DeleteTask({
+        Id: selectedTaskId,
+        HouseholdId: "",
+        Title: "",
+        Description: "",
+        recurringInDays: 0,
+        EnergyRequired: 0,
+      })
+      );
+  };
+
+  return (
+    <View style={styles.Card}>
+      {tasks.map(
+        ({ taskId, taskTitle, taskDescription, daysLeft, avatars }, i) => (
+          <TouchableOpacity
+            key={i}
+            onPress={() => {
+              setModalVisible(true), setSelectedTitle(taskTitle);
+              setSelectedDescription(taskDescription);
+              setSelectedTaskId(taskId);
+            }}
+          >
+            <Card>
+              <View style={styles.CardContainer}>
+                <Text style={styles.itemText}>{taskTitle}</Text>
+                <View style={styles.CardItem}>
+                  {avatars.length > 0 ? (
+                    avatars.map((avatar, i) => <Text key={i}>{avatar}</Text>)
+                  ) : daysLeft !== undefined && daysLeft < 0 ? (
+                    <Text style={styles.textBad}>{daysLeft}</Text>
+                  ) : (
+                    <Text style={styles.textOk}>{daysLeft}</Text>
+                  )}
+                </View>
+              </View>
+            </Card>
+          </TouchableOpacity>
+        )
+      )}
+
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <View style={styles.container}>
+          <View style={styles.modalView}>
+            <View>
+              <View>
+                <Text style={styles.itemText}>Titel:</Text>
+                <View style={styles.innerContainer}>
+                  <Text style={styles.innerContainerText}>{selectedTitle}</Text>
+                </View>
+              </View>
+              <View style={styles.marginTop}>
+                <Text style={styles.itemText}>Beskrivning:</Text>
+                <View style={styles.innerContainer}>
+                  <Text style={styles.innerContainerText}>
+                    {selectedDescription}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={[styles.buttonsContainer, styles.marginTop]}>
+              <Button
+                onPress={() => {
+                  setSelectedTaskId;
+                  setCompletedTask();
+                }}
+                buttonTitle="Färdig"
+                btnType="check"
+              />
+              <View>
+                <Button
+                  onPress={() => setModalVisible(!modalVisible)}
+                  buttonTitle="Stäng"
+                  btnType="window-close"
+              />
+                <View style={styles.marginTop}>
+                    <EditChoreModul 
+                      onPress={() => setModalVisible(!modalVisible)}
+                      selectedTaskId={selectedTaskId}
+                      />
+                  {isAdmin && (
+                    <Button
+                      onPress={() => {
+                        onDelete(selectedTaskId);
+                        setModalVisible(!modalVisible);
+                      }}
+                      buttonTitle="Radera"
+                      btnType="trash-alt"
+                    />
+                  )}
+                </View>
+              </View>
+              <View style={styles.marginTop}>
+                <TouchableOpacity></TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
 };
 
 export default TaskCard;

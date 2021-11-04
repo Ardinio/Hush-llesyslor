@@ -1,15 +1,18 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TaskCard from '../components/TaskCard';
+import * as React from "react";
+import { View, ScrollView } from "react-native";
+import { styles } from "../styles/Styles";
+import TaskCard from "../components/TaskCard";
+import AddChoreModul from "../components/AddChoreModul";
 
 function TaskScreen() {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Task Screen</Text>
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+        <TaskCard />
+      </ScrollView>
+      <AddChoreModul />
+    </View>
+  );
 }
 
 export default TaskScreen;

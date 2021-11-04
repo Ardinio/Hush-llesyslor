@@ -1,10 +1,12 @@
-# Titel På Projektet
+# HusHållet
 
-## Inlämning 2 Apputveckling
+## Inlämning 2 Apputveckling 2021
 
 Av: Andreas, Ardi, Emina, Kicki, Mathias
 
 ## Beskrivning Av Projektet
+
+Applikation skapad för att göra det lättare för familjer att samsas kring och bli påmind om uppgifter i hemmet.
 
 ## Info Om Hur Projektet Bygg & Körs
 
@@ -16,12 +18,12 @@ För att starta projektet, kör:
 
 ## Kravlista
 
-*: Dessa krav måste göras (21st).
+*: Dessa krav måste göras (20st).
 
 ### Antal krav: 40
 
-- G: 24 (60%).
-- VG: 34 (85%).
+- G: 20 (50%).
+- VG: 32 (80%).
 
 #### Kravlista (4)
 
@@ -54,7 +56,7 @@ För att starta projektet, kör:
 18. ***[X]*** En användare ska kunna välja en avatar (emoji-djur + färg) från en fördefinierad lista. *
 19. ***[X]*** Valda avatarer ska inte kunna väljas av andra användare i hushållet. *
 20. ***[X]*** Avataren ska användas i appen för att visa vad användaren har gjort. *
-21. ***[X]*** En användare ska kunna ställa in appens utseende (mörkt, ljust, auto).
+21. ***[ ]*** En användare ska kunna ställa in appens utseende (mörkt, ljust, auto).
 22. ***[X]*** Om en användare tillhör två eller fler hushåll ska denne kunna välja att byta mellan de olika hushållen.
 
 #### Sysslor (6)
@@ -63,7 +65,7 @@ För att starta projektet, kör:
 24. ***[X]*** En syssla ska ha ett namn, en beskrivning (text), hur ofta den ska göras (dagar), och en vikt som beskriver hur energikrävande den är. *
 25. ***[ ]*** En användare ska kunna lägga till en ljudinspelning och en bild för att beskriva sysslan ytterligare.
 26. ***[X]*** En ägare ska kunna redigera en syssla. *
-27. ***[X]*** En ägare ska kunna ta bort en syssla. *
+27. ***[X]*** En ägare ska kunna ta bort en syssla.
 28. ***[ ]*** När en syssla tas bort ska användaren få en varning om att all statistik gällande sysslan också kommer att tas bort och få valet att arkivera sysslan istället.
 
 #### Dagsvyn (3)
@@ -86,3 +88,19 @@ För att starta projektet, kör:
 38. ***[ ]*** En ägare ska kunna tilldela och ta bort sysslor från användare i hushållet.
 39. ***[ ]*** Användare ska kunna se de tilldelade sysslorna i sitt gränssnitt.
 40. ***[ ]*** En ägare ska kunna skapa grupper av sysslor som automatiskt tilldelas användarna i hushållet och roteras baserat på ett intervall i dagar.
+
+## Uppfyllda Krav
+
+### Krav för godkänt
+
+1. De nödvändiga kraven ifrån kravlistan ovan är uppfyllda ***[JA]***
+2. Git & GitHub har använts. ***[JA]***
+3. Projektmappen innehåller en README.md fil ***[JA]***
+4. Uppgiften lämnas in i tid! ***[JA]***
+5. Muntlig presentation är genomförd ***[JA]***
+
+### Krav för väl godkänt
+
+1. Alla punkter för godkänt är uppfyllda ***[JA]***
+2. Ni har använt CI/CD under projektet. ***[NEJ]***
+3. Applikationen kommunicerar data till och från en backend tjänst (ni väljer) med hjälp av Redux & redux-thunk. ***[NEJ]***

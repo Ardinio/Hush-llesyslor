@@ -3,5 +3,3 @@ export type Household = {
   Name: string,
   GeneratedCode: string
 }
-
-// TODO: ändra till liten bokstav

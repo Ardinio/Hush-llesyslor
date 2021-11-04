@@ -6,9 +6,29 @@ export interface AddHouseholdAction {
   payload: Household;
 }
 
-export type HouseholdActions = AddHouseholdAction;
+export interface EditHouseholdAction {
+  type: 'household/editHousehold';
+  payload: Household;
+}
+
+export interface SetActiveHouseholdAction {
+  type: 'household/setActiveHousehold';
+  payload: string;
+}
+
+export type HouseholdActions = AddHouseholdAction | EditHouseholdAction | SetActiveHouseholdAction;
 
 export const AddHousehold = (household: Household): AppThunk =>
-    async (dispatch, getState) => {
-        dispatch({ type: 'household/addHousehold', payload: household });
-    };
+  async (dispatch, getState) => {
+    dispatch({ type: 'household/addHousehold', payload: household })
+  }
+
+export const EditHousehold = (household: Household): AppThunk =>
+  async (dispatch, getState) => {
+    dispatch({ type: 'household/editHousehold', payload: household })
+  }
+
+export const SetActiveHousehold = (householdId: string): AppThunk =>
+  async (dispatch, getState) => {
+    dispatch({ type: 'household/setActiveHousehold', payload: householdId })
+  }

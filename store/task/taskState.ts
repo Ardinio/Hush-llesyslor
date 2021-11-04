@@ -3,8 +3,10 @@ import { Task } from '../../entities/Task';
 
 export interface TaskState {
   task: Task[];
+  activeTaskId: string;
 }
 
 export const initialState: TaskState = {
-    task: mockedTasks
-};
+  task: mockedTasks,
+  activeTaskId: "1"
+}

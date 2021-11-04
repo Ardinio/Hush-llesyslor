@@ -1,51 +1,58 @@
-import React from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-    HomeScreen,
-    ProfileScreen,
-    StatisticsScreen
-} from '../screens/index';
+import React from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { TaskScreen, ProfileScreen, StatisticsScreen } from "../screens/index";
+import { GenericScreenProps } from "./RootNavigator";
 
-type RootTabParams = {
-  Home: undefined;
-  Statistics: undefined;
-  Profile: undefined;
+type TabParams = {
+  Home: { householdId: string };
+  Statistics: { householdId: string };
+  Profile: { householdId: string };
 };
 
-const Tabs = createBottomTabNavigator<RootTabParams>();
+// TODO: använd MaterialTopTabsNavigator.
+const Tabs = createBottomTabNavigator<TabParams>();
 
-const BottomTabsNavigator = () => {
-    return (
-
-        <Tabs.Navigator>
-            <Tabs.Screen
-                name="Home"
-                component={HomeScreen}
-                options={{
-                    tabBarIcon: ({ color }) =>
-                        <MaterialCommunityIcons name="home" size={24} color={color} />
-                }}
+const BottomTabsNavigator = ({ route }: GenericScreenProps<"HomeScreen">) => {
+  return (
+    <Tabs.Navigator>
+      <Tabs.Screen
+        initialParams={route.params}
+        name="Home"
+        component={TaskScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" size={24} color={color} />
+          ),
+          title: "Hem",
+        }}
+      />
+      <Tabs.Screen
+        name="Statistics"
+        component={StatisticsScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="chart-pie" size={24} color={color} />
+          ),
+          title: "Statistik",
+        }}
+      />
+      <Tabs.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="face-profile"
+              size={24}
+              color={color}
             />
-            <Tabs.Screen
-                name="Statistics"
-                component={StatisticsScreen}
-                options={{
-                    tabBarIcon: ({ color }) =>
-                        <MaterialCommunityIcons name="chart-pie" size={24} color={color} />
-                }}
-            />
-            <Tabs.Screen
-                name="Profile"
-                component={ProfileScreen}
-                options={{
-                    tabBarIcon: ({ color }) =>
-                        <MaterialCommunityIcons name="face-profile" size={24} color={color} />
-                }}
-            />
-        </Tabs.Navigator>
-
-    );
+          ),
+          title: "Profil",
+        }}
+      />
+    </Tabs.Navigator>
+  );
 };
 
 export default BottomTabsNavigator;

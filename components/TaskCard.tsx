@@ -33,6 +33,7 @@ const TaskCard = ({}) => {
         CompleteDate: new Date(),
       })
     );
+    setModalVisible(false);
   };
 
   const onDelete = (selectedTaskId: string) => {
@@ -45,7 +46,7 @@ const TaskCard = ({}) => {
         recurringInDays: 0,
         EnergyRequired: 0,
       })
-    );
+      );
   };
 
   return (

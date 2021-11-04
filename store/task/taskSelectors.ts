@@ -27,14 +27,6 @@ import { singleAvatarById } from "../../data/avatars";
 
 export const selectAllTasks = (state: RootState) => state.task.task;
 
-export const selectTaskById = (Id?: string) => (state: RootState) => 
-  state.task.task.find(t => t.Id === Id)
-
-export const selectTaskByTitle = (state: RootState) => {
-  const selectedTask = state.task.task.find(t => 
-    t.Title);
-  return selectedTask;
-}
 export const selectActiveTask = (state: RootState) =>
   selectAllTasks(state).find(
     (t) => t.Id === state.task.activeTaskId

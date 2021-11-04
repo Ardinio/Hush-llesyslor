@@ -11,6 +11,7 @@ import { selectIsAdmin } from "../store/user/userSelectors";
 import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
 import nextId from "react-id-generator";
 import { selectCurrentUser } from "../store/user/userSelectors";
+import EditChoreModul from "./EditChoreModul";
 
 const TaskCard = ({}) => {
   const isAdmin = useAppSelector(selectIsAdmin);
@@ -114,6 +115,9 @@ const TaskCard = ({}) => {
                   buttonTitle="Stäng"
                   btnType="window-close"
                 />
+                <View style={styles.marginTop}>
+                    <EditChoreModul onPress={() => setModalVisible(false)}/>
+                </View>
                 <View style={styles.marginTop}>
                   {isAdmin && (
                     <Button

@@ -36,10 +36,7 @@ function TaskScreen() {
       <ScrollView>
       <TaskCard />
       </ScrollView>
-      <View style={styles.buttonsContainer}>
-          <AddChoreModul />
-          <EditChoreModul />
-      </View>
+      <AddChoreModul />
     </View>
   );
 }

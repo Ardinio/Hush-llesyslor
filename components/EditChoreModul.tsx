@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../store/store";
 import { EditTask } from "../store/task/taskActions";
 import { selectActiveHousehold } from "../store/household/householdSelectors";
 import { selectIsAdmin } from "../store/user/userSelectors";
+import { selectCurrentTask } from "../store/task/taskSelectors";
 
 interface Props {
   onPress: () => void,
@@ -16,16 +17,17 @@ interface Props {
 }
 
 function EditChoreModul({onPress, selectedTaskId}: Props) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  // const [selectedTaskId, setSelectedTaskId] = useState<string>("");
-  const [recurringInDays, setRecurringInDays] = useState<number>();
-  const [energyRequired, setEnergyRequired] = useState<number>();
-  const [errorMsg, setErrorMsg] = React.useState<string>();
   const dispatch = useAppDispatch();
   const activeHousehold = useAppSelector(selectActiveHousehold);
   const isAdmin = useAppSelector(selectIsAdmin);
+  const taskToEdit = useAppSelector(selectCurrentTask(selectedTaskId))
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [title, setTitle] = useState(taskToEdit?.Title);
+  const [description, setDescription] = useState(taskToEdit?.Description);
+  const [recurringInDays, setRecurringInDays] = useState<number>(taskToEdit?.recurringInDays!);
+  const [energyRequired, setEnergyRequired] = useState<number>(taskToEdit?.EnergyRequired!);
+  const [errorMsg, setErrorMsg] = React.useState<string>();
 
   const closeModal = () => {
     setErrorMsg("");

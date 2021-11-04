@@ -3,6 +3,8 @@ import { View, ScrollView } from "react-native";
 import { styles } from "../styles/Styles";
 import TaskCard from "../components/TaskCard";
 import AddChoreModul from "../components/AddChoreModul";
+import EditChoreModul from "../components/EditChoreModul";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 function TaskScreen() {
   return (

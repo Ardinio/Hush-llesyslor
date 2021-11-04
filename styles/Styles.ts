@@ -147,7 +147,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   CardItem: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   title: {
     fontWeight: "bold",
@@ -259,9 +259,12 @@ export const styles = StyleSheet.create({
     position: "absolute",
   },
   textOk: {
-    color: "#00ff00"
+    color: "#00ff00",
   },
   textBad: {
-    color: "#ff0000"
-  }
+    color: "#ff0000",
+  },
+  marginTop2: {
+    marginTop: 6,
+  },
 });

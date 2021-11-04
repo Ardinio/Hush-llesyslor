@@ -114,11 +114,12 @@ const TaskCard = ({}) => {
                   onPress={() => setModalVisible(!modalVisible)}
                   buttonTitle="Stäng"
                   btnType="window-close"
-                />
+              />
                 <View style={styles.marginTop}>
-                    <EditChoreModul onPress={() => setModalVisible(false)}/>
-                </View>
-                <View style={styles.marginTop}>
+                    <EditChoreModul 
+                      onPress={() => setModalVisible(!modalVisible)}
+                      selectedTaskId={selectedTaskId}
+                      />
                   {isAdmin && (
                     <Button
                       onPress={() => {

@@ -5,7 +5,6 @@ import { Button } from "../components";
 import { useState } from "react";
 import RepeatCarousel from "./RepeatCarousel";
 import ValueCarousel from "./ValueCarousel";
-import nextId from "react-id-generator";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { EditTask } from "../store/task/taskActions";
 import { selectActiveHousehold } from "../store/household/householdSelectors";
@@ -13,13 +12,14 @@ import { selectIsAdmin } from "../store/user/userSelectors";
 
 interface Props {
   onPress: () => void,
+  selectedTaskId: string,
 }
 
-function EditChoreModul({onPress}: Props) {
+function EditChoreModul({onPress, selectedTaskId}: Props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedTaskId, setSelectedTaskId] = useState<string>("");
+  // const [selectedTaskId, setSelectedTaskId] = useState<string>("");
   const [recurringInDays, setRecurringInDays] = useState<number>();
   const [energyRequired, setEnergyRequired] = useState<number>();
   const [errorMsg, setErrorMsg] = React.useState<string>();
@@ -105,10 +105,12 @@ function EditChoreModul({onPress}: Props) {
           </View>
         </View>
       </Modal>
-      <View style={styles.marginTop}>
+      <View>
         {isAdmin && (
           <Button
-            onPress={() => setModalVisible(!modalVisible)}
+            onPress={() => {setModalVisible(!modalVisible)
+              onPress
+            }}
             buttonTitle="Ändra"
             btnType="plus"
           />

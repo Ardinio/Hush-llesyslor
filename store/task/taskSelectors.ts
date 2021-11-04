@@ -15,6 +15,10 @@ function cleanDate(date: Date): Date {
   return newDate;
 }
 
+export const selectCurrentTask = (Id: string) => (state: RootState) => {
+    return state.task.task.find(t => t.Id === Id);
+}
+
 export const selectTasksOnActiveHousehold = (state: RootState) => {
   const tasksHouseholds = state.task.task
     .filter((x) => x.HouseholdId === state.household.activeHouseholdId)

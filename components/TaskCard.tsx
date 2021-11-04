@@ -12,6 +12,7 @@ import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
 import nextId from "react-id-generator";
 import { selectCurrentUser } from "../store/user/userSelectors";
 import { selectCompletedCurrentDateByUser } from "../store/completedtask/completedtaskSelectors";
+import EditChoreModul from "./EditChoreModul";
 
 const TaskCard = ({}) => {
   const isAdmin = useAppSelector(selectIsAdmin);
@@ -37,6 +38,7 @@ const TaskCard = ({}) => {
           CompleteDate: new Date()
         })
       );
+      setModalVisible(false);
     }
   };
 
@@ -117,8 +119,12 @@ const TaskCard = ({}) => {
                   onPress={() => setModalVisible(!modalVisible)}
                   buttonTitle="Stäng"
                   btnType="window-close"
-                />
+              />
                 <View style={styles.marginTop}>
+                    <EditChoreModul 
+                      onPress={() => setModalVisible(!modalVisible)}
+                      selectedTaskId={selectedTaskId}
+                      />
                   {isAdmin && (
                     <Button
                       onPress={() => {

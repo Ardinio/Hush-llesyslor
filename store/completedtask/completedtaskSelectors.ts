@@ -3,6 +3,21 @@ import { RootState } from '../store';
 import { singleAvatarById } from '../../data/avatars';
 import { CompletedTask } from '../../entities/CompletedTask';
 
+function cleanDate(date: Date): Date {
+  const newDate: Date = new Date(+date);
+  newDate.setUTCHours(0, 0, 0, 0);
+  return newDate;
+}
+
+export const selectCompletedCurrentDateByUser = (state: RootState) => {
+  const accountId = state.account.account.Id;
+  const activeHoseHoldId = state.household.activeHouseholdId;
+  const currentUser = state.user.users.find(u =>
+    u.AccountId === accountId && u.HouseholdId === activeHoseHoldId) ?? { Id: '', AccountId: '', HouseholdId: '', Name: '', AvatarId: '', IsOwner: false };
+  const date = new Date();
+  return state.completedtask.completedTasks.filter((x) => (x.UserId === currentUser.Id && cleanDate(x.CompleteDate).getTime() === cleanDate(date).getTime())).map((y) => ({ userId: y.UserId, taskid: y.TasksId }));
+}
+
 export const selectCompletedTasksTotal = (startdate: Date, enddate: Date) => (state: RootState) => {
   const usersBasedOnHousehold = state.user.users.filter((x) => x.HouseholdId === state.household.activeHouseholdId).map((x) => x.Id);
   const completedtaskContainer: CompletedTask[] = [];

@@ -20,7 +20,6 @@ import { Picker } from "@react-native-picker/picker";
 import { Household } from "../entities/Household";
 import { AllAvatars } from "../data/avatars";
 import { AddUser } from "../store/user/userActions";
-import { selectAllUsers } from "../store/user/userSelectors";
 import HouseholdCard from "../components/HouseholdCard";
 import { selectAccount } from "../store/account/accountSelectors";
 import { SafeAreaProvider } from "react-native-safe-area-context";

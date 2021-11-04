@@ -39,7 +39,6 @@ const HouseholdCard = ({ household, isowner, users }: Props) => {
   };
   const { Name, GeneratedCode, Id } = household;
   return (
-    //TODO: Check CSS to reuse several classes
       <>
         <Card style={styles.Card}>
           <View style={styles.textAlign}>

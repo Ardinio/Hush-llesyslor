@@ -37,4 +37,3 @@ const Button: FC<Props> = (props) => {
 };
 
 export default Button;
-

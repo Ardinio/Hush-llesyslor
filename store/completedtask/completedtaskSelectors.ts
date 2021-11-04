@@ -3,8 +3,6 @@ import { RootState } from '../store';
 import { singleAvatarById } from '../../data/avatars';
 import { CompletedTask } from '../../entities/CompletedTask';
 
-export const selectAllCompletedTasks = (state: RootState) => state.completedtask.completedTasks;
-
 export const selectCompletedTasksTotal = (startdate: Date, enddate: Date) => (state: RootState) => {
   const usersBasedOnHousehold = state.user.users.filter((x) => x.HouseholdId === state.household.activeHouseholdId).map((x) => x.Id);
   const completedtaskContainer: CompletedTask[] = [];
@@ -34,7 +32,7 @@ export const selectCompletedTasksTotal = (startdate: Date, enddate: Date) => (st
   return pieChartData;
 }
 
-export type tasksContainer = {
+type tasksContainer = {
   taskId: string,
   taskTitle: string,
   pieChartData: PieChartInputData[]

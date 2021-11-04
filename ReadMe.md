@@ -93,7 +93,7 @@ För att starta projektet, kör:
 
 ### Krav för godkänt
 
-1. De nödvändiga kraven ifrån kravlistan ovan är uppfyllda ***[NEJ]***
+1. De nödvändiga kraven ifrån kravlistan ovan är uppfyllda ***[JA]***
 2. Git & GitHub har använts. ***[JA]***
 3. Projektmappen innehåller en README.md fil ***[JA]***
 4. Uppgiften lämnas in i tid! ***[JA]***
@@ -101,6 +101,6 @@ För att starta projektet, kör:
 
 ### Krav för väl godkänt
 
-1. Alla punkter för godkänt är uppfyllda ***[NEJ]***
+1. Alla punkter för godkänt är uppfyllda ***[JA]***
 2. Ni har använt CI/CD under projektet. ***[NEJ]***
 3. Applikationen kommunicerar data till och från en backend tjänst (ni väljer) med hjälp av Redux & redux-thunk. ***[NEJ]***

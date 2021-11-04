@@ -4,10 +4,9 @@ import {
   StackNavigationProp,
   StackScreenProps,
 } from "@react-navigation/stack";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import {
   LoginScreen,
-  TaskScreen,
   SelectHouseholdScreen,
 } from "../screens/index";
 import BottomTabsNavigator from "./BottomTabsNavigator";
@@ -27,8 +26,6 @@ export type GenericScreenProps<customScreen extends keyof AppStackParamList> =
 const { Navigator, Screen } = createStackNavigator<AppStackParamList>();
 
 const RootNavigator: FC = () => {
-  const [user, setUser] = useState<any>(null);
-
   return (
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
@@ -40,7 +37,7 @@ const RootNavigator: FC = () => {
         <Screen
           name="SelectHousehold"
           component={SelectHouseholdScreen}
-          options={{ title: "Hushåll", headerShown: true }}
+          options={{ title: "Mina Hushåll", headerShown: true }}
         />
         <Screen
           name="HomeScreen"

@@ -88,6 +88,10 @@ function LoginScreen({ navigation }: Props) {
     setErrorMsg("");
   };
 
+  const switchHouse = () => {
+    navigation.navigate("SelectHousehold");
+  };
+
   const registerNewAccount = (login: Login) => {
     if (allAccounts.find((a) => a.Email === login.email.toLowerCase().trim()))
       return setErrorMsg("E-postadressen finns redan");
@@ -109,11 +113,18 @@ function LoginScreen({ navigation }: Props) {
           style={styles.loginLogo}
           source={require("../assets/logo.png")}
         />
+        <View style={styles.buttonsContainer}>
         <Button
           buttonTitle="Logga Ut"
           btnType="sign-out-alt"
           onPress={logOut}
         ></Button>
+        <Button
+            buttonTitle="Mina hushåll"
+            btnType="sign-in-alt"
+            onPress={switchHouse}
+          />
+          </View>
       </View>
     );
   }

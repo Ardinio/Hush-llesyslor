@@ -6,6 +6,8 @@ Av: Andreas, Ardi, Emina, Kicki, Mathias
 
 ## Beskrivning Av Projektet
 
+Applikation skapad för att göra det lättare för familjer att samsas kring och bli påmind om uppgifter i hemmet.
+
 ## Info Om Hur Projektet Bygg & Körs
 
 För att bygga projektet, kör:

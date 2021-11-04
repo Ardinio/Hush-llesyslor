@@ -14,7 +14,3 @@ export const selectIsAdmin = (state: RootState) => {
     const currentUser = selectCurrentUser(state);
     return currentUser?.IsOwner;
 }
-export const selectUserById = (Id?: string) => (state: RootState) =>
-    state.user.users.find(u => u.Id === Id);
-
-

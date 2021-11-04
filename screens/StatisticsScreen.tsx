@@ -15,7 +15,7 @@ function StatisticsScreen() {
   return (
     <ScrollView>
       <View style={styles.statisticsScreenContainer}>
-        <Text>Statistics Screen</Text>
+        <Text>Statistik - vecka</Text>
         <Text>Total</Text>
         <ChartPie data={allCompletedTasksByDateTotal} isBig={true} />
           <View style={styles.pieChartContainer}>

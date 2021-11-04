@@ -34,7 +34,7 @@ export const mockedCompletedTask: CompletedTask[] = [
     Id: "5",
     TasksId: "3",
     UserId: "8",
-    CompleteDate: date2,
+    CompleteDate: date4,
   },
   {
     Id: "6",

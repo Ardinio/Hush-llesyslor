@@ -28,7 +28,6 @@ function taskReducer(state: TaskState = initialState, action: TaskActions): Task
       recurringInDays: number, 
       EnergyRequired: number
     }
-    console.log("Edit task at: " + taskIndex + " Id: " + action.payload.Id)
     return {
       ...state,
       task: state.task.map(

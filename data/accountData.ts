@@ -1,4 +1,3 @@
-
 import { ActiveAccount } from "../entities/ActiveAccount";
 
 export const mockedAccount: ActiveAccount =

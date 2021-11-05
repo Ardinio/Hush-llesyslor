@@ -216,7 +216,7 @@ export const styles = StyleSheet.create({
     marginLeft: 8,
   },
   textInputBox: {
-    marginTop: 8,
+    marginTop: 16,
     marginLeft: 8,
   },
   carouselContainer: {

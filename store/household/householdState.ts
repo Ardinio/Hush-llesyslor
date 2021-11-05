@@ -1,5 +1,5 @@
-import { mockedHousehold } from "../../data/householdData";
-import { Household } from "../../entities/Household";
+import { mockedHousehold } from '../../data/householdData';
+import { Household } from '../../entities/Household';
 
 export interface HouseholdState {
   households: Household[];
@@ -7,6 +7,6 @@ export interface HouseholdState {
 }
 
 export const initialState: HouseholdState = {
-  households: mockedHousehold,
-  activeHouseholdId: "1",
+    households: mockedHousehold,
+    activeHouseholdId: '1'
 };

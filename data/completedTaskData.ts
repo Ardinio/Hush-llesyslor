@@ -1,4 +1,4 @@
-import { CompletedTask } from "../entities/CompletedTask";
+import { CompletedTask } from '../entities/CompletedTask';
 
 const date1: Date = new Date("2021-10-30");
 const date2: Date = new Date("2021-11-01");

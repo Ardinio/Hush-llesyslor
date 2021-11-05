@@ -6,5 +6,5 @@ export interface AccountState {
 }
 
 export const initialState: AccountState = {
-  account: mockedAccount
-}
+    account: mockedAccount
+};

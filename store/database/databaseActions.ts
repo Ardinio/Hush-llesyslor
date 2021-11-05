@@ -8,7 +8,7 @@ export interface AddAccountToDatabaseAction {
 
 export type DatabaseActions = AddAccountToDatabaseAction;
 
-export const AddAccountToDatabase = (account: Account): AppThunk => 
-  async (dispatch, getState) => {
-    dispatch({ type: 'database/addAccount', payload: account })
-  }
+export const AddAccountToDatabase = (account: Account): AppThunk =>
+    async (dispatch, getState) => {
+        dispatch({ type: 'database/addAccount', payload: account });
+    };

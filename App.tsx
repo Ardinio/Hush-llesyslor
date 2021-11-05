@@ -9,14 +9,14 @@ import RootNavigator from './navigation/RootNavigator';
 const Stack = createNativeStackNavigator();
 
 function App() {
-  return (
-    <ReduxProvider store={store}>
-      <SafeAreaProvider>
-        <StatusBar style="auto" translucent={true} />
-        <RootNavigator />
-      </SafeAreaProvider>
-    </ReduxProvider>
-  );
+    return (
+        <ReduxProvider store={store}>
+            <SafeAreaProvider>
+                <StatusBar style="auto" translucent={true} />
+                <RootNavigator />
+            </SafeAreaProvider>
+        </ReduxProvider>
+    );
 }
 
 export default App;

@@ -3,14 +3,14 @@ import { View, Text, ScrollView } from 'react-native';
 import { useAppSelector } from '../store/store';
 import { selectCompletedTasksTotal, selectCompletedTasksByTasks } from '../store/completedtask/completedtaskSelectors';
 import { ChartPie } from '../components/ChartPie';
-import { styles } from "../styles/Styles";
+import { styles } from '../styles/Styles';
 
 function StatisticsScreen() {
-  const currentDate: Date = new Date();
-  const lastWeek: Date = new Date(+currentDate);
-  lastWeek.setDate(lastWeek.getDate() - 7);
-  const allCompletedTasksByDateTotal = useAppSelector(selectCompletedTasksTotal(lastWeek, currentDate));
-  const allCompletedTasksByDateByTask = useAppSelector(selectCompletedTasksByTasks(lastWeek, currentDate));
+    const currentDate: Date = new Date();
+    const lastWeek: Date = new Date(+currentDate);
+    lastWeek.setDate(lastWeek.getDate() - 7);
+    const allCompletedTasksByDateTotal = useAppSelector(selectCompletedTasksTotal(lastWeek, currentDate));
+    const allCompletedTasksByDateByTask = useAppSelector(selectCompletedTasksByTasks(lastWeek, currentDate));
 
   return (
     <ScrollView>

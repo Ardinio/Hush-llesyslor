@@ -8,7 +8,7 @@ export interface AddCompletedTaskAction {
 
 export type CompletedTaskActions = AddCompletedTaskAction;
 
-export const AddCompletedTask = (completedtask: CompletedTask): AppThunk => 
-  async (dispatch, getState) => {
-    dispatch({ type: 'completedtask/addCompletedTask', payload: completedtask })
-  }
+export const AddCompletedTask = (completedtask: CompletedTask): AppThunk =>
+    async (dispatch, getState) => {
+        dispatch({ type: 'completedtask/addCompletedTask', payload: completedtask });
+    };

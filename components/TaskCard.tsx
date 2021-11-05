@@ -11,29 +11,35 @@ import { selectIsAdmin } from "../store/user/userSelectors";
 import { AddCompletedTask } from "../store/completedtask/completedtaskActions";
 import nextId from "react-id-generator";
 import { selectCurrentUser } from "../store/user/userSelectors";
+import { selectCompletedCurrentDateByUser } from "../store/completedtask/completedtaskSelectors";
 import EditChoreModul from "./EditChoreModul";
 
 const TaskCard = ({}) => {
   const isAdmin = useAppSelector(selectIsAdmin);
   const tasks = useAppSelector(selectTasksOnActiveHousehold);
   const currentUser = useAppSelector(selectCurrentUser);
-  const dispatch = useAppDispatch();
+  const completed = useAppSelector(selectCompletedCurrentDateByUser);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDescription, setSelectedDescription] = useState<string>("");
   const [selectedTitle, setSelectedTitle] = useState<string>("");
+  const dispatch = useAppDispatch();
   const [selectedTaskId, setSelectedTaskId] = useState<string>("");
+  const [userId, setUserId] = useState<string>(currentUser?.Id ?? "");
 
   const setCompletedTask = () => {
-    dispatch(
-      AddCompletedTask({
-        Id: nextId(),
-        TasksId: selectedTaskId,
-        UserId: currentUser?.Id!,
-        CompleteDate: new Date(),
-      })
-    );
-    setModalVisible(false);
+    const exists = completed.findIndex((x) => x.userId === currentUser?.Id && x.taskid === selectedTaskId);
+    if (exists === -1) {
+      dispatch(
+        AddCompletedTask({
+          Id: nextId(),
+          TasksId: selectedTaskId,
+          UserId: userId,
+          CompleteDate: new Date()
+        })
+      );
+      setModalVisible(false);
+    }
   };
 
   const onDelete = (selectedTaskId: string) => {
@@ -44,7 +50,7 @@ const TaskCard = ({}) => {
         Title: "",
         Description: "",
         recurringInDays: 0,
-        EnergyRequired: 0,
+        EnergyRequired: 0
       })
     );
   };

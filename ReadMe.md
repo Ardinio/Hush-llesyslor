@@ -16,6 +16,10 @@ För att bygga projektet, kör:
 För att starta projektet, kör:
 > `npm start`
 
+## Annan info
+- Finns ER-diagram (ER_diagram.png) över de entiteter vi har.
+- Finns en varning under på statistik-skärmen. Appen fungerade som den skulle ändå (iaf när man kör den direkt på telefonen) och frågade "ägaren" av projektet hur man skulle fixa det men svaret var att det var bara en varning så skippa det. Inte lyckats hitta något konkret på internet för att få bort denna.
+
 ## Kravlista
 
 *: Dessa krav måste göras (20st).

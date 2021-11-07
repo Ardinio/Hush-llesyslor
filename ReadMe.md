@@ -89,6 +89,11 @@ För att starta projektet, kör:
 39. ***[ ]*** Användare ska kunna se de tilldelade sysslorna i sitt gränssnitt.
 40. ***[ ]*** En ägare ska kunna skapa grupper av sysslor som automatiskt tilldelas användarna i hushållet och roteras baserat på ett intervall i dagar.
 
+#### Extra (2)
+
+41. ***[X]*** En användare kan byta namn och avatar på sin profil.
+42. ***[X]*** En användare kan logga ut.
+
 ## Uppfyllda Krav
 
 ### Krav för godkänt
